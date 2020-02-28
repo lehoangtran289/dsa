@@ -7,12 +7,9 @@ def fileNaming(arr):
             for j in range(i+1, len(arr)):
                 if arr[j] == arr[i]:
                     temp = arr[j] + '(' + str(k) + ')'
-                    while True:
-                        if temp in arr[:j+1]:
+                    while temp in arr[:j+1]:
                             k += 1
                             temp = arr[j] + '(' + str(k) + ')'
-                        else: 
-                            break
                     arr[j] = temp
                     k += 1
     return arr
