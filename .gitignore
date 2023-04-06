@@ -1,5 +1,7 @@
 ### Java template
 # Compiled class file
+.idea
+.vscode
 *.class
 
 # Log file
