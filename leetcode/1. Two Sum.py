@@ -9,5 +9,3 @@ class Solution:
             else:
                 map[nums[i]] = i
         return []
-
-    main
