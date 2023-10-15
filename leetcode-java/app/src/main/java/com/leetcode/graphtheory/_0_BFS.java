@@ -68,17 +68,17 @@ public class _0_BFS {
             // print the path
             if (!visited.contains(dest)) {
                 System.out.println("No path found");
-            } else {
-                ArrayList<Integer> path = new ArrayList<>();
-                int cur = dest;
-                while (cur != -1) {
-                    path.add(cur);
-                    cur = prev[cur]; // backtrack
-                }
-                Collections.reverse(path);
-                System.out.println("Path from " + src + " to " + dest + ": " + path);
-                System.out.println("Distance: " + d[dest]);
+                return;
             }
+            ArrayList<Integer> path = new ArrayList<>();
+            int cur = dest;
+            while (cur != -1) {
+                path.add(cur);
+                cur = prev[cur]; // backtrack
+            }
+            Collections.reverse(path);
+            System.out.println("Path from " + src + " to " + dest + ": " + path);
+            System.out.println("Distance: " + d[dest]);
         }
 
         public void process(int vertex) {
