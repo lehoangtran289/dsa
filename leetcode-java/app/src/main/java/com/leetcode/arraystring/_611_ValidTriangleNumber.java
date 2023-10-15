@@ -2,7 +2,7 @@ package com.leetcode.arraystring;
 
 import java.util.Arrays;
 
-public class ValidTriangleNumber {
+public class _611_ValidTriangleNumber {
     public static void main(String[] args) {
         System.out.println(triangleNumber(new int[]{2, 2, 3, 4}));
     }

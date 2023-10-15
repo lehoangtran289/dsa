@@ -1,6 +1,6 @@
 package com.leetcode.arraystring;
 
-public class Search2DMatrix {
+public class _74_Search2DMatrix {
 
     public static void main(String[] args) {
         System.out.println(searchMatrix(new int[][]{{1,3,5,7},{10,11,16,20},{23,30,34,50}}, 3));

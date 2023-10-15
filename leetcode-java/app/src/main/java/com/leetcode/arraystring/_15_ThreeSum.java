@@ -1,9 +1,8 @@
 package com.leetcode.arraystring;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
-public class ThreeSum {
+public class _15_ThreeSum {
     public static void main(String[] args) {
         System.out.println(threeSum(new int[]{-1, 0, 1, 2, -1, -4}));
         System.out.println(threeSum(new int[]{0, 1, 1}));

@@ -3,12 +3,10 @@
  */
 package com.leetcode.arraystring;
 
-import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Map;
 import java.util.Set;
 
-public class LongestSubstringWithoutRepeatingCharacters {
+public class _3_LongestSubstringWithoutRepeatingCharacters {
     public static int lengthOfLongestSubstring(String s) {
         Set<Character> set = new HashSet<>();
         int i = 0;

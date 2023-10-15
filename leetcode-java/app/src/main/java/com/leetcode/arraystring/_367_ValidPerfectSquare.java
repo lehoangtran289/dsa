@@ -1,6 +1,6 @@
 package com.leetcode.arraystring;
 
-public class ValidPerfectSquare {
+public class _367_ValidPerfectSquare {
     public static void main(String[] args) {
         System.out.println(isPerfectSquare(9));
     }

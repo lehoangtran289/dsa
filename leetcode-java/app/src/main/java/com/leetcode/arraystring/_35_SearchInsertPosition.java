@@ -1,6 +1,6 @@
 package com.leetcode.arraystring;
 
-public class SearchInsertPosition {
+public class _35_SearchInsertPosition {
     public static void main(String[] args) {
         System.out.println(searchInsert(new int[]{1, 3, 5, 6}, 2));
     }
