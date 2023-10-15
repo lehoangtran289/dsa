@@ -1,4 +1,4 @@
-package com.leetcode.arraystring;
+package com.leetcode.array;
 
 public class _74_Search2DMatrix {
 
