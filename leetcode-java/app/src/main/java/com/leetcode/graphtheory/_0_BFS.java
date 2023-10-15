@@ -19,7 +19,9 @@ public class _0_BFS {
             adj[u].add(v);
         }
 
-        // BFS from source s
+        // -----------------------------------------------------------------
+
+        // BFS all paths from source s to reachable vertices
         public void bfs(int s) {
             Set<Integer> visited = new HashSet<>();
             Queue<Integer> queue = new LinkedList<>();
@@ -28,7 +30,9 @@ public class _0_BFS {
             queue.add(s);
             while (!queue.isEmpty()) {
                 int u = queue.remove();
-                process(u);
+                // process u
+                System.out.print(u + " ");
+
                 for (int v : adj[u]) {
                     if (!visited.contains(v)) {
                         visited.add(v);
@@ -38,6 +42,7 @@ public class _0_BFS {
             }
         }
 
+        // BFS shortest path from source to destination
         public void bfs(int src, int dest) {
             if (src == dest) return;
 
@@ -79,10 +84,6 @@ public class _0_BFS {
             Collections.reverse(path);
             System.out.println("Path from " + src + " to " + dest + ": " + path);
             System.out.println("Distance: " + d[dest]);
-        }
-
-        public void process(int vertex) {
-            System.out.print(vertex + " ");
         }
     }
 
