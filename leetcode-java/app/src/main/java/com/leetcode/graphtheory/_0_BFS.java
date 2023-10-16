@@ -4,8 +4,8 @@ import java.util.*;
 
 public class _0_BFS {
     static class Graph {
-        private int V; // number of vertices
-        private ArrayList<Integer>[] adj; // adjacency list
+        private final int V; // number of vertices
+        private final ArrayList<Integer>[] adj; // adjacency list
 
         public Graph(int V) {
             this.V = V;
