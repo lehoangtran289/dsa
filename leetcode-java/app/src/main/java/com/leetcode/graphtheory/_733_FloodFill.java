@@ -45,7 +45,7 @@ public class _733_FloodFill {
                 int r = cur[0] + direction[0];
                 int c = cur[1] + direction[1];
 
-                if (Math.min(r, c) < 0 || Math.max(r, c) >= lr) // out of bounds image
+                if (r < 0 || r >= lr || c < 0 || c >= lc)
                     continue;
 
                 if (visited[r][c] || image[r][c] != prevColor) // already visited or not same color
