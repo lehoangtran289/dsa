@@ -2,6 +2,8 @@ package com.leetcode.graphtheory;
 
 import java.util.ArrayDeque;
 import java.util.Deque;
+import java.util.HashSet;
+import java.util.Set;
 
 public class _1091_ShortestPathInBinaryMatrix {
 public static void main(String[] args) {
@@ -40,29 +42,27 @@ public static void main(String[] args) {
             return -1;
 
         int[][] directions = new int[][]{{0, 1}, {1, 0}, {0, -1}, {-1, 0}, {1, 1}, {-1, -1}, {-1, 1}, {1, -1}};
-
         boolean[][] visited = new boolean[len][len];
-        visited[0][0] = true;
-
         Deque<int[]> queue = new ArrayDeque<>();
-        queue.add(new int[]{0, 0});
 
-        int res = 0;
+        visited[0][0] = true;
+        queue.add(new int[]{0, 0, 1}); // r, c, distance
+
         while (!queue.isEmpty()) {
-            res++;
             int[] cur = queue.poll();
             if (cur[0] == len - 1 && cur[1] == len - 1) // reach dest
-                return res;
+                return cur[2];
 
             for (int[] direction : directions) {
                 int r = cur[0] + direction[0];
                 int c = cur[1] + direction[1];
 
-                if (r < 0 || r >= len || c < 0 || c >= len || grid[r][c] == 1 || visited[r][c])
+                if (Math.min(r, c) < 0 || Math.max(r, c) >= len
+                        || grid[r][c] == 1 || visited[r][c])
                     continue;
 
                 visited[r][c] = true;
-                queue.add(new int[]{r, c});
+                queue.add(new int[]{r, c, cur[2] + 1}); // r, c, new distance
             }
         }
         return -1;
