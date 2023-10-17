@@ -23,10 +23,10 @@ public class _0_BFS {
 
         // BFS all paths from source s to reachable vertices
         public void bfs(int s) {
-            Set<Integer> visited = new HashSet<>();
+            boolean[] visited = new boolean[V];
             Queue<Integer> queue = new LinkedList<>();
 
-            visited.add(s);
+            visited[s] = true;
             queue.add(s);
             while (!queue.isEmpty()) {
                 int u = queue.remove();
@@ -34,8 +34,8 @@ public class _0_BFS {
                 System.out.print(u + " ");
 
                 for (int v : adj[u]) {
-                    if (!visited.contains(v)) {
-                        visited.add(v);
+                    if (!visited[v]) {
+                        visited[v] = true;
                         queue.add(v);
                     }
                 }
