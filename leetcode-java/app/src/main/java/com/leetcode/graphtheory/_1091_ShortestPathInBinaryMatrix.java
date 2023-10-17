@@ -4,7 +4,7 @@ import java.util.ArrayDeque;
 import java.util.Deque;
 
 public class _1091_ShortestPathInBinaryMatrix {
-public static void main(String[] args) {
+    public static void main(String[] args) {
         System.out.println(shortestPathBinaryMatrix(new int[][]{{0, 0, 0}, {1, 1, 0}, {1, 1, 0}}));
     }
 
