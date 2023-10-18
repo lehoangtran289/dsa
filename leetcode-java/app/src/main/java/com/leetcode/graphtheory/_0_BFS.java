@@ -24,7 +24,7 @@ public class _0_BFS {
         // BFS all paths from source s to reachable vertices
         public void bfs(int s) {
             boolean[] visited = new boolean[V];
-            Queue<Integer> queue = new LinkedList<>();
+            Queue<Integer> queue = new ArrayDeque<>();
 
             visited[s] = true;
             queue.add(s);
