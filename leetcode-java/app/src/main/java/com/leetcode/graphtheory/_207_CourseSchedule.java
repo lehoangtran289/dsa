@@ -7,7 +7,7 @@ import java.util.List;
 
 public class _207_CourseSchedule {
     public static void main(String[] args) {
-         System.out.println(canFinish(2, new int[][]{{1, 0}}));
+        System.out.println(canFinish(3, new int[][]{{1, 0}, {0, 1}, {0, 2}}));
     }
 
     public static boolean canFinish(int numCourses, int[][] prerequisites) {
@@ -19,10 +19,8 @@ public class _207_CourseSchedule {
         // init in-degree arr
         int[] indegree = new int[numCourses];
         for (int[] prerequisite : prerequisites) {
-            int prev = prerequisite[0];
-            int next = prerequisite[1];
-            indegree[next]++;
-            adj[prev].add(next);
+            indegree[prerequisite[0]]++;
+            adj[prerequisite[1]].add(prerequisite[0]);
         }
 
         // init queue with all vertices with in-degree = 0
@@ -34,7 +32,7 @@ public class _207_CourseSchedule {
         }
 
         List<Integer> order = new ArrayList<>();
-        while(!queue.isEmpty()){
+        while (!queue.isEmpty()) {
             int u = queue.poll();
             order.add(u);
             for (int v : adj[u]) {
