@@ -16,6 +16,14 @@ public class _1293_ShortestPathInGridwObstacles {
         System.out.println(shortestPath(grid, 1));
     }
 
+    /**
+     * Q "how do you know when to increment the step?"
+     * -> count how many times "while(size-- > 0) { }" have been called.
+     * First Call: the 'while loop'  will process cell (0,0) and terminate
+     * Second Call: the 'while loop' will process all cells ONE step away from (0,0)
+     * Third Call: the loop will process all cells TWO steps away from (0,0).......AND SO ON
+     * that means number of while loop calls == number of steps taken.
+     */
     public static int shortestPath(int[][] grid, int k) {
         int[][] dirs = {{1, 0}, {-1, 0}, {0, 1}, {0, -1}};
         int n = grid.length;
