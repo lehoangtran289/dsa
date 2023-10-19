@@ -37,8 +37,7 @@ public class _207_CourseSchedule {
         while(!queue.isEmpty()){
             int u = queue.poll();
             count++;
-            for (int i = 0; i < adj[u].size(); ++i) {
-                int v = adj[u].get(i);
+            for (int v : adj[u]) {
                 indegree[v]--;
                 if (indegree[v] == 0) {
                     queue.add(v);
