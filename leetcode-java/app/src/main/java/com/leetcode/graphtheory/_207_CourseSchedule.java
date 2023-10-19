@@ -33,19 +33,19 @@ public class _207_CourseSchedule {
             }
         }
 
-        int count = 0;
+        List<Integer> order = new ArrayList<>();
         while(!queue.isEmpty()){
             int u = queue.poll();
-            count++;
+            order.add(u);
             for (int v : adj[u]) {
                 indegree[v]--;
                 if (indegree[v] == 0) {
-                    queue.add(v);
+                    queue.offer(v);
                 }
             }
         }
 
-        return count == numCourses;
+        return order.size() == numCourses;
 
     }
 }
