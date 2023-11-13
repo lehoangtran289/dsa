@@ -16,29 +16,26 @@ public class _0_DisjointSets {
     }
 
     // Find the representative of the set that i belongs to
-    public int find(int i) {
+    public int find(int v) {
         // Path compression
-        if (parent[i] != i) {
-            parent[i] = find(parent[i]);
-        }
-        return parent[i];
+        return v == parent[v] ? v : (parent[v] = find(parent[v]));
     }
 
     // Union two sets by rank
-    public void union(int i, int j) {
-        int rootI = find(i);
-        int rootJ = find(j);
-        if (rootI == rootJ) return;
+    public void union(int u, int v) {
+        int rootU = find(u);
+        int rootV = find(v);
+        if (rootU == rootV) return;
 
         // Union by rank to keep the tree balanced
-        if (rank[rootI] < rank[rootJ]) {
-            parent[rootI] = rootJ;
-        } else if (rank[rootI] > rank[rootJ]) {
-            parent[rootJ] = rootI;
+        if (rank[rootU] < rank[rootV]) {
+            parent[rootU] = rootV;
+        } else if (rank[rootU] > rank[rootV]) {
+            parent[rootV] = rootU;
         } else {
             // If ranks are the same, arbitrarily choose one as the root and increment its rank
-            parent[rootI] = rootJ;
-            rank[rootJ]++;
+            parent[rootU] = rootV;
+            rank[rootV]++;
         }
     }
 
