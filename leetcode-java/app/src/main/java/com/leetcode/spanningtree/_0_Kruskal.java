@@ -14,7 +14,7 @@ public class _0_Kruskal {
 
         List<Edge> result = kruskal(vertices, edges);
 
-        System.out.println("Edges in the Minimum Spanning Tree:");
+        System.out.println("Edges in MST:");
         for (Edge edge : result) {
             System.out.println(edge.src + " - " + edge.dest + ": " + edge.weight);
         }
