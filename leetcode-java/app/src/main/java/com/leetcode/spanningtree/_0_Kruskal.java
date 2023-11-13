@@ -1,43 +1,96 @@
 package com.leetcode.spanningtree;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 
 public class _0_Kruskal {
     public static void main(String[] args) {
-        int n = 5; // Number of nodes
-        int[][] edges = {{0, 1, 1}, {1, 2, 2}, {2, 3, 3}, {0, 3, 4}, {0, 4, 5}, {3, 4, 6}}; // Edges: {u, v, weight}
+        int vertices = 4;
+        List<Edge> edges = new ArrayList<>();
+        edges.add(new Edge(0, 1, 10));
+        edges.add(new Edge(0, 2, 6));
+        edges.add(new Edge(0, 3, 5));
+        edges.add(new Edge(1, 3, 15));
+        edges.add(new Edge(2, 3, 4));
 
-        // Sort edges by weight
-        Arrays.sort(edges, Comparator.comparingInt(o -> o[2]));
+        List<Edge> result = kruskal(vertices, edges);
 
-        // Create disjoint sets
-        _0_DisjointSets ds = new _0_DisjointSets(n);
+        System.out.println("Edges in the Minimum Spanning Tree:");
+        for (Edge edge : result) {
+            System.out.println(edge.src + " - " + edge.dest + ": " + edge.weight);
+        }
+        System.out.println("Total weight: " + result.stream().mapToInt(e -> e.weight).sum());
+    }
 
-        // Keep track of the edges in the MST
-        List<int[]> mst = new ArrayList<>();
+    public static List<Edge> kruskal(int n, List<Edge> edges) {
+        List<Edge> result = new ArrayList<>();
+        Collections.sort(edges);
 
-        // Iterate through the edges in increasing order of weight
-        for (int[] edge : edges) {
-            int u = edge[0];
-            int v = edge[1];
-            int weight = edge[2];
+        DisjointSet ds = new DisjointSet(n);
 
-            // Check if the nodes u and v are connected
-            if (ds.find(u) != ds.find(v)) {
-                // Add the edge to the MST
-                mst.add(edge);
+        for (Edge e : edges) {
+            int rootSrc = ds.find(e.src);
+            int rootDest = ds.find(e.dest);
 
-                // Union the sets u and v belong to
-                ds.union(u, v);
+            if (rootSrc != rootDest) {
+                result.add(e);
+                ds.union(rootSrc, rootDest);
             }
         }
 
-        // Print the edges in the MST
-        for (int[] edge : mst) {
-            System.out.println(Arrays.toString(edge));
+        return result;
+    }
+}
+
+class Edge implements Comparable<Edge> {
+    int src, dest, weight;
+
+    public Edge(int src, int dest, int weight) {
+        this.src = src;
+        this.dest = dest;
+        this.weight = weight;
+    }
+
+    @Override
+    public int compareTo(Edge other) {
+        return Integer.compare(this.weight, other.weight);
+    }
+}
+
+class DisjointSet {
+    private final int[] parent, rank;
+
+    public DisjointSet(int n) {
+        parent = new int[n];
+        rank = new int[n];
+
+        // Initially, each element is its own set, and the rank is 0
+        for (int i = 0; i < n; i++) {
+            parent[i] = i;
+            rank[i] = 0;
+        }
+    }
+
+    // Find the representative of the set that i belongs to
+    // Path compression
+    public int find(int v) {
+        return v == parent[v] ? v : (parent[v] = find(parent[v]));
+    }
+
+    // Union two sets by rank
+    public void union(int u, int v) {
+        int rootU = find(u);
+        int rootV = find(v);
+        if (rootU == rootV) return;
+
+        // Union by rank to keep the tree balanced
+        if (rank[rootU] < rank[rootV]) {
+            parent[rootU] = rootV;
+        } else if (rank[rootU] > rank[rootV]) {
+            parent[rootV] = rootU;
+        } else {
+            // If ranks are the same, arbitrarily choose one as the root and increment its rank
+            parent[rootU] = rootV;
+            rank[rootV]++;
         }
     }
 }

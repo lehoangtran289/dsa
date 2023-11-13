@@ -41,7 +41,7 @@ public class _0_DisjointSets {
 
     public static void main(String[] args) {
         int n = 5; // Number of elements
-        _0_DisjointSets ds = new _0_DisjointSets(n);
+        DisjointSet ds = new DisjointSet(n);
 
         // Example usage
         ds.union(0, 1);

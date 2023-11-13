@@ -8,7 +8,7 @@ public class _574_NumberOfProvinces {
 
     public static int findCircleNum(int[][] isConnected) {
         int n = isConnected.length;
-        _0_DisjointSets ds = new _0_DisjointSets(n);
+        DisjointSet ds = new DisjointSet(n);
 
         for (int u = 0; u < n; u++) {
             for (int v = u + 1; v < n; v++) {
