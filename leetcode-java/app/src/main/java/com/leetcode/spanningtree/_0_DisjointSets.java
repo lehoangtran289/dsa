@@ -28,18 +28,17 @@ public class _0_DisjointSets {
     public void union(int i, int j) {
         int rootI = find(i);
         int rootJ = find(j);
+        if (rootI == rootJ) return;
 
         // Union by rank to keep the tree balanced
-        if (rootI != rootJ) {
-            if (rank[rootI] < rank[rootJ]) {
-                parent[rootI] = rootJ;
-            } else if (rank[rootI] > rank[rootJ]) {
-                parent[rootJ] = rootI;
-            } else {
-                // If ranks are the same, arbitrarily choose one as the root and increment its rank
-                parent[rootI] = rootJ;
-                rank[rootJ]++;
-            }
+        if (rank[rootI] < rank[rootJ]) {
+            parent[rootI] = rootJ;
+        } else if (rank[rootI] > rank[rootJ]) {
+            parent[rootJ] = rootI;
+        } else {
+            // If ranks are the same, arbitrarily choose one as the root and increment its rank
+            parent[rootI] = rootJ;
+            rank[rootJ]++;
         }
     }
 
@@ -51,6 +50,7 @@ public class _0_DisjointSets {
         ds.union(0, 1);
         ds.union(2, 3);
         ds.union(0, 4);
+        ds.union(4, 1);
 
         // Check if two elements belong to the same set
         System.out.println(ds.find(0) == ds.find(4)); // Should print true
