@@ -70,27 +70,21 @@ class DisjointSet {
         }
     }
 
-    // Find the representative of the set that i belongs to
-    // Path compression
     public int find(int v) {
         return v == parent[v] ? v : (parent[v] = find(parent[v]));
     }
 
-    // Union two sets by rank
     public void union(int u, int v) {
         int rootU = find(u);
         int rootV = find(v);
         if (rootU == rootV) return;
 
-        // Union by rank to keep the tree balanced
         if (rank[rootU] < rank[rootV]) {
             parent[rootU] = rootV;
-        } else if (rank[rootU] > rank[rootV]) {
-            parent[rootV] = rootU;
-        } else {
-            // If ranks are the same, arbitrarily choose one as the root and increment its rank
-            parent[rootU] = rootV;
-            rank[rootV]++;
+            return;
         }
+        parent[rootV] = rootU;
+        if (rank[rootU] == rank[rootV])
+            rank[rootV]++;
     }
 }
