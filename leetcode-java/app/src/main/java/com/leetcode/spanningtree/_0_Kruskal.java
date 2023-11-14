@@ -64,9 +64,9 @@ class DisjointSet {
         rank = new int[n];
 
         // Initially, each element is its own set, and the rank is 0
-        for (int i = 0; i < n; i++) {
-            parent[i] = i;
-            rank[i] = 0;
+        for (int v = 0; v < n; v++) {
+            parent[v] = v;
+            rank[v] = 0;
         }
     }
 
