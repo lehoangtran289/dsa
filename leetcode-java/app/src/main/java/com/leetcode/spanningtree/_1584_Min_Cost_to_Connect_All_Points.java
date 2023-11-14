@@ -2,6 +2,7 @@ package com.leetcode.spanningtree;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class _1584_Min_Cost_to_Connect_All_Points {
@@ -23,7 +24,7 @@ public class _1584_Min_Cost_to_Connect_All_Points {
 
     public static List<Edge> kruskal(int n, List<Edge> edges) {
         List<Edge> result = new ArrayList<>();
-        Collections.sort(edges);
+        edges.sort(Comparator.comparingInt(e -> e.weight));
 
         DisjointSet ds = new DisjointSet(n);
 
