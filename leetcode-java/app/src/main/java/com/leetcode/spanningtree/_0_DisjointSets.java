@@ -25,7 +25,7 @@ public class _0_DisjointSets {
     public void union(int u, int v) {
         int rootU = find(u);
         int rootV = find(v);
-        if (rootU == rootV) return;
+        if (rootU != rootV) return;
 
         // Union by rank to keep the tree balanced
         if (rank[rootU] < rank[rootV]) {
