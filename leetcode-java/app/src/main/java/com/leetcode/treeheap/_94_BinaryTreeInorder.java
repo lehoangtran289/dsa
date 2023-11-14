@@ -3,7 +3,7 @@ package com.leetcode.treeheap;
 import java.util.ArrayList;
 import java.util.List;
 
-public class _94_Binary_Tree_Inorder {
+public class _94_BinaryTreeInorder {
     public static void main(String[] args) {
         System.out.println(inorderTraversal(new TreeNode(1, null, new TreeNode(2, new TreeNode(3), null))));
     }

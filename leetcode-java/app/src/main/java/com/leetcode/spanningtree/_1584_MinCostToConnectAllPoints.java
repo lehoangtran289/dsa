@@ -1,11 +1,10 @@
 package com.leetcode.spanningtree;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-public class _1584_Min_Cost_to_Connect_All_Points {
+public class _1584_MinCostToConnectAllPoints {
     public int minCostConnectPoints(int[][] points) {
         int n = points.length;
         List<Edge> edges = new ArrayList<>();
