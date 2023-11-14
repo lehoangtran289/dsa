@@ -23,7 +23,7 @@ public class _0_Kruskal {
 
     public static List<Edge> kruskal(int n, List<Edge> edges) {
         List<Edge> result = new ArrayList<>();
-        Collections.sort(edges);
+        edges.sort(Comparator.comparingInt(e -> e.weight));
 
         DisjointSet ds = new DisjointSet(n);
 
@@ -41,18 +41,13 @@ public class _0_Kruskal {
     }
 }
 
-class Edge implements Comparable<Edge> {
+class Edge{
     int src, dest, weight;
 
     public Edge(int src, int dest, int weight) {
         this.src = src;
         this.dest = dest;
         this.weight = weight;
-    }
-
-    @Override
-    public int compareTo(Edge other) {
-        return Integer.compare(this.weight, other.weight);
     }
 }
 
