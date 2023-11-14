@@ -1,4 +1,4 @@
-package com.leetcode.spanningtree;
+package com.leetcode.treeheap;
 
 public class TreeNode {
     int val;
