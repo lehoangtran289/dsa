@@ -6,7 +6,7 @@ import java.util.*;
 
 public class _VPC_D_KetNoi {
     static boolean IS_LOCAL = System.getenv("LOCAL_JUDGE") != null;
-    static boolean DEBUG = IS_LOCAL & true;
+    static boolean DEBUG = true;
     static String INPUT_FILE = "input/D.inp";
 
     static class Point {
