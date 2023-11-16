@@ -18,9 +18,9 @@ public class _743_NetworkDelayTime {
 
         return dijkstra(graph, k - 1);
     }
+
     public static int dijkstra(List<int[]>[] graph, int s) {
         int n = graph.length;
-        Set<Integer> visited = new HashSet<>();
         int[] dist = new int[n];
 
         Arrays.fill(dist, Integer.MAX_VALUE);
@@ -31,17 +31,14 @@ public class _743_NetworkDelayTime {
         while (!pq.isEmpty()) {
             Integer[] node = pq.poll();
             int u = node[0];
-            visited.add(u);
 
             for (int[] edge : graph[u]) {
                 int v = edge[0];
                 int vW = edge[1];
-                if (!visited.contains(v)) { // if edge (u, v) exists
-                    int tempDist = dist[u] + vW;
-                    if (tempDist < dist[v]) {
-                        dist[v] = tempDist;
-                        pq.offer(new Integer[]{v, tempDist});
-                    }
+                int tempDist = dist[u] + vW;
+                if (tempDist < dist[v]) {
+                    dist[v] = tempDist;
+                    pq.offer(new Integer[]{v, tempDist});
                 }
             }
         }
