@@ -13,8 +13,9 @@ public class _0_Dijkstra {
         Arrays.fill(prev, -1);
         dist[s] = 0;
 
-        PriorityQueue<Integer> pq = new PriorityQueue<>();
-        pq.offer(s);
+        PriorityQueue<Integer> pq = new PriorityQueue<>(Comparator.comparingInt(u -> dist[u]));
+        for (int i = 0; i < n; i++)
+            pq.offer(i);
 
         while (!pq.isEmpty()) {
             int u = pq.poll();
