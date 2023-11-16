@@ -1,35 +1,50 @@
 package com.leetcode.graphtheory;
 
-import java.util.Arrays;
-
 public class _0_Floyd_Warshall {
+    private static final int INF = Integer.MAX_VALUE;
+
     public static void main(String[] args) {
-        int[][] graph = new int[][]{
-                {0, 5, Integer.MAX_VALUE, 10},
-                {Integer.MAX_VALUE, 0, 3, Integer.MAX_VALUE},
-                {Integer.MAX_VALUE, Integer.MAX_VALUE, 0, 1},
-                {Integer.MAX_VALUE, Integer.MAX_VALUE, Integer.MAX_VALUE, 0}
-        };
-        System.out.println(Arrays.deepToString(floydWarshall(graph)));
+        int[][] graph = { { 0, 5, INF, 10 },
+                { INF, 0, 3, INF },
+                { INF, INF, 0, 1 },
+                { INF, INF, INF, 0 } };
+
+        int[][] shortestPaths = floydWarshall(graph);
+
+        // Print the shortest paths
+        System.out.println("Shortest paths between all pairs of vertices:");
+        printShortestPaths(shortestPaths);
     }
 
-    public static int[][] floydWarshall(int[][] graph) {
-        int n = graph.length;
-        int[][] dist = new int[n][n];
+    private static int[][] floydWarshall(int[][] dist) {
+        int n = dist.length;
 
-        // init dist
-        for (int u = 0; u < n; u++) {
-            for (int v = 0; v < n; v++)
-                dist[u][v] = graph[u][v];
+        // Apply the Floyd-Warshall algorithm
+        for (int k = 0; k < n; k++) {
+            for (int i = 0; i < n; i++) {
+                for (int j = 0; j < n; j++) {
+                    if (dist[i][k] != INF && dist[k][j] != INF
+                            && dist[i][k] + dist[k][j] < dist[i][j]) {
+                        dist[i][j] = dist[i][k] + dist[k][j];
+                    }
+                }
+            }
         }
 
-        // compute all shortest paths
-        for (int k = 0; k < n; k++) // k is intermediate vertex
-            for (int u = 0; u < n; u++)
-                for (int v = 0; v < n; v++)
-                    if (dist[u][k] != Integer.MAX_VALUE && dist[k][v] != Integer.MAX_VALUE
-                            && dist[u][k] + dist[k][v] < dist[u][v])
-                        dist[u][v] = dist[u][k] + dist[k][v];
         return dist;
+    }
+
+    private static void printShortestPaths(int[][] shortestPaths) {
+        int vertices = shortestPaths.length;
+        for (int[] shortestPath : shortestPaths) {
+            for (int j = 0; j < vertices; j++) {
+                if (shortestPath[j] == INF) {
+                    System.out.print("INF\t");
+                } else {
+                    System.out.print(shortestPath[j] + "\t");
+                }
+            }
+            System.out.println();
+        }
     }
 }
