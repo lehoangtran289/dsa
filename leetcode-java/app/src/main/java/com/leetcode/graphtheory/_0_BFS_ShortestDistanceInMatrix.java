@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Deque;
 
-public class _0_ShortestDistanceInMatrix {
+public class _0_BFS_ShortestDistanceInMatrix {
     public static void main(String[] args) {
         System.out.println(shortestDistance(3, 4, new int[][]{{1, 0, 0, 0}, {1, 1, 0, 1}, {0, 1, 1, 1}}, 2, 3));
         System.out.println(Arrays.toString(shortestPath(new int[][]{{0, 1}, {0, 3}, {3, 4}, {4, 5}, {5, 6},
