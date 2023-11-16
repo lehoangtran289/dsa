@@ -32,11 +32,13 @@ public class _0_Dijkstra {
             }
         }
 
-        // print the path
+        // trace all path
         System.out.println("Shortest distances from node " + s + ":");
         for (int i = 0; i < n; i++) {
             if (i == s) continue;
             System.out.println("\nTo node " + i + ": " + dist[i]);
+
+            // construct path
             ArrayList<Integer> path = new ArrayList<>();
             int cur = i;
             while (cur != -1) {
