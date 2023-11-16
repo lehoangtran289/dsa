@@ -25,7 +25,6 @@ public class _0_Dijkstra {
             5) Print distance array dist[] to print all shortest paths.*/
     public static void dijkstra(List<int[]>[] graph, int s) {
         int n = graph.length;
-        Set<Integer> visited = new HashSet<>();
         int[] dist = new int[n];
         int[] prev = new int[n];
 
@@ -38,18 +37,15 @@ public class _0_Dijkstra {
         while (!pq.isEmpty()) {
             Integer[] p = pq.poll();
             int u = p[0];
-            visited.add(u);
 
             for (int[] edge : graph[u]) {
                 int v = edge[0];
                 int vW = edge[1];
-                if (!visited.contains(v)) {
-                    int tempDist = dist[u] + vW;
-                    if (tempDist < dist[v]) {
-                        dist[v] = tempDist;
-                        prev[v] = u;
-                        pq.offer(new Integer[]{v, tempDist});
-                    }
+                int tempDist = dist[u] + vW;
+                if (tempDist < dist[v]) {
+                    dist[v] = tempDist;
+                    prev[v] = u;
+                    pq.offer(new Integer[]{v, tempDist});
                 }
             }
         }
