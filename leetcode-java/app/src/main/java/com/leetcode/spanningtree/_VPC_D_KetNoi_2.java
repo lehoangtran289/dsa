@@ -30,7 +30,7 @@ public class _VPC_D_KetNoi_2 {
         }
     }
 
-    public static class Edge implements Comparable<Edge> {
+    static class Edge implements Comparable<Edge> {
         int u, v;
         double d;
 
