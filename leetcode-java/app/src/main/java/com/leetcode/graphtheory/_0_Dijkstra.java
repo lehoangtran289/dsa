@@ -3,6 +3,7 @@ package com.leetcode.graphtheory;
 import java.util.*;
 
 public class _0_Dijkstra {
+
     public static void dijkstra(List<int[]>[] graph, int s) {
         int n = graph.length;
         Set<Integer> visited = new HashSet<>();
@@ -23,7 +24,7 @@ public class _0_Dijkstra {
             for (int[] edge : graph[u]) {
                 int v = edge[0];
                 int vW = edge[1];
-                if (!visited.contains(v)) { // if edge (u, v) exists
+                if (!visited.contains(v)) {
                     int tempDist = dist[u] + vW;
                     if (tempDist < dist[v]) {
                         dist[v] = tempDist;
