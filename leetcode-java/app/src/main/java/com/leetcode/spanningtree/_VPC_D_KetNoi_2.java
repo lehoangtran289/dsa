@@ -6,7 +6,7 @@ import java.util.*;
 
 public class _VPC_D_KetNoi_2 {
     static boolean IS_LOCAL = System.getenv("LOCAL_JUDGE") != null;
-    static boolean DEBUG = IS_LOCAL & true;
+    static boolean DEBUG = false;
     static String INPUT_FILE = "input/D.inp";
 
     static class Point {
@@ -50,6 +50,15 @@ public class _VPC_D_KetNoi_2 {
         @Override
         public int compareTo(Edge o) {
             return Double.compare(d, o.d);
+        }
+
+        @Override
+        public String toString() {
+            return "Edge{" +
+                    "u=" + u +
+                    ", v=" + v +
+                    ", d=" + d +
+                    '}';
         }
     }
 
@@ -132,18 +141,19 @@ public class _VPC_D_KetNoi_2 {
                 }
             }
 
+            System.out.println(totalCost);
+            debug(edgesInMST);
+
             // pop last element in edgesInMST
             Edge lastEdge = edgesInMST.pollLast();
-            if (lastEdge.d > wifiCost * 2) {
-                totalCost -= lastEdge.d + 2 * wifiCost;
+            if (lastEdge.d * cableCost > wifiCost * 2) {
+                totalCost = totalCost - lastEdge.d * cableCost + 2 * wifiCost;
             }
 
             while (!edgesInMST.isEmpty()) {
                 Edge cur = edgesInMST.pollLast();
-                if (cur.d > wifiCost) {
-                    totalCost -= cur.d + wifiCost;
-                } else {
-                    break;
+                if (cur.d * cableCost > wifiCost) {
+                    totalCost -= cur.d * cableCost + wifiCost;
                 }
             }
 
