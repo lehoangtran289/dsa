@@ -20,7 +20,7 @@ public class _2136_FullDayTillFlowerBloom {
         Seed[] seeds = new Seed[plantTime.length];
         for (int i = 0; i < plantTime.length; i++)
             seeds[i] = new Seed(plantTime[i], growTime[i]);
-        Arrays.sort(seeds, (a, b) -> a.g - b.g);
+        Arrays.sort(seeds, (a, b) -> b.g - a.g);
         int time = 0;
         int res = 0;
         for (Seed s : seeds) {
