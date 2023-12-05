@@ -1,10 +1,10 @@
-package com.leetcode.spanningtree;
+package com.leetcode.VPC;
 
 import java.io.*;
 import java.nio.file.Files;
 import java.util.*;
 
-public class _VPC_D_KetNoi_2 {
+public class VPC_D_KetNoi {
     static boolean IS_LOCAL = System.getenv("LOCAL_JUDGE") != null;
     static boolean DEBUG = false;
     static String INPUT_FILE = "input/D.inp";
