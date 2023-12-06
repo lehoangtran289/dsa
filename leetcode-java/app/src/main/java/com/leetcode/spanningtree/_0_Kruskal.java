@@ -1,6 +1,8 @@
 package com.leetcode.spanningtree;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
 
 public class _0_Kruskal {
     public static void main(String[] args) {

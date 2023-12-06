@@ -1,8 +1,20 @@
 package com.leetcode.VPC;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
 import java.nio.file.Files;
-import java.util.*;
+import java.util.ArrayDeque;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Deque;
+import java.util.List;
+import java.util.StringTokenizer;
 
 public class VPC_D_KetNoi {
     static boolean IS_LOCAL = System.getenv("LOCAL_JUDGE") != null;

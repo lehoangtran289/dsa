@@ -1,6 +1,8 @@
 package com.leetcode.array;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 
 public class _349_IntersectionOfTwoArrays {
     public static int[] intersection(int[] nums1, int[] nums2) {
