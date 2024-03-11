@@ -19,36 +19,25 @@ public class Template {
         // int test = 1;
         int test = reader.nextInt();
         while (test-- > 0) {
+
             int n = read();
-            char ch[] = charArray();
-            if (n < 3) {
-                out.println(0);
-                continue;
-            }
-            int cnt = 0;
+            int m = read();
+            int k = read();
+            int b[] = intArray(n, false);
+            int c[] = intArray(m, false);
+            int ans = 0;
+            Arrays.sort(b);
+            Arrays.sort(c);
             for (int i = 0; i < n; i++) {
-                if (ch[i] == 'p') {
-                    boolean map = false;
-                    boolean pie = false;
-
-                    if (i - 2 >= 0) {
-                        if (ch[i - 1] == 'a' && ch[i - 2] == 'm') {
-                            map = true;
-                        }
-                    }
-                    if (i + 2 < n) {
-                        if (ch[i + 1] == 'i' && ch[i + 2] == 'e') {
-                            pie = true;
-                        }
-                    }
-
-                    if (map || pie) {
-                        cnt++;
+                for (int j = 0; j < m; j++) {
+                    if (b[i] + c[j] <= k) {
+                        ans++;
                     }
                 }
             }
-            out.println(cnt);
+            out.println(ans);
         }
+
         out.flush();
         out.close();
     }
