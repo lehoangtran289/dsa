@@ -79,8 +79,6 @@ public class A {
             for (int j = 0; j < m; j++) {
                 if (l[i] + r[j] <= k) {
                     count++;
-                } else {
-                    break;
                 }
             }
         }
