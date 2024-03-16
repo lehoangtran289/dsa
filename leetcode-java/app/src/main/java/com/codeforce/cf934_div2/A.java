@@ -1,11 +1,11 @@
-package com.codeforce.div3_933;
+package com.codeforce.cf934_div2;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.StringTokenizer;
 
-public class C {
+public class A {
     static class MyScanner {
         BufferedReader br;
         StringTokenizer st;
@@ -58,29 +58,12 @@ public class C {
         // Start writing your solution here. -------------------------------------
         int tests = sc.nextInt(); // number of test cases
         while (tests-- > 0) {
-            int n = sc.nextInt(); // read input as integer
-            String s = sc.nextLine(); // read input as String
-            solution(n, s);
+            int n = sc.nextInt();
+            int k = sc.nextInt();
+            if (k < n - 1) System.out.println(n);
+            else System.out.println(1);
         }
 
         // Stop writing your solution here. -------------------------------------
     }
-
-    private static void solution(int n, String str) {
-        int count = 0;
-        for (int i = 0; i < n; i++) {
-            if (str.startsWith("mapie", i)) {
-                count++;
-                i += 4;
-            } else if (str.startsWith("map", i)) {
-                count++;
-                i += 2;
-            } else if (str.startsWith("pie", i)) {
-                count++;
-                i += 2;
-            }
-        }
-        System.out.println(count);
-    }
-
 }

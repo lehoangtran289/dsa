@@ -1,11 +1,11 @@
-package com.codeforce.div3_933;
+package com.codeforce.cf933_div3;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.*;
+import java.util.StringTokenizer;
 
-public class D {
+public class F {
     static class MyScanner {
         BufferedReader br;
         StringTokenizer st;
@@ -27,10 +27,6 @@ public class D {
 
         int nextInt() {
             return Integer.parseInt(next());
-        }
-
-        char nextChar() {
-            return next().charAt(0);
         }
 
         long nextLong() {
@@ -64,46 +60,29 @@ public class D {
         while (tests-- > 0) {
             int n = sc.nextInt();
             int m = sc.nextInt();
-            int x = sc.nextInt();
-            Set<Integer> curPos = new HashSet<>();
-            curPos.add(x);
-            while (m-- > 0) {
-                int dist = sc.nextInt();
-                char dir = sc.nextChar();
-
-                Set<Integer> newPos = new HashSet<>();
-                for (int cur : curPos) {
-                    if (dir == '0') {
-                        newPos.add(newPos0(n, cur, dist));
-                    } else if (dir == '1') {
-                        newPos.add(newPos1(n, cur, dist));
-                    } else if (dir == '?') {
-                        newPos.add(newPos0(n, cur, dist));
-                        newPos.add(newPos1(n, cur, dist));
-                    }
-                }
-                curPos = newPos;
-            }
-
-            List<Integer> res = new ArrayList<>(curPos);
-            Collections.sort(res);
-            System.out.println(res.size());
-            for (int num : res) {
-                System.out.print(num + " ");
-            }
+            int k = sc.nextInt();
+            Integer[] left = new Integer[n];
+            for (int i = 0; i < n; i++)
+                left[i] = sc.nextInt();
+            Integer[] right = new Integer[m];
+            for (int i = 0; i < m; i++)
+                right[i] = sc.nextInt();
+            solution(n, m, left, right, k);
         }
 
         // Stop writing your solution here. -------------------------------------
     }
 
-    private static int newPos0(int n, int cur, int dist) {
-        int res = (cur + dist) % n;
-        return res == 0 ? n : res;
-    }
-
-    private static int newPos1(int n, int cur, int dist) {
-        int res = (cur + n - dist) % n;
-        return res == 0 ? n : res;
+    private static void solution(int n, int m, Integer[] l, Integer[] r, int k) {
+        int count = 0;
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < m; j++) {
+                if (l[i] + r[j] <= k) {
+                    count++;
+                }
+            }
+        }
+        System.out.println(count);
     }
 
 }

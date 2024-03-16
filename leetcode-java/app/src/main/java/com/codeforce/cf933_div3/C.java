@@ -1,12 +1,11 @@
-package com.codeforce.div3_933;
+package com.codeforce.cf933_div3;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.Arrays;
 import java.util.StringTokenizer;
 
-public class B {
+public class C {
     static class MyScanner {
         BufferedReader br;
         StringTokenizer st;
@@ -59,32 +58,29 @@ public class B {
         // Start writing your solution here. -------------------------------------
         int tests = sc.nextInt(); // number of test cases
         while (tests-- > 0) {
-            int n = sc.nextInt();
-            int[] a = new int[n];
-            for (int i = 0; i < n; i++) {
-                a[i] = sc.nextInt();
-            }
-            solution(n, a);
+            int n = sc.nextInt(); // read input as integer
+            String s = sc.nextLine(); // read input as String
+            solution(n, s);
         }
 
         // Stop writing your solution here. -------------------------------------
     }
 
-    private static void solution(int n, int[] a) {
-        for (int i = 1; i < n - 1; i++) {
-            if (a[i - 1] > 0) {
-                a[i] = a[i] - 2 * a[i - 1];
-                a[i + 1] = a[i + 1] - a[i - 1];
-                a[i - 1] = 0;
+    private static void solution(int n, String str) {
+        int count = 0;
+        for (int i = 0; i < n; i++) {
+            if (str.startsWith("mapie", i)) {
+                count++;
+                i += 4;
+            } else if (str.startsWith("map", i)) {
+                count++;
+                i += 2;
+            } else if (str.startsWith("pie", i)) {
+                count++;
+                i += 2;
             }
         }
-        for (int num : a) {
-            if (num != 0) {
-                System.out.println("NO");
-                return;
-            }
-        }
-        System.out.println("YES");
+        System.out.println(count);
     }
 
 }
