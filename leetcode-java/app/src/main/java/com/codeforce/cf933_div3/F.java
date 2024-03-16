@@ -58,31 +58,9 @@ public class F {
         // Start writing your solution here. -------------------------------------
         int tests = sc.nextInt(); // number of test cases
         while (tests-- > 0) {
-            int n = sc.nextInt();
-            int m = sc.nextInt();
-            int k = sc.nextInt();
-            Integer[] left = new Integer[n];
-            for (int i = 0; i < n; i++)
-                left[i] = sc.nextInt();
-            Integer[] right = new Integer[m];
-            for (int i = 0; i < m; i++)
-                right[i] = sc.nextInt();
-            solution(n, m, left, right, k);
         }
 
         // Stop writing your solution here. -------------------------------------
-    }
-
-    private static void solution(int n, int m, Integer[] l, Integer[] r, int k) {
-        int count = 0;
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < m; j++) {
-                if (l[i] + r[j] <= k) {
-                    count++;
-                }
-            }
-        }
-        System.out.println(count);
     }
 
 }
