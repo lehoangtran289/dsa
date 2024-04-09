@@ -1,8 +1,6 @@
 package com.leetcode.bit;
 
-import java.util.*;
-
-public class _1835_XORSumOfAND {
+public class _1835H_XORSumOfAND {
     public int getXORSum(int[] arr1, int[] arr2) {
         int[] bitCount2 = new int[30];
         for (int x : arr2) {
