@@ -3,9 +3,9 @@ package com.leetcode.string;
 import java.util.HashMap;
 import java.util.Map;
 
-public class _76H_MinimumWindowSubString_ {
+public class _H_76_MinimumWindowSubString_ {
     public static void main(String[] args) {
-        _76H_MinimumWindowSubString_ obj = new _76H_MinimumWindowSubString_();
+        _H_76_MinimumWindowSubString_ obj = new _H_76_MinimumWindowSubString_();
         System.out.println(obj.minWindow("ADOBECODEBANC", "ABC"));
     }
 

@@ -2,7 +2,7 @@ package com.leetcode.greedy;
 
 import java.util.Arrays;
 
-public class _2136_FullDayTillFlowerBloom {
+public class _H_2136_FullDayTillFlowerBloom {
     public static void main(String[] args) {
         System.out.println(earliestFullBloom(new int[]{1, 10, 3, 10, 2}, new int[]{5, 1, 2, 15, 4}));
     }
