@@ -6,7 +6,7 @@ import java.util.Map;
 public class _76H_MinimumWindowSubString_ {
     public static void main(String[] args) {
         _76H_MinimumWindowSubString_ obj = new _76H_MinimumWindowSubString_();
-        System.out.println(obj.minWindow("a", "a"));
+        System.out.println(obj.minWindow("ADOBECODEBANC", "ABC"));
     }
 
     public String minWindow(String s, String t) {
