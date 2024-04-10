@@ -1,6 +1,6 @@
 package com.leetcode.divideconquer;
 
-public class _53_MaximumSubarray {
+public class _M_53_MaximumSubarray {
     public static void main(String[] args) {
         System.out.println(maxSubArray(new int[]{-2,1,-3,4,-1,2,1,-5,4})); // 23
     }
@@ -18,7 +18,7 @@ public class _53_MaximumSubarray {
         return Math.max(Math.max(lsum, rsum), cross);
     }
 
-    public static int crossSum(int[] nums, int lo, int hi, int mid) {
+    private static int crossSum(int[] nums, int lo, int hi, int mid) {
         int lsum = 0;
         int lmax = Integer.MIN_VALUE;
         for (int i = mid; i >= lo; i--) {
