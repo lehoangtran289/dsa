@@ -19,6 +19,8 @@ public class _M_152_MaximumProductSubarray {
     }
 
     private static int crossProduct(int[] nums, int lo, int hi, int mid) {
+        // since product of two negative numbers is positive, we need to keep track of both max and min
+
         int lProd = 1;
         int lmax = Integer.MIN_VALUE;
         int lmin = Integer.MAX_VALUE;
