@@ -12,28 +12,20 @@ public class _M_238_ProductOfArrayExceptSelf {
     public int[] productExceptSelf(int[] nums) {
         int prodWithoutZero = 1;
         int zerosCount = 0;
-        for (int i = 0; i < nums.length; ++i) {
-            if (nums[i] == 0) {
+        for (int num : nums) {
+            if (num == 0) {
                 zerosCount++;
                 continue;
             }
-            prodWithoutZero *= nums[i];
+            prodWithoutZero *= num;
         }
 
         int[] answer = new int[nums.length];
         for (int i = 0; i < answer.length; ++i) {
             if (nums[i] == 0) {
-                if (zerosCount > 1) {
-                    answer[i] = 0;
-                } else {
-                    answer[i] = prodWithoutZero;
-                }
+                answer[i] = zerosCount > 1 ? 0 : prodWithoutZero;
             } else {
-                if (zerosCount > 0) {
-                    answer[i] = 0;
-                } else {
-                    answer[i] = prodWithoutZero / nums[i];
-                }
+                answer[i] = zerosCount > 0 ? 0 : prodWithoutZero / nums[i];
             }
         }
         return answer;
