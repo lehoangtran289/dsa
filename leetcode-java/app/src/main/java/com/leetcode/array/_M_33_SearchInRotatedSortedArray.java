@@ -7,6 +7,13 @@ public class _M_33_SearchInRotatedSortedArray {
         System.out.println(obj.search(new int[]{3, 1}, 0));
     }
 
+    /**
+     * If A[mid] >= A[low] => a[low]...a[mid] are ascending. <br>
+     * So if A[low] <= target < A[mid] -> right = mid <br>
+     * Otherwise, go right. <br>
+     * A[mid] < A[low] meaning a[mid]...a[high] is ascending.
+     * So if A[mid] <= target < A[high] -> low = mid + 1 <br>
+     */
     public int search(int[] nums, int target) {
         if (nums == null) return -1;
 
@@ -25,9 +32,7 @@ public class _M_33_SearchInRotatedSortedArray {
                 } else {
                     lo = mid + 1;
                 }
-            }
-
-            if (nums[mid] <= nums[hi]) {
+            } else {
                 if (target > nums[mid] && target <= nums[hi]) {
                     lo = mid + 1;
                 } else {
