@@ -8,6 +8,8 @@ public class _M_153_MinimumInRotatedSortedArray {
 
     /**
      * The idea is that when rotating the array, there must be one half of the array that is still in sorted order.
+     * lo <= mid <= hi: min is in left part
+     * mid > lo && mid > hi: min is in right part
      */
     public int findMin(int[] nums) {
         int lo = 0;
