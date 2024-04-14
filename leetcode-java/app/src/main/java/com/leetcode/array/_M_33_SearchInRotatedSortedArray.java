@@ -12,7 +12,7 @@ public class _M_33_SearchInRotatedSortedArray {
 
         int lo = 0, hi = nums.length - 1;
         while (lo < hi) {
-            int mid = (lo + hi) / 2;
+            int mid = lo + (hi - lo) / 2;
             System.out.println(lo + " " + mid + " " + hi);
 
             if (nums[mid] == target) {

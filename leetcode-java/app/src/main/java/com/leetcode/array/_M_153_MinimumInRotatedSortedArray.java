@@ -16,7 +16,7 @@ public class _M_153_MinimumInRotatedSortedArray {
         int hi = nums.length - 1;
 
         while (lo < hi) { // return when only 1 element
-            int mid = (hi + lo) / 2;
+            int mid = lo + (hi - lo) / 2;
             if (nums[mid] > nums[hi]) {
                 lo = mid + 1; // skip mid since it is not answer
             } else {
