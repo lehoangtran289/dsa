@@ -6,6 +6,9 @@ public class _M_153_MinimumInRotatedSortedArray {
         System.out.println(obj.findMin(new int[]{3, 4, 5, 1, 2}));
     }
 
+    /**
+     * The idea is that when rotating the array, there must be one half of the array that is still in sorted order.
+     */
     public int findMin(int[] nums) {
         int lo = 0;
         int hi = nums.length - 1;
