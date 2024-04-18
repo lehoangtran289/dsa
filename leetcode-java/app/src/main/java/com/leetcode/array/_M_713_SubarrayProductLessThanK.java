@@ -6,6 +6,18 @@ public class _M_713_SubarrayProductLessThanK {
         System.out.println(obj.numSubarrayProductLessThanK(new int[]{10, 5, 2, 6}, 100));
     }
 
+    /**
+     * why count += (hi - lo) + 1?
+     * 1. (hi - lo) is the number of sub-arrays that ends at hi OR size of the window
+     * 2. +1 is to include the single element subarray till hi
+     * Example
+     * Given subarray [1, 2, 3] -> add new element 6 -> [1, 2, 3, 6], sub-arrays are:
+     * => 1, 2, 3, 6
+     * => 2, 3, 6
+     * => 3, 6
+     * => 6
+     * => total = 4 sub-arrays ~ size of current window (hi - lo) + 1
+     */
     public int numSubarrayProductLessThanK(int[] nums, int k) {
          if (k <= 1) return 0;
 
@@ -31,7 +43,7 @@ public class _M_713_SubarrayProductLessThanK {
             for (int j = i; j < nums.length; ++j) {
                 prod *= nums[j];
                 if (prod >= k) break;
-                count++;
+                count++; // count all sub-arrays that start at i
             }
         }
         return count;
