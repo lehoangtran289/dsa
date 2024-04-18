@@ -26,7 +26,7 @@ public class _M_713_SubarrayProductLessThanK {
 
          while (hi < nums.length) {
              prod *= nums[hi];
-             while (prod >= k) {
+             while (prod >= k) { // shrink window
                  prod /= nums[lo];
                  lo++;
              }
