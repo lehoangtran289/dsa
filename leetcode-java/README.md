@@ -14,7 +14,7 @@
     - [x]  Find First and Last Position of Element in Sorted Array - https://leetcode.com/problems/find-first-and-last-position-of-element-in-sorted-array
     - [x] Subarray Product Less Than K - https://leetcode.com/problems/subarray-product-less-than-k/description/
     - [x] Longest Substring Without Repeating Characters https://leetcode.com/problems/longest-substring-without-repeating-characters/description/
-    - [] Maximum Number of Removable Characters https://leetcode.com/problems/maximum-number-of-removable-characters/description/
+    - [x] Maximum Number of Removable Characters https://leetcode.com/problems/maximum-number-of-removable-characters/description/
     - [] Sort an Array https://leetcode.com/problems/sort-an-array/description/
     - [] Minimum Speed to Arrive on Time https://leetcode.com/problems/minimum-speed-to-arrive-on-time/description/
 
