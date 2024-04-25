@@ -9,19 +9,19 @@ import java.util.Set;
 public class _M_3_LongestSubstringWithoutRepeatingCharacters {
     public static int lengthOfLongestSubstring(String s) {
         int lo = 0, hi = 0;
-        int max = 0;
+        int max = Integer.MIN_VALUE;
 
-        Set<Character> charSet = new HashSet<>();
+        Set<Character> set = new HashSet<>();
         while (hi < s.length()) {
-            if (!charSet.contains(s.charAt(hi))) {
-                charSet.add(s.charAt(hi));
+            if (!set.contains(s.charAt(hi))) {
+                set.add(s.charAt(hi));
                 max = Math.max(max, hi - lo + 1);
             } else {
-                while (lo <= hi && charSet.contains(s.charAt(hi))) {
-                    charSet.remove(s.charAt(lo));
+                while (lo <= hi && set.contains(s.charAt(hi))) {
+                    set.remove(s.charAt(lo));
                     lo++;
                 }
-                charSet.add(s.charAt(hi));
+                set.add(s.charAt(hi));
             }
             hi++;
         }
@@ -29,7 +29,7 @@ public class _M_3_LongestSubstringWithoutRepeatingCharacters {
     }
 
     public static void main(String[] args) {
-        System.out.println(lengthOfLongestSubstring("dvdf"));
+        System.out.println(lengthOfLongestSubstring("bbbb"));
     }
 
 
