@@ -9,7 +9,7 @@ public class _E_69_MySqrtX {
     public static int mySqrt(int x) {
         if (x == 0) return 0;
 
-        int lo = -1;
+        int lo = 0;
         int hi = Integer.MAX_VALUE;
         while (lo < hi - 1) {
             int mid = hi - (hi - lo) / 2;
