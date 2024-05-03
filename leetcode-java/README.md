@@ -17,9 +17,10 @@
     - [x] Longest Substring Without Repeating Characters https://leetcode.com/problems/longest-substring-without-repeating-characters/description/
     - [x] Maximum Number of Removable Characters https://leetcode.com/problems/maximum-number-of-removable-characters/description/
     - [x] Sort an Array https://leetcode.com/problems/sort-an-array/description/
-    - [x] Minimum Speed to Arrive on Time https://leetcode.com/problems/minimum-speed-to-arrive-on-time/description/\
+    - [x] Minimum Speed to Arrive on Time https://leetcode.com/problems/minimum-speed-to-arrive-on-time/description/
     - [x] Sqrt(x) https://leetcode.com/problems/sqrtx/description/
     - [x] Binary Search https://leetcode.com/problems/binary-search/description/
+    - [x] Find Peak Element https://leetcode.com/problems/find-peak-element/description/
 
 2. String
     - [] Longest Substring Without Repeating Characters - https://leetcode.com/problems/longest-substring-without-repeating-characters/
