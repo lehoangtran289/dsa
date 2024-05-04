@@ -21,6 +21,7 @@
     - [x] Sqrt(x) https://leetcode.com/problems/sqrtx/description/
     - [x] Binary Search https://leetcode.com/problems/binary-search/description/
     - [x] Find Peak Element https://leetcode.com/problems/find-peak-element/description/
+    - [x] Search in 2D Matrix II https://leetcode.com/problems/search-a-2d-matrix-ii/description/
 
 2. String
     - [] Longest Substring Without Repeating Characters - https://leetcode.com/problems/longest-substring-without-repeating-characters/
