@@ -7,6 +7,11 @@ public class _M_287_FindDuplicate {
         System.out.println(findDuplicate.findDuplicate(new int[]{3, 1, 3, 4, 2}));
     }
 
+    /**
+     * Count the number of elements that are less than or equal to mid. <br/>
+     * If the count is less than or equal to mid, the duplicate element must be in the right half. <br/>
+     * Otherwise, the duplicate element must be in the left half.
+     */
     public int findDuplicate(int[] nums) {
         int lo = -1, hi = nums.length - 1;
 
