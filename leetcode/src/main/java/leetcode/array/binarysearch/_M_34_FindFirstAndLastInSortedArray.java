@@ -1,6 +1,13 @@
-package leetcode.array;
+package leetcode.array.binarysearch;
+
+import java.util.Arrays;
 
 public class _M_34_FindFirstAndLastInSortedArray {
+    public static void main(String[] args) {
+        _M_34_FindFirstAndLastInSortedArray obj = new _M_34_FindFirstAndLastInSortedArray();
+        System.out.println(Arrays.toString(obj.searchRange(new int[]{5, 7, 7, 8, 8, 10}, 8)));
+    }
+
     public int first(int[] nums, int target) {
         int ans = -1;
         int low = 0, high = nums.length - 1;

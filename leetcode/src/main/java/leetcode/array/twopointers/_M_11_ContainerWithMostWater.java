@@ -1,4 +1,4 @@
-package leetcode.array;
+package leetcode.array.twopointers;
 
 public class _M_11_ContainerWithMostWater {
     public static void main(String[] args) {

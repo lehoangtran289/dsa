@@ -18,6 +18,8 @@ public class _M_287_FindDuplicate {
         while (lo + 1 < hi) {
             int mid = hi - (hi - lo) / 2;
 
+
+
             int count = 0;
             for (int n : nums) {
                 if (n <= mid) count++;

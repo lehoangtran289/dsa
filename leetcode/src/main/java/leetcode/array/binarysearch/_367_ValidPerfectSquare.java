@@ -1,4 +1,4 @@
-package leetcode.array;
+package leetcode.array.binarysearch;
 
 public class _367_ValidPerfectSquare {
     public static void main(String[] args) {

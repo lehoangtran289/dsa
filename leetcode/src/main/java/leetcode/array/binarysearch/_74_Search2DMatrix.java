@@ -1,4 +1,4 @@
-package leetcode.array;
+package leetcode.array.binarysearch;
 
 public class _74_Search2DMatrix {
 
