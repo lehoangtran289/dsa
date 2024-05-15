@@ -1,4 +1,4 @@
-package leetcode.array.binarysearch;
+package leetcode.array.twopointers;
 
 import java.util.Arrays;
 
