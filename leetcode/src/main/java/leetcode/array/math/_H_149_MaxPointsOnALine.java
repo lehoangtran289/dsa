@@ -1,4 +1,4 @@
-package leetcode.array;
+package leetcode.array.math;
 
 public class _H_149_MaxPointsOnALine {
     public static void main(String[] args) {
@@ -16,8 +16,6 @@ public class _H_149_MaxPointsOnALine {
         if (points.length <= 2) return points.length;
 
         int res = 2;
-
-
         for (int i = 0; i < points.length; ++i) {
             for (int j = i + 1; j < points.length; ++j) {
                 int curMax = 2;
