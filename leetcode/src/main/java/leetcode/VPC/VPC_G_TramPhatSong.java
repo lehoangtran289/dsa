@@ -17,7 +17,7 @@ import java.util.Map;
 import java.util.StringTokenizer;
 
 public class VPC_G_TramPhatSong {
-    private static final boolean IS_LOCAL = false;
+    private static final boolean IS_LOCAL = true;
     private static final String INPUT_FILE = "src/main/java/leetcode/VPC/input/D.inp";
     private final static FastReader reader;
     private final static String YES = "YES";
@@ -115,7 +115,7 @@ public class VPC_G_TramPhatSong {
         for (int i = 1; i < intervals.size(); ++i) {
             Interval cur = result.get(result.size() - 1);
             Interval interval = intervals.get(i);
-            if (cur.end >= interval.start) {
+            if (cur.end >= interval.start || cur.end + 1 == interval.start) {
                 cur.end = Math.max(cur.end, interval.end);
             } else {
                 result.add(interval);
