@@ -17,12 +17,12 @@ import java.util.Map;
 import java.util.StringTokenizer;
 
 public class VPC_G_TramPhatSong {
-    private final static long mod = (long) 1e9 + 7;
-    private static final boolean IS_LOCAL = true;
+    private static final boolean IS_LOCAL = false;
     private static final String INPUT_FILE = "src/main/java/leetcode/VPC/input/D.inp";
     private final static FastReader reader;
     private final static String YES = "YES";
     private final static String NO = "NO";
+    private final static long mod = (long) 1e9 + 7;
 
     // ----------------------------------------------------------------
 
