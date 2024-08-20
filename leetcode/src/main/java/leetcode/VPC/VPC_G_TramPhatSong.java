@@ -1,24 +1,24 @@
 package leetcode.VPC;
 
-import codeforce.cf933_div3.A;
-
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
+import java.io.PrintStream;
 import java.io.PrintWriter;
 import java.nio.file.Files;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 import java.util.Map;
 import java.util.StringTokenizer;
 
 public class VPC_G_TramPhatSong {
     private final static long mod = (long) 1e9 + 7;
-    private static final boolean IS_LOCAL = System.getenv("LOCAL_JUDGE") != null;
+    private static final boolean IS_LOCAL = true;
     private static final String INPUT_FILE = "src/main/java/leetcode/VPC/input/D.inp";
     private final static FastReader reader;
     private final static String YES = "YES";
@@ -38,7 +38,7 @@ public class VPC_G_TramPhatSong {
 
     public static void main(String[] args) {
         try {
-            PrintWriter out = new PrintWriter(System.out);
+            PrintStream out = System.out;
 
             // INPUT -----------------------------------------------
             int n = readInt();
@@ -62,12 +62,69 @@ public class VPC_G_TramPhatSong {
         }
     }
 
-    public static int sol(int n, int x, int y, int[][] stations) {
-        int[][] directions = new int[][]{{0, 1}, {0, -1}, {1, 0}, {-1, 0}}; // right, left, down, up
-        System.out.println(n + " " + x + " " + y);
-        System.out.println(Arrays.deepToString(stations));
-        return 0;
+    static class Interval {
+        int start;
+        int end;
+
+        Interval(int start, int end) {
+            this.start = start;
+            this.end = end;
+        }
     }
+
+    public static long sol(int n, int x, int y, int[][] stations) {
+        List<Interval> xIntervals = new ArrayList<>();
+        List<Interval> yIntervals = new ArrayList<>();
+        for (int i = 0; i < n; i++) {
+            int xi = stations[i][0];
+            int yi = stations[i][1];
+            int wi = stations[i][2];
+
+            xIntervals.add(new Interval(Math.max(1, xi - wi), Math.min(x, xi + wi)));
+            yIntervals.add(new Interval(Math.max(1, yi - wi), Math.min(y, yi + wi)));
+        }
+
+        long totalX = 0;
+        long totalY = 0;
+        List<Interval> mergedX = mergeIntervals(xIntervals);
+        List<Interval> mergedY = mergeIntervals(yIntervals);
+
+        for (Interval X : mergedX) {
+            totalX += (long) (X.end - X.start + 1) * y;
+        }
+
+        for (Interval Y : mergedY) {
+            totalY += (long) (Y.end - Y.start + 1) * x;
+        }
+
+        long overlap = 0;
+        for (Interval X : mergedX) {
+            for (Interval Y : mergedY) {
+                overlap += (long) (X.end - X.start + 1) * (Y.end - Y.start + 1);
+            }
+        }
+        return totalX + totalY - overlap;
+    }
+
+    private static List<Interval> mergeIntervals(List<Interval> intervals) {
+        intervals.sort(Comparator.comparingInt(a -> a.start));
+
+        List<Interval> result = new ArrayList<>();
+
+        result.add(intervals.get(0));
+        for (int i = 1; i < intervals.size(); ++i) {
+            Interval cur = result.get(result.size() - 1);
+            Interval interval = intervals.get(i);
+            if (cur.end >= interval.start) {
+                cur.end = Math.max(cur.end, interval.end);
+            } else {
+                result.add(interval);
+            }
+        }
+        return result;
+    }
+
+    // ======================================================================================
 
     private static String[] stringArray(int n, boolean oneIndexed) {
         int i = 0;
