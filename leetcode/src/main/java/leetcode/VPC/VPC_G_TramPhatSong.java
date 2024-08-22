@@ -6,12 +6,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.PrintStream;
-import java.io.PrintWriter;
 import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.StringTokenizer;
@@ -90,25 +87,18 @@ public class VPC_G_TramPhatSong {
         List<Interval> mergedY = mergeIntervals(yIntervals);
 
         for (Interval X : mergedX) {
-            totalX += (long) (X.end - X.start + 1) * y;
+            totalX += X.end - X.start + 1;
         }
 
         for (Interval Y : mergedY) {
-            totalY += (long) (Y.end - Y.start + 1) * x;
+            totalY += Y.end - Y.start + 1;
         }
 
-        long overlap = 0;
-        for (Interval X : mergedX) {
-            for (Interval Y : mergedY) {
-                overlap += (long) (X.end - X.start + 1) * (Y.end - Y.start + 1);
-            }
-        }
-        return totalX + totalY - overlap;
+        return totalX * y + totalY * x - totalX * totalY;
     }
 
     private static List<Interval> mergeIntervals(List<Interval> intervals) {
-        intervals.sort(Comparator.comparingInt(a -> a.start));
-
+        intervals.sort((a, b) -> a.start - b.start); // ascending
         List<Interval> result = new ArrayList<>();
 
         result.add(intervals.get(0));
