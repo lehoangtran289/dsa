@@ -62,9 +62,10 @@ public class VPC_F_NoiTu {
             }
 
             for (String s : queries) {
-                out.println(sol(s, trie));
+                List<String> res = new ArrayList<>();
+                out.println(sol(s, trie, 0, res));
             }
-            
+
             // ----------------------------------------------
             out.flush();
             out.close();
@@ -73,30 +74,19 @@ public class VPC_F_NoiTu {
         }
     }
 
-    private static String sol(String s, Trie trie) {
+    private static String sol(String s, Trie trie, int start, List<String> res) {
+        if (start == s.length()) {
+            return String.join(" ", res);
+        }
 
-        ArrayDeque<Integer> queue = new ArrayDeque<>();
-        Map<Integer, List<String>> map = new HashMap<>();
-
-        queue.addLast(0);
-        map.put(0, new ArrayList<>());
-
-        while (!queue.isEmpty()) {
-            int start = queue.poll();
-            List<String> lst = map.get(start);
-
-            for (int i = start + 1; i <= s.length(); ++i) {
-                String word = s.substring(start, i);
-                if (trie.search(word)) {
-                    if (i == s.length()) {
-                        return String.join(" ", lst) + " " + word;
-                    }
-
-                    lst.add(word);
-                    map.put(i, new ArrayList<>(lst));
-                    queue.addLast(i);
-                    break;
+        for (int i = start; i < s.length(); ++i) {
+            if (trie.search(s.substring(start, i + 1))) {
+                res.add(s.substring(start, i + 1));
+                String ans = sol(s, trie, i + 1, res);
+                if (!ans.equals("-1")) {
+                    return ans;
                 }
+                res.remove(res.size() - 1);
             }
         }
 
