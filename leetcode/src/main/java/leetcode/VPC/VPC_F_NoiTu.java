@@ -7,10 +7,13 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.PrintStream;
 import java.nio.file.Files;
+import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Queue;
 import java.util.StringTokenizer;
 
 public class VPC_F_NoiTu {
@@ -59,8 +62,7 @@ public class VPC_F_NoiTu {
             }
 
             for (String s : queries) {
-                List<String> res = new ArrayList<>();
-                out.println(sol(s, trie, 0, s.length(), res));
+                out.println(sol(s, trie));
             }
             
             // ----------------------------------------------
@@ -71,19 +73,30 @@ public class VPC_F_NoiTu {
         }
     }
 
-    private static String sol(String s, Trie trie, int start, int end, List<String> res) {
-        if (start == end) {
-            return String.join(" ", res);
-        }
+    private static String sol(String s, Trie trie) {
 
-        for (int i = start; i < end; ++i) {
-            if (trie.search(s.substring(start, i + 1))) {
-                res.add(s.substring(start, i + 1));
-                String ans = sol(s, trie, i + 1, end, res);
-                if (!ans.equals("-1")) {
-                    return ans;
+        ArrayDeque<Integer> queue = new ArrayDeque<>();
+        Map<Integer, List<String>> map = new HashMap<>();
+
+        queue.addLast(0);
+        map.put(0, new ArrayList<>());
+
+        while (!queue.isEmpty()) {
+            int start = queue.poll();
+            List<String> lst = map.get(start);
+
+            for (int i = start + 1; i <= s.length(); ++i) {
+                String word = s.substring(start, i);
+                if (trie.search(word)) {
+                    if (i == s.length()) {
+                        return String.join(" ", lst) + " " + word;
+                    }
+
+                    lst.add(word);
+                    map.put(i, new ArrayList<>(lst));
+                    queue.addLast(i);
+                    break;
                 }
-                res.remove(res.size() - 1);
             }
         }
 
