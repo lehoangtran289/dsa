@@ -23,6 +23,16 @@ public class _733_FloodFill {
         }
     }
 
+    static class Node {
+        int r;
+        int c;
+
+        Node(int r, int c) {
+            this.r = r;
+            this.c = c;
+        }
+    }
+
     // flood fill using bfs
     public static int[][] floodFill(int[][] image, int sr, int sc, int color) {
         int prevColor = image[sr][sc];
@@ -32,18 +42,18 @@ public class _733_FloodFill {
 
         int[][] directions = new int[][]{{0, 1}, {0, -1}, {1, 0}, {-1, 0}}; // right, left, down, up
 
-        Deque<int[]> queue = new ArrayDeque<>();
-        queue.add(new int[]{sr, sc});
+        Deque<Node> queue = new ArrayDeque<>();
+        queue.add(new Node(sr, sc));
         visited[sr][sc] = true;
 
         while (!queue.isEmpty()) {
-            int[] cur = queue.poll();
-            image[cur[0]][cur[1]] = color;
+            Node cur = queue.poll();
+            image[cur.r][cur.c] = color;
 
             // check all 4 directions of cur cell
             for (int[] direction : directions) {
-                int r = cur[0] + direction[0];
-                int c = cur[1] + direction[1];
+                int r = cur.r + direction[0];
+                int c = cur.c + direction[1];
 
                 if (r < 0 || r >= lr || c < 0 || c >= lc)
                     continue;
@@ -51,7 +61,7 @@ public class _733_FloodFill {
                 if (visited[r][c] || image[r][c] != prevColor) // already visited or not same color
                     continue;
 
-                queue.add(new int[]{r, c});
+                queue.add(new Node(r, c));
                 visited[r][c] = true;
             }
         }
