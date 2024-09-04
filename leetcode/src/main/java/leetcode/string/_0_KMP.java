@@ -1,73 +1,50 @@
 package leetcode.string;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class _0_KMP {
 
-    /**
-     * Fills lps[] for given pattern pat
-      */
-    static void computeLPSArray(String pattern, int M, int[] lps) {
-        // Length of the previous longest prefix suffix
-        int len = 0;
+    // Given a pattern and a text kmp finds all the places that the pattern
+    // is found in the text (even overlapping pattern matches)
+    public static java.util.List<Integer> kmp(String txt, String pat) {
+        java.util.List<Integer> matches = new java.util.ArrayList<>();
+        if (txt == null || pat == null) return matches;
 
-        // lps[0] is always 0
-        lps[0] = 0;
+        int m = pat.length(), n = txt.length(), i = 0, j = 0;
+        if (m > n) return matches;
 
-        // Loop calculates lps[i] for i = 1 to M-1
-        int i = 1;
-        while (i < M) {
-            if (pattern.charAt(i) == pattern.charAt(len)) {
-                len++;
-                lps[i] = len;
-                i++;
-            } else {
-                if (len != 0) {
-                    len = lps[len - 1];
-                } else {
-                    lps[i] = 0;
-                    i++;
-                }
-            }
-        }
-    }
+        int[] arr = kmpHelper(pat, m);
 
-    /**
-     *  Prints occurrences of pattern in text
-     */
-    static List<Integer> KMPSearch(String pattern, String text) {
-        int M = pattern.length();
-        int N = text.length();
-
-        // Create lps[] that will hold the longest prefix
-        // suffix values for pattern
-        int[] lps = new int[M];
-        List<Integer> result = new ArrayList<>();
-
-        // Preprocess the pattern (calculate lps[] array)
-        computeLPSArray(pattern, M, lps);
-
-        int i = 0; // index for text
-        int j = 0; // index for pattern
-        while ((N - i) >= (M - j)) {
-            if (pattern.charAt(j) == text.charAt(i)) {
+        while (i < n) {
+            if (pat.charAt(j) == txt.charAt(i)) {
                 j++;
                 i++;
             }
-
-            if (j == M) {
-                result.add(i - j + 1);
-                j = lps[j - 1];
-            } else if (i < N && pattern.charAt(j) != text.charAt(i)) {
-                if (j != 0) {
-                    j = lps[j - 1];
-                } else {
-                    i = i + 1;
-                }
+            if (j == m) {
+                matches.add(i - j);
+                j = arr[j - 1];
+            } else if (i < n && pat.charAt(j) != txt.charAt(i)) {
+                if (j != 0) j = arr[j - 1];
+                else i = i + 1;
             }
         }
-        return result;
+
+        return matches;
+    }
+
+    // For each index i compute the longest match between the proper
+    // prefix starting at 0 and the proper suffix starting at i
+    private static int[] kmpHelper(String pat, int m) {
+        int[] arr = new int[m];
+        for (int i = 1, len = 0; i < m; ) {
+            if (pat.charAt(i) == pat.charAt(len)) {
+                arr[i++] = ++len;
+            } else {
+                if (len > 0) len = arr[len - 1];
+                else i++;
+            }
+        }
+        return arr;
     }
 
     // Driver code
@@ -75,11 +52,16 @@ public class _0_KMP {
         String txt = "geeksforgeeks";
         String pat = "geeks";
 
-        List<Integer> result = KMPSearch(pat, txt);
+        List<Integer> result = kmp(txt, pat);
+        System.out.println(result);
 
-        // Print all the occurrences (1-based indices)
-        for (int index : result) {
-            System.out.print(index + " ");
-        }
+        java.util.List<Integer> matches = kmp("abababa", "aba");
+        System.out.println(matches); // [0, 2, 4]
+
+        matches = kmp("abc", "abcdef");
+        System.out.println(matches); // []
+
+        matches = kmp("P@TTerNabcdefP@TTerNP@TTerNabcdefabcdefabcdefabcdefP@TTerN", "P@TTerN");
+        System.out.println(matches); // [0, 13, 20, 51]
     }
 }
