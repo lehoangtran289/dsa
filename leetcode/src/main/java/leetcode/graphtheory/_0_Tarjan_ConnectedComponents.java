@@ -195,80 +195,6 @@ public class _0_Tarjan_ConnectedComponents {
         graph[to].add(from);
     }
 
-    // ======================================
-    // GET ALL ARTICULATION POINTS
-    // ======================================
-    static class ArticulationPointsFinder {
-        private final int n;
-        private int id;
-        private int rootNodeOutcomingEdgeCount;
-        private boolean solved;
-        private int[] low, ids;
-        private boolean[] visited, isArticulationPoint;
-        private final List<Integer>[] graph;
-
-        public ArticulationPointsFinder(List<Integer>[] graph, int n) {
-            if (graph == null || n <= 0 || graph.length != n) throw new IllegalArgumentException();
-            this.graph = graph;
-            this.n = n;
-        }
-
-        public List<Integer> AP() {
-            List<Integer> result = new ArrayList<>();
-            boolean[] res = findArticulationPoints();
-            for (int i = 0; i < res.length; i++) {
-                if (isArticulationPoint[i]) {
-                    result.add(i);
-                }
-            }
-            return result;
-        }
-
-        // Returns the indexes for all articulation points in the graph even if the graph is not fully connected.
-        public boolean[] findArticulationPoints() {
-            if (solved) return isArticulationPoint;
-
-            id = 0;
-            low = new int[n]; // Low link values
-            ids = new int[n]; // Nodes ids
-            visited = new boolean[n];
-            isArticulationPoint = new boolean[n];
-
-            for (int i = 0; i < n; i++) {
-                if (!visited[i]) {
-                    rootNodeOutcomingEdgeCount = 0;
-                    dfs(i, i, -1);
-                    isArticulationPoint[i] = (rootNodeOutcomingEdgeCount > 1);
-                }
-            }
-
-            solved = true;
-            return isArticulationPoint;
-        }
-
-        private void dfs(int root, int at, int parent) {
-
-            if (parent == root) rootNodeOutcomingEdgeCount++;
-
-            visited[at] = true;
-            low[at] = ids[at] = id++;
-
-            List<Integer> edges = graph[at];
-            for (Integer to : edges) {
-                if (to == parent) continue;
-                if (!visited[to]) {
-                    dfs(root, to, at);
-                    low[at] = min(low[at], low[to]);
-                    if (ids[at] <= low[to]) {
-                        isArticulationPoint[at] = true;
-                    }
-                } else {
-                    low[at] = min(low[at], ids[to]);
-                }
-            }
-        }
-    }
-
     public static List<List<Integer>> criticalConnections(int n, List<List<Integer>> connections) {
         List<Integer>[] graph = createGraph(n);
         for (List<Integer> connection : connections) {
@@ -333,21 +259,8 @@ public class _0_Tarjan_ConnectedComponents {
         addEdgeUndi(graph4, 3, 4);
         addEdgeUndi(graph4, 3, 5);
         addEdgeUndi(graph4, 5, 6);
-        ArticulationPointsFinder tarjan4 = new ArticulationPointsFinder(graph4, size4);
-        System.out.println(tarjan4.AP());
 
-        System.out.println("=====================================");
-
-        int size5 = 7;
-        List<Integer>[] graph5 = createGraph(size5);
-        addEdgeUndi(graph5, 0, 1);
-        addEdgeUndi(graph5, 1, 2);
-        addEdgeUndi(graph5, 0, 2);
-        addEdgeUndi(graph5, 2, 3);
-        addEdgeUndi(graph5, 3, 4);
-        addEdgeUndi(graph5, 3, 5);
-        addEdgeUndi(graph5, 5, 6);
-        Tarjan tarjan5 = new Tarjan(graph5);
+        Tarjan tarjan5 = new Tarjan(graph4);
         System.out.println(tarjan5.getSCComponents());
         System.out.println(tarjan5.bridge());
         System.out.println(tarjan5.AP());
