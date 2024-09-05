@@ -1,4 +1,4 @@
-package leetcode.array.math;
+package leetcode.math;
 
 public class _H_149_MaxPointsOnALine {
     public static void main(String[] args) {
