@@ -326,20 +326,13 @@ public class _0_Tarjan_ConnectedComponents {
 
         int size4 = 7;
         List<Integer>[] graph4 = createGraph(size4);
-        graph4[1].add(0);
-        graph4[0].add(1);
-        graph4[1].add(2);
-        graph4[2].add(1);
-        graph4[0].add(2);
-        graph4[2].add(0);
-        graph4[2].add(3);
-        graph4[3].add(2);
-        graph4[4].add(3);
-        graph4[3].add(4);
-        graph4[5].add(3);
-        graph4[3].add(5);
-        graph4[5].add(6);
-        graph4[6].add(5);
+        addEdgeUndi(graph4, 0, 1);
+        addEdgeUndi(graph4, 1, 2);
+        addEdgeUndi(graph4, 0, 2);
+        addEdgeUndi(graph4, 2, 3);
+        addEdgeUndi(graph4, 3, 4);
+        addEdgeUndi(graph4, 3, 5);
+        addEdgeUndi(graph4, 5, 6);
         ArticulationPointsFinder tarjan4 = new ArticulationPointsFinder(graph4, size4);
         System.out.println(tarjan4.AP());
 
