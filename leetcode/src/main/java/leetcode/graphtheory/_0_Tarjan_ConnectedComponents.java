@@ -3,10 +3,10 @@ package leetcode.graphtheory;
 import codeforce.cf933_div3.A;
 
 import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Stack;
+
+import static java.lang.Math.min;
 
 public class _0_Tarjan_ConnectedComponents {
 
@@ -27,6 +27,10 @@ public class _0_Tarjan_ConnectedComponents {
             stack = new Stack<>();
             sccComp = new ArrayList<>();
         }
+
+        // ======================================
+        // GET ALL STRONGLY CONNECTED COMPONENTS
+        // ======================================
 
         /**
          * function to get all strongly connected components
@@ -64,34 +68,27 @@ public class _0_Tarjan_ConnectedComponents {
             sccComp.add(component);
         }
 
-        int time = 0;
+        // ======================================
+        // GET ALL BRIDGES
+        // ======================================
+
+        int num = 0;
         static final int NIL = -1;
         List<List<Integer>> bridges = new ArrayList<>();
+
         void bridgeUtil(int u, boolean[] visited, int[] disc, int[] low, int[] parent) {
-
-            // Mark the current node as visited
             visited[u] = true;
+            disc[u] = low[u] = ++num; // Initialize discovery time and low value
 
-            // Initialize discovery time and low value
-            disc[u] = low[u] = ++time;
-
-            // Go through all vertices adjacent to this
-            // v is current adjacent of u
             for (int v : graph[u]) {
-                // If v is not visited yet, then make it a child
-                // of u in DFS tree and recur for it.
-                // If v is not visited yet, then recur for it
                 if (!visited[v]) {
                     parent[v] = u;
                     bridgeUtil(v, visited, disc, low, parent);
 
-                    // Check if the subtree rooted with v has a
-                    // connection to one of the ancestors of u
+                    // Check if the subtree rooted with v has a connection to one of the ancestors of u
                     low[u] = Math.min(low[u], low[v]);
 
-                    // If the lowest vertex reachable from subtree
-                    // under v is below u in DFS tree, then u-v is
-                    // a bridge
+                    // If the lowest vertex reachable from subtree under v is below u in DFS tree, then u-v is a bridge
                     if (low[v] > disc[u]) {
                         bridges.add(List.of(u, v));
                     }
@@ -104,15 +101,14 @@ public class _0_Tarjan_ConnectedComponents {
         }
 
 
-        // DFS based function to find all bridges. It uses recursive
-        // function bridgeUtil()
-        List<List<Integer>> bridge() {
+        // DFS based function to find all bridges. It uses recursive function bridgeUtil()
+        public List<List<Integer>> bridge() {
             // Mark all the vertices as not visited
             boolean[] visited = new boolean[V];
             int[] disc = new int[V];
             int[] low = new int[V];
             int[] parent = new int[V];
-
+            num = 0;
 
             // Initialize parent and visited, and ap(articulation point) arrays
             for (int i = 0; i < V; i++) {
@@ -120,51 +116,247 @@ public class _0_Tarjan_ConnectedComponents {
                 visited[i] = false;
             }
 
-            // Call the recursive helper function to find Bridges
-            // in DFS tree rooted with vertex 'i'
+            // Call the recursive helper function to find Bridges in DFS tree rooted with vertex 'i'
             for (int i = 0; i < V; i++)
                 if (!visited[i])
                     bridgeUtil(i, visited, disc, low, parent);
 
             return bridges;
         }
+
+        // ======================================
+        // GET ALL ARTICULATION POINTS
+        // ======================================
+        List<Integer> apList = new ArrayList<>();
+        void APUtil(int u, boolean[] visited, int[] disc, int[] low, int parent, boolean[] isAP) {
+            int children = 0;
+            visited[u] = true;
+            disc[u] = low[u] = ++num;
+
+            for (Integer v : graph[u]) {
+                if (!visited[v]) {
+                    children++;
+                    APUtil(v, visited, disc, low, u, isAP);
+
+                    // Check if the subtree rooted with v has a connection to one of the ancestors of u
+                    low[u] = Math.min(low[u], low[v]);
+
+                    // If u is not root and low value of one of its child is more than discovery value of u.
+                    if (parent != -1 && low[v] >= disc[u])
+                        isAP[u] = true;
+                }
+
+                // Update low value of u for parent function calls.
+                else if (v != parent)
+                    low[u] = Math.min(low[u], disc[v]);
+            }
+
+            // If u is root of DFS tree and has two or more children.
+            if (parent == -1 && children > 1)
+                isAP[u] = true;
+        }
+
+        public List<Integer> AP() {
+            boolean[] visited = new boolean[V];
+            int[] disc = new int[V];
+            int[] low = new int[V];
+            boolean[] isAP = new boolean[V];
+            num = 0;
+            int par = -1;
+
+            // Adding this loop so that the
+            // code works even if we are given
+            // disconnected graph
+            for (int u = 0; u < V; u++)
+                if (!visited[u])
+                    APUtil(u, visited, disc, low, par, isAP);
+
+            for (int u = 0; u < V; u++)
+                if (isAP[u])
+                    apList.add(u);
+
+            return apList;
+        }
+    }
+
+    public static List<Integer>[] createGraph(int n) {
+        List<Integer>[] graph = new List[n];
+        for (int i = 0; i < n; i++) graph[i] = new ArrayList<>();
+        return graph;
+    }
+
+    public static void addEdgeDi(List<Integer>[] graph, int from, int to) {
+        graph[from].add(to);
+        graph[to].add(from);
+    }
+
+    public static void addEdgeUndi(List<Integer>[] graph, int from, int to) {
+        graph[from].add(to);
+        graph[to].add(from);
+    }
+
+    // ======================================
+    // GET ALL ARTICULATION POINTS
+    // ======================================
+    static class ArticulationPointsFinder {
+        private final int n;
+        private int id;
+        private int rootNodeOutcomingEdgeCount;
+        private boolean solved;
+        private int[] low, ids;
+        private boolean[] visited, isArticulationPoint;
+        private final List<Integer>[] graph;
+
+        public ArticulationPointsFinder(List<Integer>[] graph, int n) {
+            if (graph == null || n <= 0 || graph.length != n) throw new IllegalArgumentException();
+            this.graph = graph;
+            this.n = n;
+        }
+
+        public List<Integer> AP() {
+            List<Integer> result = new ArrayList<>();
+            boolean[] res = findArticulationPoints();
+            for (int i = 0; i < res.length; i++) {
+                if (isArticulationPoint[i]) {
+                    result.add(i);
+                }
+            }
+            return result;
+        }
+
+        // Returns the indexes for all articulation points in the graph even if the graph is not fully connected.
+        public boolean[] findArticulationPoints() {
+            if (solved) return isArticulationPoint;
+
+            id = 0;
+            low = new int[n]; // Low link values
+            ids = new int[n]; // Nodes ids
+            visited = new boolean[n];
+            isArticulationPoint = new boolean[n];
+
+            for (int i = 0; i < n; i++) {
+                if (!visited[i]) {
+                    rootNodeOutcomingEdgeCount = 0;
+                    dfs(i, i, -1);
+                    isArticulationPoint[i] = (rootNodeOutcomingEdgeCount > 1);
+                }
+            }
+
+            solved = true;
+            return isArticulationPoint;
+        }
+
+        private void dfs(int root, int at, int parent) {
+
+            if (parent == root) rootNodeOutcomingEdgeCount++;
+
+            visited[at] = true;
+            low[at] = ids[at] = id++;
+
+            List<Integer> edges = graph[at];
+            for (Integer to : edges) {
+                if (to == parent) continue;
+                if (!visited[to]) {
+                    dfs(root, to, at);
+                    low[at] = min(low[at], low[to]);
+                    if (ids[at] <= low[to]) {
+                        isArticulationPoint[at] = true;
+                    }
+                } else {
+                    low[at] = min(low[at], ids[to]);
+                }
+            }
+        }
+    }
+
+    public static List<List<Integer>> criticalConnections(int n, List<List<Integer>> connections) {
+        List<Integer>[] graph = createGraph(n);
+        for (List<Integer> connection : connections) {
+            graph[connection.get(0)].add(connection.get(1));
+            graph[connection.get(1)].add(connection.get(0));
+        }
+        Tarjan tarjan = new Tarjan(graph);
+        return tarjan.bridge();
     }
 
     public static void main(String[] args) {
-        int size = 8;
-        List<Integer>[] graph = new List[size];
-        for (int i = 0; i < size; i++) {
-            graph[i] = new ArrayList<>();
-        }
+        int size = 9;
+        List<Integer>[] graph = createGraph(size);
         graph[0].add(1);
         graph[1].add(2);
-        graph[1].add(5);
-        graph[1].add(4);
-        graph[2].add(3);
-        graph[2].add(6);
-        graph[3].add(2);
+        graph[2].add(0);
+        graph[0].add(3);
         graph[3].add(7);
-        graph[4].add(0);
+        graph[4].add(3);
         graph[4].add(5);
         graph[5].add(6);
-        graph[6].add(5);
-        graph[7].add(3);
-        graph[7].add(6);
+        graph[6].add(4);
+        graph[2].add(8);
+        graph[8].add(2);
 
         Tarjan tarjan = new Tarjan(graph);
         List<List<Integer>> sccComp = tarjan.getSCComponents();
         System.out.println(sccComp);
         System.out.println(tarjan.bridge());
 
+        System.out.println("=====================================");
+
         int size2 = 4;
-        List<Integer>[] graph2 = new List[size2];
-        for (int i = 0; i < size2; i++) {
-            graph2[i] = new ArrayList<>();
-        }
+        List<Integer>[] graph2 = createGraph(size2);
         graph2[0].add(1);
         graph2[1].add(2);
-        graph2[2].add(3);
+        graph2[2].add(0);
+        graph2[1].add(3);
         Tarjan tarjan2 = new Tarjan(graph2);
+        System.out.println(tarjan2.getSCComponents());
         System.out.println(tarjan2.bridge());
+
+        System.out.println("=====================================");
+
+        int size3 = 2;
+        List<Integer>[] graph3 = createGraph(size3);
+        for (int i = 0; i < size3; i++) {
+            graph3[i] = new ArrayList<>();
+        }
+        graph3[0].add(1);
+        Tarjan tarjan3 = new Tarjan(graph3);
+        System.out.println(tarjan3.bridge());
+
+        System.out.println("=====================================");
+
+        int size4 = 7;
+        List<Integer>[] graph4 = createGraph(size4);
+        graph4[1].add(0);
+        graph4[0].add(1);
+        graph4[1].add(2);
+        graph4[2].add(1);
+        graph4[0].add(2);
+        graph4[2].add(0);
+        graph4[2].add(3);
+        graph4[3].add(2);
+        graph4[4].add(3);
+        graph4[3].add(4);
+        graph4[5].add(3);
+        graph4[3].add(5);
+        graph4[5].add(6);
+        graph4[6].add(5);
+        ArticulationPointsFinder tarjan4 = new ArticulationPointsFinder(graph4, size4);
+        System.out.println(tarjan4.AP());
+
+        System.out.println("=====================================");
+
+        int size5 = 7;
+        List<Integer>[] graph5 = createGraph(size5);
+        addEdgeUndi(graph5, 0, 1);
+        addEdgeUndi(graph5, 1, 2);
+        addEdgeUndi(graph5, 0, 2);
+        addEdgeUndi(graph5, 2, 3);
+        addEdgeUndi(graph5, 3, 4);
+        addEdgeUndi(graph5, 3, 5);
+        addEdgeUndi(graph5, 5, 6);
+        Tarjan tarjan5 = new Tarjan(graph5);
+        System.out.println(tarjan5.getSCComponents());
+        System.out.println(tarjan5.bridge());
+        System.out.println(tarjan5.AP());
     }
 }
