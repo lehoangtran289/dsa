@@ -1,8 +1,8 @@
+package leetcode.VPC2024;
+
+public class VPC_01 {
     private static final boolean IS_LOCAL = true;
     private static final String INPUT_FILE = "src/main/java/leetcode/VPC2024/input/01.inp";
-
-    // ----------------------------------------------------------------
-
     private final static FastReader reader;
     private final static String YES = "YES";
     private final static String NO = "NO";
@@ -25,6 +25,7 @@
             java.io.PrintStream out = System.out;
 
             // INPUT -----------------------------------------------
+            int n = readInt();
 
             // SOLUTION --------------------------------------------
 
@@ -238,3 +239,4 @@
             return str;
         }
     }
+}
