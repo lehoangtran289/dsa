@@ -1,5 +1,8 @@
 package leetcode.VPC2024;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class VPC_06 {
     private static final boolean IS_LOCAL = true;
     private static final String INPUT_FILE = "src/main/java/leetcode/VPC2024/input/06.inp";
@@ -7,8 +10,8 @@ public class VPC_06 {
     // ----------------------------------------------------------------
 
     private final static FastReader reader;
-    private final static String YES = "YES";
-    private final static String NO = "NO";
+    private final static String YES = "Y";
+    private final static String NO = "N";
     private final static long mod = (long) 1e9 + 7;
 
     // ----------------------------------------------------------------
@@ -28,6 +31,55 @@ public class VPC_06 {
             java.io.PrintStream out = System.out;
 
             // INPUT -----------------------------------------------
+            int m = readInt();
+            List<Rule> rules = new ArrayList<>();
+            for (int i = 0; i < m; ++i) {
+                String commandStr = readStr();
+                String ipStr = readStr();
+
+                String[] temp;
+                String ip;
+                int n = 32;
+                if (ipStr.contains("/")) {
+                    temp = ipStr.split("/");
+                    ip = temp[0];
+                    n = Integer.parseInt(temp[1]);
+                } else {
+                    ip = ipStr;
+                }
+                temp = ip.split("\\.");
+                int x1 = Integer.parseInt(temp[0]);
+                int x2 = Integer.parseInt(temp[1]);
+                int x3 = Integer.parseInt(temp[2]);
+                int x4 = Integer.parseInt(temp[3]);
+
+                long start = (long) x1 << 24 | (long) x2 << 16 | (long) x3 << 8 | x4;
+
+                long end;
+                if (n == 32) end = start;
+                else {
+                    end = start | 1L << (32 - n);
+                    end -= 1;
+                }
+                System.out.println(start + " " + end);
+
+                int type;
+                switch (commandStr) {
+                    case "A":
+                        type = 1;
+                        rules.add(new Rule(type, start, end));
+                        break;
+                    case "D":
+                        type = 0;
+                        rules.add(new Rule(type, start, end));
+                        break;
+                    case "?":
+                        System.out.println(query(new Rule(3, start, start), rules));
+                        break;
+                }
+//                System.out.println("COMMAND:" + " " + type + " " + ip + " " + start + " " + end + " " + n);
+            }
+//            System.out.println(rules);
 
             // SOLUTION --------------------------------------------
 
@@ -36,6 +88,32 @@ public class VPC_06 {
             out.close();
         } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+
+    static String query(Rule rule, List<Rule> rules) {
+        for (Rule r : rules) {
+            if (rule.start < r.start || rule.end > r.end) continue;
+            if (r.type == 1) return YES;
+            else return NO;
+        }
+        return YES;
+    }
+
+    static class Rule {
+        int type; // 1: A, 0: D
+        long start;
+        long end;
+
+        Rule(int type, long start, long end) {
+            this.type = type;
+            this.start = start;
+            this.end = end;
+        }
+
+        @Override
+        public String toString() {
+            return type + " " + start + " " + end;
         }
     }
 
