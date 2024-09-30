@@ -7,16 +7,14 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.PrintStream;
 import java.nio.file.Files;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 import java.util.Map;
 import java.util.StringTokenizer;
 
-public class VPC_F_NoiTu {
+public class VPC2_A {
 
     private static final boolean IS_LOCAL = true;
-    private static final String INPUT_FILE = "src/main/java/leetcode/VPC/input/F.inp";
+    private static final String INPUT_FILE = "src/main/java/leetcode/VPC/input/A.inp";
     private final static FastReader reader;
     private final static String YES = "YES";
     private final static String NO = "NO";
@@ -39,29 +37,27 @@ public class VPC_F_NoiTu {
             PrintStream out = System.out;
 
             // INPUT -----------------------------------------------
-            int n = readInt();
-            List<String> dict = new ArrayList<>();
-            for (int i = 0; i < n; ++i) {
-                dict.add(readStr());
-            }
 
-            int q = readInt();
-            List<String> queries = new ArrayList<>();
-            for (int i = 0; i < q; ++i) {
-                queries.add(readStr());
+            int n = readInt();
+            int m = readInt();
+
+            int[] deg = new int[n];
+            Arrays.fill(deg, 0);
+
+            for (int i = 0; i < m; ++i) {
+                int[] p = intArray(2, false);
+                deg[p[0] - 1] += 1;
+                deg[p[1] - 1] += 1;
             }
 
             // SOLUTION --------------------------------------------
-
-            Trie trie = new Trie();
-            for (String s : dict) {
-                trie.insert(s);
+            int count = 0;
+            for (int d : deg) {
+                if (d < 2) count++;
             }
 
-            for (String s : queries) {
-                List<String> res = new ArrayList<>();
-                out.println(sol(s, trie, 0, res));
-            }
+            if (count < 2) out.println(count);
+            else out.println(count - 1);
 
             // ----------------------------------------------
             out.flush();
@@ -71,90 +67,10 @@ public class VPC_F_NoiTu {
         }
     }
 
-    private static String sol(String s, Trie trie, int start, List<String> res) {
-        if (start == s.length()) {
-            return String.join(" ", res);
-        }
-
-        for (int i = start; i < s.length(); ++i) {
-            if (trie.search(s.substring(start, i + 1))) {
-                res.add(s.substring(start, i + 1));
-                String ans = sol(s, trie, i + 1, res);
-                if (!ans.equals("-1")) {
-                    return ans;
-                }
-                res.remove(res.size() - 1);
-            }
-        }
-
-        return "-1";
-    }
-
-    static class TrieNode {
-        TrieNode[] child = new TrieNode[26];
-        boolean isLeaf;
-
-        TrieNode() {
-            Arrays.fill(child, null);
-            isLeaf = false;
-        }
-    }
-
-    static class Trie {
-        TrieNode root;
-
-        Trie() {
-            root = new TrieNode();
-        }
-
-        void insert(String key) {
-            TrieNode node = root;
-            for (char chr : key.toCharArray()) {
-                int index = chr - 'a';
-                if (node.child[index] == null) {
-                    node.child[index] = new TrieNode(); // If node for current character does not exist then make a new node
-                }
-                node = node.child[index]; // Move the curr pointer to the newly created node
-            }
-            node.isLeaf = true;
-        }
-
-        boolean search(String key) {
-            TrieNode node = root;
-            for (char chr : key.toCharArray()) {
-                int index = chr - 'a';
-                if (node.child[index] == null) {
-                    return false;
-                }
-                node = node.child[index];
-            }
-            return node != null && node.isLeaf;
-        }
-
-        boolean startsWith(String prefix) {
-            TrieNode node = root;
-            for (char chr : prefix.toCharArray()) {
-                int index = chr - 'a';
-                if (node.child[index] == null) {
-                    return false;
-                }
-                node = node.child[index];
-            }
-            return node != null;
-        }
-
-        void display(TrieNode node, char[] str, int level) {
-            if (node.isLeaf) {
-                str[level] = '\0';
-                System.out.println(new String(str, 0, level));
-            }
-            for (int i = 0; i < 26; i++) {
-                if (node.child[i] != null) {
-                    str[level] = (char) (i + 'a');
-                    display(node.child[i], str, level + 1);
-                }
-            }
-        }
+    private static String sol(int[] t) {
+        int sum = t[0] + t[1];
+        if (sum % 2 == 0) return "Bob";
+        else return "Alice";
     }
 
     // ======================================================================================
@@ -360,4 +276,3 @@ public class VPC_F_NoiTu {
         }
     }
 }
-

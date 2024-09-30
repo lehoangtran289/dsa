@@ -1,22 +1,23 @@
 package leetcode.VPC;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.PrintStream;
 import java.nio.file.Files;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 import java.util.Map;
 import java.util.StringTokenizer;
 
-public class VPC_F_NoiTu {
+public class VPC2_F {
 
     private static final boolean IS_LOCAL = true;
-    private static final String INPUT_FILE = "src/main/java/leetcode/VPC/input/F.inp";
+    private static final String INPUT_FILE = "src/main/java/leetcode/VPC/input/02.inp";
+    private static final String OUTPUT_FILE = "src/main/java/leetcode/VPC/output/02.out";
     private final static FastReader reader;
     private final static String YES = "YES";
     private final static String NO = "NO";
@@ -34,34 +35,44 @@ public class VPC_F_NoiTu {
         reader = new FastReader(is);
     }
 
+    static class Point {
+        int x, y;
+
+        public Point(int x, int y) {
+            this.x = x;
+            this.y = y;
+        }
+    }
+
     public static void main(String[] args) {
         try {
             PrintStream out = System.out;
 
             // INPUT -----------------------------------------------
+            int m = readInt();
             int n = readInt();
-            List<String> dict = new ArrayList<>();
-            for (int i = 0; i < n; ++i) {
-                dict.add(readStr());
-            }
+            int k = readInt();
 
-            int q = readInt();
-            List<String> queries = new ArrayList<>();
-            for (int i = 0; i < q; ++i) {
-                queries.add(readStr());
+            Point start = null;
+            int inpFlag = 0;
+            char[][] graph = new char[n][m];
+            for (int i = 0; i < n; ++i) {
+                String s = readStr();
+                if (inpFlag == 0 && s.indexOf('O') != -1) {
+                    start = new Point(i, s.indexOf('O'));
+                    inpFlag = 1;
+                }
+                graph[i] = s.toCharArray();
+                out.println(Arrays.toString(graph[i]));
             }
 
             // SOLUTION --------------------------------------------
 
-            Trie trie = new Trie();
-            for (String s : dict) {
-                trie.insert(s);
-            }
+            String res = sol(n, m, k, graph, start);
+            BufferedWriter writer = new BufferedWriter(new FileWriter(OUTPUT_FILE));
+            writer.write(res);
 
-            for (String s : queries) {
-                List<String> res = new ArrayList<>();
-                out.println(sol(s, trie, 0, res));
-            }
+            writer.close();
 
             // ----------------------------------------------
             out.flush();
@@ -71,90 +82,90 @@ public class VPC_F_NoiTu {
         }
     }
 
-    private static String sol(String s, Trie trie, int start, List<String> res) {
-        if (start == s.length()) {
-            return String.join(" ", res);
-        }
-
-        for (int i = start; i < s.length(); ++i) {
-            if (trie.search(s.substring(start, i + 1))) {
-                res.add(s.substring(start, i + 1));
-                String ans = sol(s, trie, i + 1, res);
-                if (!ans.equals("-1")) {
-                    return ans;
+    private static String sol(int n, int m, int k, char[][] graph, Point start) {
+        StringBuilder res = new StringBuilder();
+        while (k-- > 0) {
+            int countUp = 0;
+            int curUp = start.x;
+            for (int i = start.x - 1; i >= 0; i--) {
+                if (graph[i][start.y] == '#') {
+                    curUp = i + 1;
+                    break;
                 }
-                res.remove(res.size() - 1);
+                if (graph[i][start.y] == '.')
+                    countUp++;
             }
-        }
 
-        return "-1";
-    }
-
-    static class TrieNode {
-        TrieNode[] child = new TrieNode[26];
-        boolean isLeaf;
-
-        TrieNode() {
-            Arrays.fill(child, null);
-            isLeaf = false;
-        }
-    }
-
-    static class Trie {
-        TrieNode root;
-
-        Trie() {
-            root = new TrieNode();
-        }
-
-        void insert(String key) {
-            TrieNode node = root;
-            for (char chr : key.toCharArray()) {
-                int index = chr - 'a';
-                if (node.child[index] == null) {
-                    node.child[index] = new TrieNode(); // If node for current character does not exist then make a new node
+            int countDown = 0;
+            int curDown = start.x;
+            for (int i = start.x + 1; i < n; i++) {
+                if (graph[i][start.y] == '#') {
+                    curDown = i - 1;
+                    break;
                 }
-                node = node.child[index]; // Move the curr pointer to the newly created node
+                if (graph[i][start.y] == '.')
+                    countDown++;
             }
-            node.isLeaf = true;
-        }
 
-        boolean search(String key) {
-            TrieNode node = root;
-            for (char chr : key.toCharArray()) {
-                int index = chr - 'a';
-                if (node.child[index] == null) {
-                    return false;
+            int countLeft = 0;
+            int curLeft = start.y;
+            for (int i = start.y - 1; i >= 0; i--) {
+                if (graph[start.x][i] == '#') {
+                    curLeft = i + 1;
+                    break;
                 }
-                node = node.child[index];
-            }
-            return node != null && node.isLeaf;
-        }
-
-        boolean startsWith(String prefix) {
-            TrieNode node = root;
-            for (char chr : prefix.toCharArray()) {
-                int index = chr - 'a';
-                if (node.child[index] == null) {
-                    return false;
-                }
-                node = node.child[index];
-            }
-            return node != null;
-        }
-
-        void display(TrieNode node, char[] str, int level) {
-            if (node.isLeaf) {
-                str[level] = '\0';
-                System.out.println(new String(str, 0, level));
-            }
-            for (int i = 0; i < 26; i++) {
-                if (node.child[i] != null) {
-                    str[level] = (char) (i + 'a');
-                    display(node.child[i], str, level + 1);
+                if (graph[start.x][i] == '.') {
+                    countLeft++;
                 }
             }
+
+            int countRight = 0;
+            int curRight = start.y;
+            for (int i = start.y + 1; i < m; i++) {
+                if (graph[start.x][i] == '#') {
+                    curRight = i - 1;
+                    break;
+                }
+                if (graph[start.x][i] == '.') {
+                    countRight++;
+                }
+            }
+
+            int max = max(countUp, countDown, countLeft, countRight);
+            if (max == countUp) {
+                res.append("U");
+                for (int i = curUp; i <= start.x; i++) {
+                    graph[i][start.y] = '+';
+                }
+                start.x = curUp;
+            } else if (max == countDown) {
+                res.append("D");
+                for (int i = start.x; i <= curDown; i++) {
+                    graph[i][start.y] = '+';
+                }
+                start.x = curDown;
+            } else if (max == countLeft) {
+                res.append("L");
+                for (int i = curLeft; i <= start.y; i++) {
+                    graph[start.x][i] = '+';
+                }
+                start.y = curLeft;
+            } else {
+                res.append("R");
+                for (int i = start.y; i <= curRight; i++) {
+                    graph[start.x][i] = '+';
+                }
+                start.y = curRight;
+            }
+            graph[start.x][start.y] = 'O';
+
+            for (int i = 0; i < n; ++i) {
+                System.out.println(Arrays.toString(graph[i]));
+            }
+            System.out.println("\nmax: " + max + " (" + start.x + " " + start.y + ") " + res);
         }
+
+        return res.toString();
     }
 
     // ======================================================================================
@@ -360,4 +371,3 @@ public class VPC_F_NoiTu {
         }
     }
 }
-
