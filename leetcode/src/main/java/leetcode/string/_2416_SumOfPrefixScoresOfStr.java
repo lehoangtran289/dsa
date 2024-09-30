@@ -1,16 +1,17 @@
 package leetcode.string;
 
 import java.util.Arrays;
-import java.util.List;
 
-public class _0_Trie {
+public class _2416_SumOfPrefixScoresOfStr {
     static class TrieNode {
         TrieNode[] child = new TrieNode[26];
-        boolean isLeaf;
+        boolean isWord;
+        int score;
 
         TrieNode() {
             Arrays.fill(child, null);
-            isLeaf = false;
+            isWord = false;
+            score = 1;
         }
     }
 
@@ -27,22 +28,28 @@ public class _0_Trie {
                 int index = chr - 'a';
                 if (node.child[index] == null) {
                     node.child[index] = new TrieNode(); // If node for current character does not exist then make a new node
+                } else {
+                    node.child[index].score++;
                 }
                 node = node.child[index]; // Move the curr pointer to the newly created node
             }
-            node.isLeaf = true;
+            node.isWord = true;
         }
 
-        boolean search(String key) {
+        int search(String key) {
             TrieNode node = root;
+            int score = 0;
             for (char chr : key.toCharArray()) {
                 int index = chr - 'a';
                 if (node.child[index] == null) {
-                    return false;
+                    return 0;
+                } else {
+                    score += node.child[index].score;
                 }
                 node = node.child[index];
             }
-            return node != null && node.isLeaf;
+            if (node != null && node.isWord) return score;
+            else return 0;
         }
 
         boolean startsWith(String prefix) {
@@ -58,7 +65,7 @@ public class _0_Trie {
         }
 
         void display(TrieNode node, char[] str, int level) {
-            if (node.isLeaf) {
+            if (node.isWord) {
                 str[level] = '\0';
                 System.out.println(new String(str, 0, level));
             }
@@ -70,45 +77,21 @@ public class _0_Trie {
             }
         }
     }
+    
+    public static void main(String[] args) {
+        System.out.println(Arrays.toString(new _2416_SumOfPrefixScoresOfStr().sumPrefixScores(new String[]{"abc", "ab", "bc", "b"})));
+    }
 
-    public static int[] sumPrefixScores(String[] words) {
+    public int[] sumPrefixScores(String[] words) {
         Trie trie = new Trie();
         for (String word : words) {
             trie.insert(word);
         }
 
-        int[] scores = new int[words.length];
-        for (int i = 0; i < words.length; i++) {
-            String word = words[i];
-            int score = 0;
-            for (int j = 0; j < word.length(); j++) {
-                String prefix = word.substring(0, j + 1);
-                if (trie.search(prefix)) {
-                    score += j + 1;
-                }
-            }
-            scores[i] = score;
+        int[] res = new int[words.length];
+        for (int i = 0; i < res.length; ++i) {
+            res[i] = trie.search(words[i]);
         }
-        return scores;
-    }
-
-    public static void main(String[] args) {
-        System.out.println(Arrays.toString(sumPrefixScores(new String[]{"abc", "ab", "bc", "b"})));
-
-//        Trie trie = new Trie();
-//        for (String s : Arrays.asList("and", "ant", "do", "geek", "dad", "ball")) {
-//            trie.insert(s);
-//        }
-//
-//        List<String> searchKeys = Arrays.asList("do", "gee", "bat");
-//        for (String s : searchKeys) {
-//            System.out.print("Key : " + s + " -> ");
-//            if (trie.search(s))
-//                System.out.println("Present");
-//            else
-//                System.out.println("Not Present");
-//        }
-//
-//        trie.display(trie.root, new char[100], 0);
+        return res;
     }
 }
