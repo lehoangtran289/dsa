@@ -9,30 +9,38 @@ public class _2696_E_MinStrLenAfterRemoveSubStr {
         System.out.println(new _2696_E_MinStrLenAfterRemoveSubStr().minLength("ACBBD"));
     }
 
+    /**
+     *     def minLength(self, s: str) -> int:
+     *         stack = []
+     *         for c in s:
+     *             if not stack:
+     *                 stack.append(c)
+     *                 continue
+     *             if c == "B" and stack[-1] == "A":
+     *                 stack.pop()
+     *             elif c == "D" and stack[-1] == "C":
+     *                 stack.pop()
+     *             else:
+     *                 stack.append(c)
+     *         return len(stack)
+     */
     public int minLength(String s) {
-        int count = 0;
         Deque<Integer> stack = new ArrayDeque<>();
         for (int i = 0; i < s.length(); ++i) {
-            int cur = s.charAt(i);
-            if (cur < 'A' || cur > 'D') {
-                count += 1 + stack.size();
-                stack = new ArrayDeque<>();
+            int c = s.charAt(i);
+            if (stack.isEmpty()) {
+                stack.addLast(c);
+                continue;
             }
 
-            if (cur == 'A' || cur == 'C') {
-                stack.addLast(cur);
-            } else if (cur == 'B' || cur == 'D') {
-                if (stack.isEmpty()) count ++;
-                else {
-                    if (cur - stack.peekLast() == 1) {
-                        stack.pollLast();
-                    } else {
-                        count += 1 + stack.size();
-                        stack = new ArrayDeque<>();
-                    }
-                }
+            if (c == 'B' && stack.peekLast() == 'A') {
+                stack.pollLast();
+            } else if (c == 'D' && stack.peekLast() == 'C') {
+                stack.pollLast();
+            } else {
+                stack.addLast(c);
             }
         }
-        return count + stack.size();
+        return stack.size();
     }
 }
