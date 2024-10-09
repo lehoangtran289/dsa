@@ -2,7 +2,7 @@ package leetcode.string;
 
 import java.util.Arrays;
 
-public class _2416_SumOfPrefixScoresOfStr {
+public class _H_2416_SumOfPrefixScoresOfStr {
     static class TrieNode {
         TrieNode[] child = new TrieNode[26];
         boolean isWord;
@@ -79,7 +79,7 @@ public class _2416_SumOfPrefixScoresOfStr {
     }
     
     public static void main(String[] args) {
-        System.out.println(Arrays.toString(new _2416_SumOfPrefixScoresOfStr().sumPrefixScores(new String[]{"abc", "ab", "bc", "b"})));
+        System.out.println(Arrays.toString(new _H_2416_SumOfPrefixScoresOfStr().sumPrefixScores(new String[]{"abc", "ab", "bc", "b"})));
     }
 
     public int[] sumPrefixScores(String[] words) {

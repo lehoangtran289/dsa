@@ -1,6 +1,6 @@
 package leetcode.string;
 
-public class _1898_M_MaximumNumberOfRemovableChars {
+public class _M_1898_MaximumNumberOfRemovableChars {
 
     public static void main(String[] args) {
         System.out.println(maximumRemovals("qlevcvgzfpryiqlwy", "qlecfqlw", new int[]{12,5}));

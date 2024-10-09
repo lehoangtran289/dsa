@@ -3,7 +3,7 @@ package leetcode.string;
 import java.util.ArrayDeque;
 import java.util.Deque;
 
-public class _921_M_MinAddToMakeStrValid {
+public class _M_921_MinAddToMakeStrValid {
     public int minAddToMakeValid(String s) {
         Deque<Integer> st = new ArrayDeque<>();
         for (int i = 0; i < s.length(); ++i) {

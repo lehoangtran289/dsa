@@ -3,10 +3,10 @@ package leetcode.string;
 import java.util.ArrayDeque;
 import java.util.Deque;
 
-public class _2696_E_MinStrLenAfterRemoveSubStr {
+public class _E_2696_MinStrLenAfterRemoveSubStr {
     public static void main(String[] args) {
-//        System.out.println(new _2696_E_MinStrLenAfterRemoveSubStr().minLength("AATQCABDCBE"));
-        System.out.println(new _2696_E_MinStrLenAfterRemoveSubStr().minLength("ACBBD"));
+//        System.out.println(new _E_2696_MinStrLenAfterRemoveSubStr().minLength("AATQCABDCBE"));
+        System.out.println(new _E_2696_MinStrLenAfterRemoveSubStr().minLength("ACBBD"));
     }
 
     /**
