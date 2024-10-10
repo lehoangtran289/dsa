@@ -18,7 +18,7 @@ public class M_962_MaximumWidthRamp {
                 stack.addLast(i);
             }
         }
-//        System.out.println(stack);
+//        System.out.println(stack); // [0, 1, 3]
 
         // find max ramp
         int ans = 0;
