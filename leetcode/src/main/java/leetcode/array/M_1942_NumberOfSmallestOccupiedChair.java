@@ -19,7 +19,6 @@ public class M_1942_NumberOfSmallestOccupiedChair {
         Arrays.sort(times, (a, b) -> a[0] - b[0]);
         System.out.println(Arrays.deepToString(times));
 
-        int res = 0;
         for (int[] time : times) {
             int start = time[0];
             int end = time[1];
@@ -31,7 +30,7 @@ public class M_1942_NumberOfSmallestOccupiedChair {
                 }
             }
         }
-        return res;
+        return 0;
     }
 
     private boolean checkTargetFriend(int start, int end, int[] time) {
