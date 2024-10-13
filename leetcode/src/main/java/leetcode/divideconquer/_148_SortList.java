@@ -74,11 +74,6 @@ public class _148_SortList {
         int val;
         ListNode next;
 
-        @Override
-        public String toString() {
-            return val + " ";
-        }
-
         ListNode(int val) {
             this.val = val;
         }
@@ -86,6 +81,11 @@ public class _148_SortList {
         ListNode(int val, ListNode next) {
             this.val = val;
             this.next = next;
+        }
+
+        @Override
+        public String toString() {
+            return val + " ";
         }
     }
 }

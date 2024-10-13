@@ -20,60 +20,6 @@ public class VPC_D_KetNoi {
     static boolean IS_LOCAL = System.getenv("LOCAL_JUDGE") != null;
     static boolean DEBUG = false;
     static String INPUT_FILE = "input/D.inp";
-
-    static class Point {
-        double x, y;
-
-        public Point(double x, double y) {
-            this.x = x;
-            this.y = y;
-        }
-
-        @Override
-        public String toString() {
-            return "Point{" +
-                    "x=" + x +
-                    ", y=" + y +
-                    '}';
-        }
-
-        public double dist(Point other) {
-            return Math.sqrt((x - other.x) * (x - other.x) + (y - other.y) * (y - other.y));
-        }
-    }
-
-    static class Edge implements Comparable<Edge> {
-        int u, v;
-        double d;
-
-        public Edge(int u, int v, double d) {
-            // Ensure u < v
-            if (u > v) {
-                int tmp = v;
-                v = u;
-                u = tmp;
-            }
-
-            this.u = u;
-            this.v = v;
-            this.d = d;
-        }
-
-        @Override
-        public int compareTo(Edge o) {
-            return Double.compare(d, o.d);
-        }
-
-        @Override
-        public String toString() {
-            return "Edge{" +
-                    "u=" + u +
-                    ", v=" + v +
-                    ", d=" + d +
-                    '}';
-        }
-    }
-
     static int[] parent, size;
 
     static void makeSet(int v) {
@@ -181,6 +127,68 @@ public class VPC_D_KetNoi {
         }
     }
 
+    static void debug(Object... args) {
+        if (DEBUG) {
+            for (int i = 0; i < args.length; ++i) {
+                System.out.print(args[i] + " ");
+            }
+            System.out.println();
+        }
+    }
+
+    static class Point {
+        double x, y;
+
+        public Point(double x, double y) {
+            this.x = x;
+            this.y = y;
+        }
+
+        @Override
+        public String toString() {
+            return "Point{" +
+                    "x=" + x +
+                    ", y=" + y +
+                    '}';
+        }
+
+        public double dist(Point other) {
+            return Math.sqrt((x - other.x) * (x - other.x) + (y - other.y) * (y - other.y));
+        }
+    }
+
+    static class Edge implements Comparable<Edge> {
+        int u, v;
+        double d;
+
+        public Edge(int u, int v, double d) {
+            // Ensure u < v
+            if (u > v) {
+                int tmp = v;
+                v = u;
+                u = tmp;
+            }
+
+            this.u = u;
+            this.v = v;
+            this.d = d;
+        }
+
+        @Override
+        public int compareTo(Edge o) {
+            return Double.compare(d, o.d);
+        }
+
+        @Override
+        public String toString() {
+            return "Edge{" +
+                    "u=" + u +
+                    ", v=" + v +
+                    ", d=" + d +
+                    '}';
+        }
+    }
+
     static class InputReader {
         public BufferedReader reader;
         public StringTokenizer tokenizer;
@@ -211,15 +219,6 @@ public class VPC_D_KetNoi {
 
         public double nextDouble() {
             return Double.parseDouble(next());
-        }
-    }
-
-    static void debug(Object... args) {
-        if (DEBUG) {
-            for (int i = 0; i < args.length; ++i) {
-                System.out.print(args[i] + " ");
-            }
-            System.out.println();
         }
     }
 }

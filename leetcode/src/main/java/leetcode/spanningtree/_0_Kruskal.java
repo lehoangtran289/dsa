@@ -43,7 +43,7 @@ public class _0_Kruskal {
     }
 }
 
-class Edge{
+class Edge {
     int src, dest, weight;
 
     public Edge(int src, int dest, int weight) {

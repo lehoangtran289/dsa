@@ -4,10 +4,10 @@ public class _0_Floyd_Warshall {
     private static final int INF = Integer.MAX_VALUE;
 
     public static void main(String[] args) {
-        int[][] graph = { { 0, 5, INF, 10 },
-                { INF, 0, 3, INF },
-                { INF, INF, 0, 1 },
-                { INF, INF, INF, 0 } };
+        int[][] graph = {{0, 5, INF, 10},
+                {INF, 0, 3, INF},
+                {INF, INF, 0, 1},
+                {INF, INF, INF, 0}};
 
         int[][] shortestPaths = floydWarshall(graph);
 

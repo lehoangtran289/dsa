@@ -4,7 +4,7 @@ import java.util.Arrays;
 
 public class _134_GasStation {
     public static void main(String[] args) {
-        System.out.println(canCompleteCircuit(new int[]{1,2,3,4,5}, new int[]{3,4,5,1,2}));
+        System.out.println(canCompleteCircuit(new int[]{1, 2, 3, 4, 5}, new int[]{3, 4, 5, 1, 2}));
     }
 
     public static int canCompleteCircuit(int[] gas, int[] cost) {

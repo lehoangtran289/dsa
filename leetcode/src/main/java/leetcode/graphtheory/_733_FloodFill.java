@@ -23,16 +23,6 @@ public class _733_FloodFill {
         }
     }
 
-    static class Node {
-        int r;
-        int c;
-
-        Node(int r, int c) {
-            this.r = r;
-            this.c = c;
-        }
-    }
-
     // flood fill using bfs
     public static int[][] floodFill(int[][] image, int sr, int sc, int color) {
         int prevColor = image[sr][sc];
@@ -66,5 +56,15 @@ public class _733_FloodFill {
             }
         }
         return image;
+    }
+
+    static class Node {
+        int r;
+        int c;
+
+        Node(int r, int c) {
+            this.r = r;
+            this.c = c;
+        }
     }
 }

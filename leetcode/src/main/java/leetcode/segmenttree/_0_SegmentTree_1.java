@@ -94,7 +94,7 @@ class SegmentTree {
     }
 
     /**
-     *  Query the range sum [i, j]
+     * Query the range sum [i, j]
      */
     public int sumRange(int i, int j) {
         return sumRange(root, i, j);

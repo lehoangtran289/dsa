@@ -20,7 +20,7 @@ public class _1293_ShortestPathInGridwObstacles {
         int n = grid.length;
         int m = grid[0].length;
         Queue<int[]> q = new ArrayDeque<>();
-        boolean[][][] visited = new boolean[n][m][k+1]; // k+1 since k is not index
+        boolean[][][] visited = new boolean[n][m][k + 1]; // k+1 since k is not index
         int res = 0;
 
         visited[0][0][k] = true;

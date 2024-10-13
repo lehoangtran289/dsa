@@ -105,25 +105,6 @@ public class VPC_06 {
         return YES;
     }
 
-    static class Rule {
-        int type; // 1: A, 0: D
-        long start;
-        long end;
-
-        Rule(int type, long start, long end) {
-            this.type = type;
-            this.start = start;
-            this.end = end;
-        }
-
-        @Override
-        public String toString() {
-            return type + " " + start + " " + end;
-        }
-    }
-
-    // ======================================================================================
-
     private static String[] stringArray(int n, boolean oneIndexed) {
         int i = 0;
         String s[] = new String[n];
@@ -138,6 +119,8 @@ public class VPC_06 {
         }
         return s;
     }
+
+    // ======================================================================================
 
     private static long readLong() {
         return reader.nextLong();
@@ -257,6 +240,23 @@ public class VPC_06 {
 
     private long addMod(long a, long b) {
         return (a + b) % mod;
+    }
+
+    static class Rule {
+        int type; // 1: A, 0: D
+        long start;
+        long end;
+
+        Rule(int type, long start, long end) {
+            this.type = type;
+            this.start = start;
+            this.end = end;
+        }
+
+        @Override
+        public String toString() {
+            return type + " " + start + " " + end;
+        }
     }
 
     static class FastReader {

@@ -4,6 +4,22 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class _0_GraphUtils {
+    public static List<Integer>[] createGraph(int n) {
+        List<Integer>[] graph = new List[n];
+        for (int i = 0; i < n; i++) graph[i] = new ArrayList<>();
+        return graph;
+    }
+
+    public static void addEdgeDi(List<Integer>[] graph, int from, int to) {
+        graph[from].add(to);
+        graph[to].add(from);
+    }
+
+    public static void addEdgeUndi(List<Integer>[] graph, int from, int to) {
+        graph[from].add(to);
+        graph[to].add(from);
+    }
+
     static class Graph {
         private final int V; // number of vertices
         private final ArrayList<Integer>[] adj; // adjacency list
@@ -24,21 +40,5 @@ public class _0_GraphUtils {
             adj[u].add(v);
             adj[v].add(u);
         }
-    }
-
-    public static List<Integer>[] createGraph(int n) {
-        List<Integer>[] graph = new List[n];
-        for (int i = 0; i < n; i++) graph[i] = new ArrayList<>();
-        return graph;
-    }
-
-    public static void addEdgeDi(List<Integer>[] graph, int from, int to) {
-        graph[from].add(to);
-        graph[to].add(from);
-    }
-
-    public static void addEdgeUndi(List<Integer>[] graph, int from, int to) {
-        graph[from].add(to);
-        graph[to].add(from);
     }
 }

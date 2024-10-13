@@ -59,16 +59,6 @@ public class VPC_G_TramPhatSong {
         }
     }
 
-    static class Interval {
-        int start;
-        int end;
-
-        Interval(int start, int end) {
-            this.start = start;
-            this.end = end;
-        }
-    }
-
     public static long sol(int n, int x, int y, int[][] stations) {
         List<Interval> xIntervals = new ArrayList<>();
         List<Interval> yIntervals = new ArrayList<>();
@@ -114,8 +104,6 @@ public class VPC_G_TramPhatSong {
         return result;
     }
 
-    // ======================================================================================
-
     private static String[] stringArray(int n, boolean oneIndexed) {
         int i = 0;
         String s[] = new String[n];
@@ -130,6 +118,8 @@ public class VPC_G_TramPhatSong {
         }
         return s;
     }
+
+    // ======================================================================================
 
     private static long readLong() {
         return reader.nextLong();
@@ -249,6 +239,16 @@ public class VPC_G_TramPhatSong {
 
     private long addMod(long a, long b) {
         return (a + b) % mod;
+    }
+
+    static class Interval {
+        int start;
+        int end;
+
+        Interval(int start, int end) {
+            this.start = start;
+            this.end = end;
+        }
     }
 
     static class FastReader {

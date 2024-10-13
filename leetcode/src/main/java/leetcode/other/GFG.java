@@ -11,10 +11,33 @@ class GFG {
     static final int NIL = 0;
     static final int INF = Integer.MAX_VALUE;
 
+    public static void main(String[] args) {
+
+        BipGraph g = new BipGraph(4, 4);
+        g.addEdge(1, 2);
+        g.addEdge(1, 3);
+        g.addEdge(2, 1);
+        g.addEdge(3, 2);
+        g.addEdge(4, 2);
+        g.addEdge(4, 4);
+
+        System.out.println("Size of maximum matching is " +
+                g.hopcroftKarp());
+    }
+
     static class BipGraph {
         int m, n;
         List<Integer>[] adj;
         int[] pairU, pairV, dist;
+
+        // Constructor
+        @SuppressWarnings("unchecked")
+        public BipGraph(int m, int n) {
+            this.m = m;
+            this.n = n;
+            adj = new ArrayList[m + 1];
+            Arrays.fill(adj, new ArrayList<>());
+        }
 
         int hopcroftKarp() {
             pairU = new int[m + 1];
@@ -80,32 +103,9 @@ class GFG {
             return true;
         }
 
-        // Constructor
-        @SuppressWarnings("unchecked")
-        public BipGraph(int m, int n) {
-            this.m = m;
-            this.n = n;
-            adj = new ArrayList[m + 1];
-            Arrays.fill(adj, new ArrayList<>());
-        }
-
         void addEdge(int u, int v) {
             adj[u].add(v);
         }
-    }
-
-    public static void main(String[] args) {
-
-        BipGraph g = new BipGraph(4, 4);
-        g.addEdge(1, 2);
-        g.addEdge(1, 3);
-        g.addEdge(2, 1);
-        g.addEdge(3, 2);
-        g.addEdge(4, 2);
-        g.addEdge(4, 4);
-
-        System.out.println("Size of maximum matching is " +
-                g.hopcroftKarp());
     }
 }
 

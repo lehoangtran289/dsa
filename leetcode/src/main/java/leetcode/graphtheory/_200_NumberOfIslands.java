@@ -4,6 +4,8 @@ import java.util.ArrayDeque;
 import java.util.Deque;
 
 public class _200_NumberOfIslands {
+    static int[][] directions = new int[][]{{0, 1}, {0, -1}, {1, 0}, {-1, 0}}; // right, left, down, up
+
     public static void main(String[] args) {
         char[][] grid = new char[][]{
                 {'1', '1', '1', '1', '1', '1', '1', '1'},
@@ -17,7 +19,6 @@ public class _200_NumberOfIslands {
         System.out.println(numIslands(grid));
     }
 
-    static int[][] directions = new int[][]{{0, 1}, {0, -1}, {1, 0}, {-1, 0}}; // right, left, down, up
     public static int numIslands(char[][] grid) {
         int count = 0;
         for (int i = 0; i < grid.length; i++) {
@@ -43,7 +44,7 @@ public class _200_NumberOfIslands {
                 int newC = cur[1] + direction[1];
 
                 if (newR < 0 || newR >= grid.length || newC < 0 || newC >= grid[0].length
-                    || grid[newR][newC] != '1') // out of bounds image or not island
+                        || grid[newR][newC] != '1') // out of bounds image or not island
                     continue;
 
                 queue.offer(new int[]{newR, newC});

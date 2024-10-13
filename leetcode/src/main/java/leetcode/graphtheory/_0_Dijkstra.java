@@ -8,16 +8,6 @@ import java.util.List;
 import java.util.PriorityQueue;
 
 public class _0_Dijkstra {
-    static class Edge {
-        int v;
-        int w;
-
-        public Edge(int v, int w) {
-            this.v = v;
-            this.w = w;
-        }
-    }
-
     public static void dijkstra(List<Edge>[] graph, int s) {
         int n = graph.length;
         int[] dist = new int[n];
@@ -88,6 +78,16 @@ public class _0_Dijkstra {
         graph[5].add(new Edge(4, 3));
 
         dijkstra(graph, 0);
+    }
+
+    static class Edge {
+        int v;
+        int w;
+
+        public Edge(int v, int w) {
+            this.v = v;
+            this.w = w;
+        }
     }
 }
 

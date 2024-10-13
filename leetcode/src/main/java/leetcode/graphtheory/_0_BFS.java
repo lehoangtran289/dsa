@@ -10,6 +10,43 @@ import java.util.Queue;
 import java.util.Set;
 
 public class _0_BFS {
+    public static void main(String[] args) {
+        Graph g = new Graph(11);
+        g.addEdge(0, 1);
+        g.addEdge(0, 4);
+        g.addEdge(1, 0);
+        g.addEdge(1, 4);
+        g.addEdge(1, 2);
+        g.addEdge(2, 1);
+        g.addEdge(2, 3);
+        g.addEdge(2, 7);
+        g.addEdge(3, 2);
+        g.addEdge(3, 4);
+        g.addEdge(3, 5);
+        g.addEdge(3, 6);
+        g.addEdge(4, 0);
+        g.addEdge(4, 3);
+        g.addEdge(5, 3);
+        g.addEdge(5, 8);
+        g.addEdge(6, 3);
+        g.addEdge(6, 7);
+        g.addEdge(7, 2);
+        g.addEdge(7, 6);
+        g.addEdge(7, 8);
+        g.addEdge(7, 9);
+        g.addEdge(8, 5);
+        g.addEdge(8, 7);
+        g.addEdge(8, 10);
+        g.addEdge(9, 7);
+        g.addEdge(10, 8);
+
+        System.out.print("Start BFS from 0: ");
+        g.bfs(0);
+        System.out.println();
+
+        g.bfs(0, 10);
+    }
+
     static class Graph {
         private final int V; // number of vertices
         private final ArrayList<Integer>[] adj; // adjacency list
@@ -92,42 +129,5 @@ public class _0_BFS {
             System.out.println("Path from " + src + " to " + dest + ": " + path);
             System.out.println("Distance: " + d[dest]);
         }
-    }
-
-    public static void main(String[] args) {
-        Graph g = new Graph(11);
-        g.addEdge(0, 1);
-        g.addEdge(0, 4);
-        g.addEdge(1, 0);
-        g.addEdge(1, 4);
-        g.addEdge(1, 2);
-        g.addEdge(2, 1);
-        g.addEdge(2, 3);
-        g.addEdge(2, 7);
-        g.addEdge(3, 2);
-        g.addEdge(3, 4);
-        g.addEdge(3, 5);
-        g.addEdge(3, 6);
-        g.addEdge(4, 0);
-        g.addEdge(4, 3);
-        g.addEdge(5, 3);
-        g.addEdge(5, 8);
-        g.addEdge(6, 3);
-        g.addEdge(6, 7);
-        g.addEdge(7, 2);
-        g.addEdge(7, 6);
-        g.addEdge(7, 8);
-        g.addEdge(7, 9);
-        g.addEdge(8, 5);
-        g.addEdge(8, 7);
-        g.addEdge(8, 10);
-        g.addEdge(9, 7);
-        g.addEdge(10, 8);
-
-        System.out.print("Start BFS from 0: ");
-        g.bfs(0);
-        System.out.println();
-
-        g.bfs(0, 10);
     }
 }

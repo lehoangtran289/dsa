@@ -35,15 +35,6 @@ public class VPC2_F {
         reader = new FastReader(is);
     }
 
-    static class Point {
-        int x, y;
-
-        public Point(int x, int y) {
-            this.x = x;
-            this.y = y;
-        }
-    }
-
     public static void main(String[] args) {
         try {
             PrintStream out = System.out;
@@ -168,8 +159,6 @@ public class VPC2_F {
         return res.toString();
     }
 
-    // ======================================================================================
-
     private static String[] stringArray(int n, boolean oneIndexed) {
         int i = 0;
         String s[] = new String[n];
@@ -184,6 +173,8 @@ public class VPC2_F {
         }
         return s;
     }
+
+    // ======================================================================================
 
     private static long readLong() {
         return reader.nextLong();
@@ -303,6 +294,15 @@ public class VPC2_F {
 
     private long addMod(long a, long b) {
         return (a + b) % mod;
+    }
+
+    static class Point {
+        int x, y;
+
+        public Point(int x, int y) {
+            this.x = x;
+            this.y = y;
+        }
     }
 
     static class FastReader {

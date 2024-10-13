@@ -7,22 +7,6 @@ import java.util.List;
 import java.util.PriorityQueue;
 
 public class _743_NetworkDelayTime {
-    public int networkDelayTime(int[][] times, int n, int k) {
-        List<int[]>[] graph = new List[n];
-
-        for (int i = 0; i < n; i++)
-            graph[i] = new ArrayList<>();
-
-        for (int[] time : times) {
-            final int u = time[0] - 1;
-            final int v = time[1] - 1;
-            final int w = time[2];
-            graph[u].add(new int[]{v, w});
-        }
-
-        return dijkstra(graph, k - 1);
-    }
-
     public static int dijkstra(List<int[]>[] graph, int s) {
         int n = graph.length;
         int[] dist = new int[n];
@@ -48,5 +32,21 @@ public class _743_NetworkDelayTime {
         }
         int maxDist = Arrays.stream(dist).max().getAsInt();
         return maxDist == Integer.MAX_VALUE ? -1 : maxDist;
+    }
+
+    public int networkDelayTime(int[][] times, int n, int k) {
+        List<int[]>[] graph = new List[n];
+
+        for (int i = 0; i < n; i++)
+            graph[i] = new ArrayList<>();
+
+        for (int[] time : times) {
+            final int u = time[0] - 1;
+            final int v = time[1] - 1;
+            final int w = time[2];
+            graph[u].add(new int[]{v, w});
+        }
+
+        return dijkstra(graph, k - 1);
     }
 }

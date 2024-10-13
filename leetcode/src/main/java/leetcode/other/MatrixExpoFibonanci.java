@@ -28,7 +28,7 @@ public class MatrixExpoFibonanci {
     // Function to find (Matrix M ^ expo)
     public static long[][] power(long[][] M, int expo) {
         // Initialize result with identity matrix
-        long[][] ans = { { 1, 0 }, { 0, 1 } };
+        long[][] ans = {{1, 0}, {0, 1}};
 
         // Fast exponentiation
         while (expo > 0) {
@@ -49,9 +49,9 @@ public class MatrixExpoFibonanci {
             return 1;
         }
 
-        long[][] M = { { 1, 1 }, { 1, 0 } };
+        long[][] M = {{1, 1}, {1, 0}};
         // F(0) = 1, F(1) = 1
-        long[][] F = { { 1, 0 }, { 0, 0 } };
+        long[][] F = {{1, 0}, {0, 0}};
 
         // Multiply matrix M (n - 2) times
         long[][] res = power(M, n - 2);
@@ -59,7 +59,7 @@ public class MatrixExpoFibonanci {
         // Multiply resultant with matrix F
         multiply(res, F);
 
-        return (int)((res[0][0] + res[1][0]) % MOD);
+        return (int) ((res[0][0] + res[1][0]) % MOD);
     }
 
     public static void main(String[] args) {

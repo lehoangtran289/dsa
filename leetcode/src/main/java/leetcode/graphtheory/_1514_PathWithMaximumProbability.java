@@ -11,16 +11,6 @@ public class _1514_PathWithMaximumProbability {
                 , 0, 2));
     }
 
-    static class Edge {
-        int v;
-        double w;
-
-        public Edge(int v, double w) {
-            this.v = v;
-            this.w = w;
-        }
-    }
-
     public static double maxProbability(int n, int[][] edges, double[] succProb, int start_node, int end_node) {
         List<Edge>[] graph = new List[n];
         for (int i = 0; i < n; ++i) {
@@ -62,5 +52,15 @@ public class _1514_PathWithMaximumProbability {
             }
         }
         return dist[dst] != 0 ? dist[dst] : 0;
+    }
+
+    static class Edge {
+        int v;
+        double w;
+
+        public Edge(int v, double w) {
+            this.v = v;
+            this.w = w;
+        }
     }
 }
