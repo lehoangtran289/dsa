@@ -1,5 +1,6 @@
 package leetcode.array;
 
+import java.util.Collections;
 import java.util.PriorityQueue;
 
 public class M_2530_MaxScoreAfterKOperations {
@@ -9,7 +10,7 @@ public class M_2530_MaxScoreAfterKOperations {
     }
 
     public long maxKelements(int[] nums, int k) {
-        PriorityQueue<Integer> pq = new PriorityQueue<>((a, b) -> b - a);
+        PriorityQueue<Integer> pq = new PriorityQueue<>(Collections.reverseOrder());
         for (int n : nums) {
             pq.offer(n);
         }
