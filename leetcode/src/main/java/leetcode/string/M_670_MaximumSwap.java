@@ -8,6 +8,7 @@ public class M_670_MaximumSwap {
         System.out.println(new M_670_MaximumSwap().maximumSwap(9973));
     }
 
+    // swap (first element in the left) that is less than (its max right element)
     public int maximumSwap(int num) {
         char[] nums = String.valueOf(num).toCharArray();
         int[] maxRight = new int[nums.length];
