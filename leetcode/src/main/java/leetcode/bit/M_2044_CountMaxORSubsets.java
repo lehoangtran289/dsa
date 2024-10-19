@@ -11,6 +11,8 @@ public class M_2044_CountMaxORSubsets {
     public int countMaxOrSubsets(int[] nums) {
         Map<Integer, Integer> freq = new HashMap<>();
         int max = Integer.MIN_VALUE;
+
+        // enumerate using mask
         for (int mask = 0; mask < (1 << nums.length); ++mask) {
             int cur = 0;
 
