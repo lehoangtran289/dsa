@@ -1,7 +1,5 @@
 package leetcode.bit;
 
-import codeforce.cf933_div3.A;
-
 public class M_1545_FindKthBitInString {
     public static void main(String[] args) {
         System.out.println(new M_1545_FindKthBitInString().findKthBit(4, 11));
