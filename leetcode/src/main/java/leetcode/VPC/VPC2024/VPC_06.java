@@ -1,14 +1,17 @@
-package leetcode.VPC2024;
+package leetcode.VPC.VPC2024;
 
-public class VPC_08 {
+import java.util.ArrayList;
+import java.util.List;
+
+public class VPC_06 {
     private static final boolean IS_LOCAL = true;
-    private static final String INPUT_FILE = "src/main/java/leetcode/VPC2024/input/08.inp";
+    private static final String INPUT_FILE = "src/main/java/leetcode/VPC2024/input/06.inp";
 
     // ----------------------------------------------------------------
 
     private final static FastReader reader;
-    private final static String YES = "YES";
-    private final static String NO = "NO";
+    private final static String YES = "Y";
+    private final static String NO = "N";
     private final static long mod = (long) 1e9 + 7;
 
     // ----------------------------------------------------------------
@@ -28,6 +31,59 @@ public class VPC_08 {
             java.io.PrintStream out = System.out;
 
             // INPUT -----------------------------------------------
+            int m = readInt();
+            List<Rule> rules = new ArrayList<>();
+
+            long min = -1;
+            long max = 1L << 33;
+
+            for (int i = 0; i < m; ++i) {
+                String commandStr = readStr();
+                String ipStr = readStr();
+
+                String[] temp = ipStr.split("/");
+                String ip = temp[0];
+                int n = temp.length == 1 ? 32 : Integer.parseInt(temp[1]);
+                temp = ip.split("\\.");
+
+                long x1 = Integer.parseInt(temp[0]);
+                long x2 = Integer.parseInt(temp[1]);
+                long x3 = Integer.parseInt(temp[2]);
+                long x4 = Integer.parseInt(temp[3]);
+
+                long start = (x1 << 24) | (x2 << 16) | (x3 << 8) | x4;
+                long end;
+                if (n == 32) {
+                    end = start;
+                } else {
+                    end = (start + (1L << (32 - n)));
+                    end -= 1;
+                }
+
+                switch (commandStr) {
+                    case "A":
+//                        System.out.println("A: " + start + " " + end);
+                        rules.add(new Rule(1, start, end));
+                        min = Math.min(start, min);
+                        max = Math.max(end, max);
+                        break;
+                    case "D":
+//                        System.out.println("D: " + start + " " + end);
+                        rules.add(new Rule(0, start, end));
+                        min = Math.min(start, min);
+                        max = Math.max(end, max);
+                        break;
+                    case "?":
+//                        System.out.print("Check: " + start + " => ");
+                        if (start < min || start > max) System.out.println(NO);
+                        else {
+                            System.out.println(query(new Rule(-1, start, start), rules));
+                        }
+                        break;
+                }
+//                System.out.println("COMMAND:" + " " + type + " " + ip + " " + start + " " + end + " " + n);
+            }
+//            System.out.println(rules);
 
             // SOLUTION --------------------------------------------
 
@@ -39,7 +95,15 @@ public class VPC_08 {
         }
     }
 
-    // ======================================================================================
+    static String query(Rule check, List<Rule> rules) {
+        long ip = check.start;
+        for (Rule rule : rules) {
+            if (ip < rule.start || ip > rule.end) continue;
+            if (rule.type == 1) return YES;
+            else return NO;
+        }
+        return YES;
+    }
 
     private static String[] stringArray(int n, boolean oneIndexed) {
         int i = 0;
@@ -55,6 +119,8 @@ public class VPC_08 {
         }
         return s;
     }
+
+    // ======================================================================================
 
     private static long readLong() {
         return reader.nextLong();
@@ -174,6 +240,23 @@ public class VPC_08 {
 
     private long addMod(long a, long b) {
         return (a + b) % mod;
+    }
+
+    static class Rule {
+        int type; // 1: A, 0: D
+        long start;
+        long end;
+
+        Rule(int type, long start, long end) {
+            this.type = type;
+            this.start = start;
+            this.end = end;
+        }
+
+        @Override
+        public String toString() {
+            return type + " " + start + " " + end;
+        }
     }
 
     static class FastReader {

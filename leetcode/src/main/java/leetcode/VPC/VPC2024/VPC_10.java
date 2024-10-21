@@ -1,8 +1,8 @@
-package leetcode.VPC2024;
+package leetcode.VPC.VPC2024;
 
-public class VPC_07 {
+public class VPC_10 {
     private static final boolean IS_LOCAL = true;
-    private static final String INPUT_FILE = "src/main/java/leetcode/VPC2024/input/07.inp";
+    private static final String INPUT_FILE = "src/main/java/leetcode/VPC2024/input/10.inp";
 
     // ----------------------------------------------------------------
 
