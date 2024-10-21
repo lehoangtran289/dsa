@@ -33,6 +33,7 @@ public class M_1593_SplitStringIntoMaxUniqueSubstrings {
         return backtrack(s, start, seen);
     }
 
+    // idea: find all possible substring and count
     public int backtrack(String s, int start, Set<String> seen) {
         if (start == s.length()) return 0;
 
