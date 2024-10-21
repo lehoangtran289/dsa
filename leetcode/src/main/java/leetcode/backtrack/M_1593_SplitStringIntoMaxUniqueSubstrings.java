@@ -1,4 +1,4 @@
-package leetcode.string;
+package leetcode.backtrack;
 
 import java.util.HashSet;
 import java.util.Set;
