@@ -1,4 +1,4 @@
-package leetcode.spanningtree;
+package leetcode.tree.spanningtree;
 
 public class _0_DisjointSets {
     private final int[] parent;

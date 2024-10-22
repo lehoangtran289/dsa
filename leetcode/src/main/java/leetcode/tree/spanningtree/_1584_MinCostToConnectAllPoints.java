@@ -1,4 +1,4 @@
-package leetcode.spanningtree;
+package leetcode.tree.spanningtree;
 
 import java.util.ArrayList;
 import java.util.Comparator;
