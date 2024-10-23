@@ -1,7 +1,6 @@
 package leetcode.tree.binarytree;
 
 import java.util.ArrayDeque;
-import java.util.Arrays;
 import java.util.Queue;
 
 public class _M_2641_CousinsInBinaryTreeII {
