@@ -3,10 +3,10 @@ package leetcode.tree.binarytree;
 import java.util.ArrayDeque;
 import java.util.Queue;
 
-public class _M_2641_CousinsInBinaryTreeII {
+public class M_2641_CousinsInBinaryTreeII {
     public static void main(String[] args) {
         TreeNode root = new TreeNode(5, new TreeNode(4, new TreeNode(1), new TreeNode(10)), new TreeNode(9, null, new TreeNode(7)));
-        System.out.println(new _M_2641_CousinsInBinaryTreeII().replaceValueInTree(root));
+        System.out.println(new M_2641_CousinsInBinaryTreeII().replaceValueInTree(root));
     }
 
     // 2 pass BFS
