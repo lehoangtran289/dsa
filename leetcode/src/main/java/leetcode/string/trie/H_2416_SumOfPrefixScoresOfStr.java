@@ -1,47 +1,34 @@
-package leetcode.string;
+package leetcode.string.trie;
 
 import java.util.Arrays;
-import java.util.List;
 
-public class M_139_WordBreak {
+public class H_2416_SumOfPrefixScoresOfStr {
     public static void main(String[] args) {
-        String s = "aaaaaaa";
-        List<String> wordDict = List.of("aaaa", "aaa");
-        System.out.println(new M_139_WordBreak().wordBreak(s, wordDict));
+        System.out.println(Arrays.toString(new H_2416_SumOfPrefixScoresOfStr().sumPrefixScores(new String[]{"abc", "ab", "bc", "b"})));
     }
 
-    public boolean wordBreak(String s, List<String> wordDict) {
+    public int[] sumPrefixScores(String[] words) {
         Trie trie = new Trie();
-        for (String word : wordDict) {
+        for (String word : words) {
             trie.insert(word);
         }
 
-        boolean[] dp = new boolean[s.length() + 1];
-        dp[0] = true;
-
-        for (int i = 0; i < s.length(); ++i) {
-            if (dp[i]) {
-                for (int j = i + 1; j <= s.length(); ++j) {
-                    if (trie.search(s.substring(i, j))) {
-                        dp[j] = true;
-                    }
-                }
-            }
+        int[] res = new int[words.length];
+        for (int i = 0; i < res.length; ++i) {
+            res[i] = trie.search(words[i]);
         }
-
-        // add word trace
-
-
-        return dp[s.length()];
+        return res;
     }
 
     static class TrieNode {
         TrieNode[] child = new TrieNode[26];
-        boolean isLeaf;
+        boolean isWord;
+        int score;
 
         TrieNode() {
             Arrays.fill(child, null);
-            isLeaf = false;
+            isWord = false;
+            score = 1;
         }
     }
 
@@ -58,22 +45,28 @@ public class M_139_WordBreak {
                 int index = chr - 'a';
                 if (node.child[index] == null) {
                     node.child[index] = new TrieNode(); // If node for current character does not exist then make a new node
+                } else {
+                    node.child[index].score++;
                 }
                 node = node.child[index]; // Move the curr pointer to the newly created node
             }
-            node.isLeaf = true;
+            node.isWord = true;
         }
 
-        boolean search(String key) {
+        int search(String key) {
             TrieNode node = root;
+            int score = 0;
             for (char chr : key.toCharArray()) {
                 int index = chr - 'a';
                 if (node.child[index] == null) {
-                    return false;
+                    return 0;
+                } else {
+                    score += node.child[index].score;
                 }
                 node = node.child[index];
             }
-            return node != null && node.isLeaf;
+            if (node != null && node.isWord) return score;
+            else return 0;
         }
 
         boolean startsWith(String prefix) {
@@ -89,7 +82,7 @@ public class M_139_WordBreak {
         }
 
         void display(TrieNode node, char[] str, int level) {
-            if (node.isLeaf) {
+            if (node.isWord) {
                 str[level] = '\0';
                 System.out.println(new String(str, 0, level));
             }
