@@ -1,5 +1,7 @@
 package leetcode.dp;
 
+import java.util.Arrays;
+
 public class M_1277_CountSquareSubmatricesWithAllOnes {
     public static void main(String[] args) {
         int[][] matrix = {
@@ -10,6 +12,7 @@ public class M_1277_CountSquareSubmatricesWithAllOnes {
         System.out.println(new M_1277_CountSquareSubmatricesWithAllOnes().countSquares(matrix));
     }
 
+    // count number of squares at a specific cells and save to dp
     private int solve(int i, int j, int[][] matrix, int[][] dp) {
         if (i >= matrix.length || j >= matrix[0].length) return 0;
         if (matrix[i][j] == 0) return 0;
@@ -37,9 +40,10 @@ public class M_1277_CountSquareSubmatricesWithAllOnes {
         int count = 0;
         for (int i = 0; i < rows; ++i) {
             for (int j = 0; j < cols; ++j) {
-                count += solve(i, j, matrix, dp);
+                count += solve(i, j, matrix, dp); // number of ones's square at this cell
             }
         }
+        System.out.println(Arrays.deepToString(dp));
 
         return count;
     }
