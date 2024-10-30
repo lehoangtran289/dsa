@@ -1,5 +1,7 @@
 package leetcode.dp;
 
+import java.util.Arrays;
+
 public class M_300_LongestIncreasingSubsequence {
     public static void main(String[] args) {
         M_300_LongestIncreasingSubsequence obj = new M_300_LongestIncreasingSubsequence();
@@ -14,27 +16,22 @@ public class M_300_LongestIncreasingSubsequence {
      * LIS[i] = 1 OR LIS[j] + 1 for j < i and nums[j] < nums[i], where LIS[j] is the length of the longest increasing subsequence ending at index j.
      */
     public int lengthOfLIS(int[] nums) {
-        // LIS[i] = length of the longest increasing subsequence ending at index i
-        // initialize LIS[i] = 1 for all i
-        int[] LIS = new int[nums.length];
-        for (int i = 0; i < nums.length; ++i) {
-            LIS[i] = 1;
-        }
+        int[] dp = new int[nums.length];
+        Arrays.fill(dp, 1);
 
-        // LIS[i] = max(LIS[j] + 1) for all j < i and nums[j] < nums[i]
-        for (int i = 1; i < nums.length; i++) {
+        int maxLength = 0;
+        for (int i = 1; i < nums.length; ++i) {
             for (int j = 0; j < i; ++j) {
-                if (nums[i] > nums[j]) {
-                    LIS[i] = Math.max(LIS[j] + 1, LIS[i]);
+                if (nums[j] < nums[i]) {
+                    dp[i] = Math.max(dp[i], dp[j] + 1);
                 }
             }
         }
 
-        // find max(LIS[i])
-        int max = -1;
-        for (int n : LIS) {
-            max = Math.max(max, n);
+        for (int n : dp) {
+            maxLength = Math.max(maxLength, n);
         }
-        return max;
+
+        return maxLength;
     }
 }
