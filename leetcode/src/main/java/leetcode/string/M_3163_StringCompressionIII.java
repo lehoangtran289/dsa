@@ -4,6 +4,7 @@ public class M_3163_StringCompressionIII {
     public static void main(String[] args) {
         System.out.println(compressedString("aba"));
         System.out.println(compressedString("aabb"));
+        System.out.println(compressedString("aaaaaaaaaaaaaabb"));
     }
 
     public static String compressedString(String word) {
