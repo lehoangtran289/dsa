@@ -12,15 +12,21 @@ public class M_3163_StringCompressionIII {
 
         int i = 0;
         while (i < word.length()) {
-            int count = 0;
             char cur = word.charAt(i);
-            while (i < word.length() && word.charAt(i) == cur && count < 9) {
+            int count = 0;
+            while (i < word.length() && word.charAt(i) == cur) {
                 i++;
                 count++;
             }
+
+            if (count > 9) {
+                while (count > 9) {
+                    res.append(9).append(cur);
+                    count -= 9;
+                }
+            }
             res.append(count).append(cur);
         }
-
         return res.toString();
     }
 }
