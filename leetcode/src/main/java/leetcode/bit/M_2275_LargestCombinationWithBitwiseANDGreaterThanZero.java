@@ -7,17 +7,15 @@ public class M_2275_LargestCombinationWithBitwiseANDGreaterThanZero {
 
     public static int largestCombination(int[] candidates) {
         int[] bitIndex = new int[24];
+        int max = 0;
+
         for (int n : candidates) {
             for (int i = 0; i < 24; ++i) {
                 if ((n & (1 << i)) != 0) {
                     bitIndex[i]++;
+                    max = Math.max(bitIndex[i], max);
                 }
             }
-        }
-
-        int max = 0;
-        for (int idx : bitIndex) {
-            max = Math.max(idx, max);
         }
 
         return max;
