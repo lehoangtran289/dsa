@@ -2,7 +2,7 @@ package leetcode.array;
 
 import java.util.Arrays;
 
-public class M_2601_Prime_Subtraction_Operation {
+public class M_2601_PrimeSubtractionOperation {
     public static void main(String[] args) {
         System.out.println(primeSubOperation(new int[] {5, 8, 3}));
     }
