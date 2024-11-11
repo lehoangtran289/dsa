@@ -7,12 +7,13 @@ public class E_121_BestTimeToBuySellStock {
     }
 
     public int maxProfit(int[] nums) {
-        int min = Integer.MAX_VALUE;
-        int max = 0;
+        int minSoFar = Integer.MAX_VALUE;
+
+        int maxProfit = 0;
         for (int num : nums) {
-            min = Math.min(min, num); // min price so far
-            max = Math.max(max, num - min); // max prof so far
+            minSoFar = Math.min(minSoFar, num); // min price so far
+            maxProfit = Math.max(maxProfit, num - minSoFar); // max prof so far
         }
-        return max;
+        return maxProfit;
     }
 }
