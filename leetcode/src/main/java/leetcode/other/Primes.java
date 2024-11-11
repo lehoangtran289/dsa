@@ -5,6 +5,9 @@ import java.util.Arrays;
 import java.util.List;
 
 public class Primes {
+    public static void main(String[] args) {
+        System.out.println(buildPrimes(30));
+    }
 
     public static boolean isPrime(long n) {
         if (n <= 1)
@@ -16,22 +19,27 @@ public class Primes {
         return true;
     }
 
-    public static List<Long> buildPrimes(long n) {
+    public static boolean[] buildPrimeFilter(long n) {
         boolean[] primes = new boolean[(int) n + 1];
         Arrays.fill(primes, true);
         primes[0] = false;
         primes[1] = false;
 
-        for (int i = 2; (long) i * i <= n; ++i) {
+        for (int i = 2; i <= Math.sqrt(n); ++i) {
             if (primes[i]) {
                 for (int j = i * i; j <= n; j += i) {
                     primes[j] = false;
                 }
             }
         }
+        return primes;
+    }
+
+    public static List<Long> buildPrimes(long n) {
+        boolean[] isPrimes = buildPrimeFilter(n);
         List<Long> result = new ArrayList<>();
-        for (int i = 0; (long) i * i <= n; ++i) {
-            if (primes[i]) {
+        for (int i = 0; i <= n; ++i) {
+            if (isPrimes[i]) {
                 result.add((long) i);
             }
         }
@@ -52,7 +60,4 @@ public class Primes {
         return cnt;
     }
 
-    public static void main(String[] args) {
-        System.out.println(primeCount(1));
-    }
 }
