@@ -38,10 +38,21 @@ public class M_2064_MinimizedMaximumOfProductsDistributedToAnyStore {
             }
         }
 
-        for (int i = arr.length - 1; i >= 0; --i) {
-            if (arr[i] != 0) return false;
+        return arr[arr.length - 1] == 0;
+    }
+
+    public static boolean isDistributedO1Space(int n, int[] nums, int mid) {
+        int remain = nums[0];
+        for (int num : nums) {
+            remain = num;
+
+            if (n == 0) return false;
+            while (remain > 0 && n > 0) {
+                remain -= remain >= mid ? mid : remain % mid;
+                n--;
+            }
         }
 
-        return true;
+        return remain == 0;
     }
 }
