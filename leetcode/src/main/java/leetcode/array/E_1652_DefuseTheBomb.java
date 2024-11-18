@@ -4,7 +4,7 @@ import java.util.Arrays;
 
 public class E_1652_DefuseTheBomb {
     public static void main(String[] args) {
-        System.out.println(Arrays.toString(decrypt(new int[]{2,4,9,3}, -2)));
+        System.out.println(Arrays.toString(decrypt(new int[]{2, 4, 9, 3}, -2)));
     }
 
     public static int[] decrypt(int[] code, int k) {
