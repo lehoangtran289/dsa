@@ -17,12 +17,12 @@ public class M_1975_MaximumMatrixSum {
         boolean is0Exist = false;
 
         for (int[] row : matrix) {
-            for (int i = 0; i < matrix[0].length; ++i) {
-                total += Math.abs(row[i]);
-                minVal = Math.min(minVal, Math.abs(row[i]));
+            for (int val : row) {
+                total += Math.abs(val);
+                minVal = Math.min(minVal, Math.abs(val));
 
-                if (row[i] == 0) is0Exist = true;
-                if (!is0Exist && row[i] < 0) countNeg++;
+                if (val == 0) is0Exist = true;
+                if (!is0Exist && val < 0) countNeg++;
             }
         }
 
