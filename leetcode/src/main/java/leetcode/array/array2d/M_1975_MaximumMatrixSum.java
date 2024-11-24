@@ -26,7 +26,6 @@ public class M_1975_MaximumMatrixSum {
             }
         }
 
-        if (is0Exist) return total;
-        else return countNeg % 2 == 0 ? total : total - minVal * 2L;
+        return is0Exist || countNeg % 2 == 0 ? total : total - minVal * 2L;
     }
 }
