@@ -10,22 +10,21 @@ public class M_1975_MaximumMatrixSum {
         System.out.println(maxMatrixSum(new int[][]{{1,2,3},{-1,-2,-3},{1,2,3}})); // 16
     }
 
+    // no need to keep track 0 - since minVal will be 0
     public static long maxMatrixSum(int[][] matrix) {
         long total = 0;
         int minVal = Integer.MAX_VALUE;
         int countNeg = 0;
-        boolean is0Exist = false;
 
         for (int[] row : matrix) {
             for (int val : row) {
                 total += Math.abs(val);
                 minVal = Math.min(minVal, Math.abs(val));
 
-                if (val == 0) is0Exist = true;
-                if (!is0Exist && val < 0) countNeg++;
+                if (val < 0) countNeg++;
             }
         }
 
-        return is0Exist || countNeg % 2 == 0 ? total : total - minVal * 2L;
+        return countNeg % 2 == 0 ? total : total - minVal * 2L;
     }
 }
