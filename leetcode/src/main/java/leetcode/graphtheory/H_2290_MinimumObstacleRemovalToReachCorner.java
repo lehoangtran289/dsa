@@ -3,7 +3,7 @@ package leetcode.graphtheory;
 import java.util.Arrays;
 import java.util.PriorityQueue;
 
-public class M_2290_MinimumObstacleRemovalToReachCorner {
+public class H_2290_MinimumObstacleRemovalToReachCorner {
     public static void main(String[] args) {
         System.out.println(minimumObstacles(new int[][]{{0, 1, 0, 0, 0}, {0, 1, 0, 1, 0}, {0, 0, 0, 1, 0}}));
         System.out.println(minimumObstacles(new int[][]{{0, 1, 1}, {1, 1, 0}, {1, 1, 0}}));
