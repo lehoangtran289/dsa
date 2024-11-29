@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.PriorityQueue;
 
-public class _1514_PathWithMaximumProbability {
+public class M_1514_PathWithMaximumProbability {
     public static void main(String[] args) {
         System.out.println(maxProbability(3,
                 new int[][]{{0, 1}, {1, 2}, {0, 2}}, new double[]{0.5, 0.5, 0.2}

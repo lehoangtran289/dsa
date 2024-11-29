@@ -6,7 +6,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.PriorityQueue;
 
-public class _743_NetworkDelayTime {
+public class M_743_NetworkDelayTime {
     public static int dijkstra(List<int[]>[] graph, int s) {
         int n = graph.length;
         int[] dist = new int[n];

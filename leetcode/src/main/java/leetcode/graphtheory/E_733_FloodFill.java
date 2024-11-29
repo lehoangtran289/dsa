@@ -3,7 +3,7 @@ package leetcode.graphtheory;
 import java.util.ArrayDeque;
 import java.util.Deque;
 
-public class _733_FloodFill {
+public class E_733_FloodFill {
     public static void main(String[] args) {
         int[][] image = new int[][]{
                 {1, 1, 1, 1, 1, 1, 1, 1},

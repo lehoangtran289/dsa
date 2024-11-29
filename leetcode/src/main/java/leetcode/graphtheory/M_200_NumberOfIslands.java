@@ -3,7 +3,7 @@ package leetcode.graphtheory;
 import java.util.ArrayDeque;
 import java.util.Deque;
 
-public class _200_NumberOfIslands {
+public class M_200_NumberOfIslands {
     static int[][] directions = new int[][]{{0, 1}, {0, -1}, {1, 0}, {-1, 0}}; // right, left, down, up
 
     public static void main(String[] args) {

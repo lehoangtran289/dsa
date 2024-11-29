@@ -3,7 +3,7 @@ package leetcode.graphtheory;
 import java.util.ArrayDeque;
 import java.util.Queue;
 
-public class _1293_ShortestPathInGridwObstacles {
+public class H_1293_ShortestPathInGridWithObstacles {
     public static void main(String[] args) {
         int[][] grid = new int[][]{
                 {0, 0, 0},

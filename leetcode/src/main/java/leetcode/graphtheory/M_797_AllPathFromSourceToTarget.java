@@ -3,7 +3,7 @@ package leetcode.graphtheory;
 import java.util.ArrayList;
 import java.util.List;
 
-public class _797_AllPathFromSourceToTarget {
+public class M_797_AllPathFromSourceToTarget {
     public static void main(String[] args) {
         System.out.println(allPathsSourceTarget(new int[][]{{1, 2}, {3}, {3}, {}}));
     }

@@ -9,7 +9,7 @@ import java.util.Queue;
 /**
  * TOPOLOGICAL SORT
  */
-public class _207_CourseSchedule {
+public class M_207_CourseSchedule {
     public static void main(String[] args) {
         System.out.println(canFinish(3, new int[][]{{1, 0}, {0, 1}, {0, 2}}));
     }
