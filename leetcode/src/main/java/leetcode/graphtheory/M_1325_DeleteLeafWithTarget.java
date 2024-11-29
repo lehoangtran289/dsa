@@ -7,6 +7,24 @@ package leetcode.graphtheory;
  * it should also be deleted (you need to continue doing that until you cannot).
  */
 public class M_1325_DeleteLeafWithTarget {
+    static class TreeNode {
+        int val;
+        TreeNode left;
+        TreeNode right;
+
+        TreeNode() {
+        }
+
+        TreeNode(int val) {
+            this.val = val;
+        }
+
+        TreeNode(int val, TreeNode left, TreeNode right) {
+            this.val = val;
+            this.left = left;
+            this.right = right;
+        }
+    }
     public TreeNode removeLeafNodes(TreeNode root, int target) {
         if (root == null) return null;
 
@@ -15,24 +33,5 @@ public class M_1325_DeleteLeafWithTarget {
 
         if (root.left == null && root.right == null && root.val == target) return null;
         return root;
-    }
-}
-
-class TreeNode {
-    int val;
-    TreeNode left;
-    TreeNode right;
-
-    TreeNode() {
-    }
-
-    TreeNode(int val) {
-        this.val = val;
-    }
-
-    TreeNode(int val, TreeNode left, TreeNode right) {
-        this.val = val;
-        this.left = left;
-        this.right = right;
     }
 }
