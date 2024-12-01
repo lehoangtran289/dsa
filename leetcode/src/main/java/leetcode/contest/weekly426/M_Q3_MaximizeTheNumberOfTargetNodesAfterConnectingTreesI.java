@@ -6,7 +6,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Queue;
 
-public class Q3_MaximizeTheNumberOfTargetNodesAfterConnectingTreesI {
+public class M_Q3_MaximizeTheNumberOfTargetNodesAfterConnectingTreesI {
     public static void main(String[] args) {
         int[][] edges1 = {{0, 1}, {0, 2}, {2, 3}, {2, 4}};
         int[][] edges2 = {{0, 1}, {0, 2}, {0, 3}, {2, 7}, {1, 4}, {4, 5}, {4, 6}};
