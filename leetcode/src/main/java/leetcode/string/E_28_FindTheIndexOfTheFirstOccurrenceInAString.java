@@ -1,4 +1,4 @@
-package leetcode.array;
+package leetcode.string;
 
 public class E_28_FindTheIndexOfTheFirstOccurrenceInAString {
     public static void main(String[] args) {
