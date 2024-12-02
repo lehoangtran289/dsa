@@ -6,10 +6,10 @@ public class E_100501_SmallestNumberWithAllSetBits {
     }
 
     public static int smallestNumber(int n) {
-        int i = 0;
-        while ((1 << i) - 1 < n) {
+        int i = n + 1;
+        while (true) {
+            if (Integer.bitCount(i) == 1) return i - 1;
             i++;
         }
-        return (1 << i) - 1;
     }
 }
