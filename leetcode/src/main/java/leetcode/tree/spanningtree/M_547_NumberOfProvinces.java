@@ -1,6 +1,6 @@
 package leetcode.tree.spanningtree;
 
-public class _574_NumberOfProvinces {
+public class M_547_NumberOfProvinces {
 
     public static void main(String[] args) {
         System.out.println(findCircleNum(new int[][]{{1, 1, 0}, {1, 1, 0}, {0, 0, 1}}));

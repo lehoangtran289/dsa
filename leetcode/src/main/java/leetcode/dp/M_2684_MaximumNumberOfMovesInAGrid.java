@@ -6,12 +6,12 @@ import java.util.Arrays;
  * Top down dp
  */
 public class M_2684_MaximumNumberOfMovesInAGrid {
+    public static int[] dirs = {-1, 0, 1};
+
     public static void main(String[] args) {
         int[][] grid = {{2, 4, 3, 5}, {5, 4, 9, 3}, {3, 4, 2, 11}, {10, 9, 13, 15}};
         System.out.println(new M_2684_MaximumNumberOfMovesInAGrid().maxMoves(grid));
     }
-
-    public static int[] dirs = {-1, 0, 1};
 
     public int maxMoves(int[][] grid) {
         int rows = grid.length;

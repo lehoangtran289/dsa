@@ -5,7 +5,7 @@ import java.util.Set;
 
 public class M_2461_MaximumSumofDistinctSubarraysWithLengthK {
     public static void main(String[] args) {
-        System.out.println(maximumSubarraySum(new int[] {1,5,4,2,9,9,9}, 3));
+        System.out.println(maximumSubarraySum(new int[]{1, 5, 4, 2, 9, 9, 9}, 3));
     }
 
     public static long maximumSubarraySum(int[] nums, int k) {

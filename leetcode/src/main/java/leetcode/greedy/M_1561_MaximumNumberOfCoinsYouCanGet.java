@@ -2,7 +2,7 @@ package leetcode.greedy;
 
 import java.util.Arrays;
 
-public class _1561_MaximumNumberOfCoinsYouCanGet {
+public class M_1561_MaximumNumberOfCoinsYouCanGet {
     public static void main(String[] args) {
         System.out.println(maxCoins(new int[]{9, 8, 7, 6, 5, 4, 3, 2, 1}));
     }

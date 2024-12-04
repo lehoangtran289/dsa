@@ -3,7 +3,7 @@ package leetcode.divideconquer;
 import java.util.HashSet;
 import java.util.Set;
 
-public class _1763_LongestNiceSubstring {
+public class E_1763_LongestNiceSubstring {
     public static void main(String[] args) {
         System.out.println(longestNiceSubstring("YazaAay"));
     }

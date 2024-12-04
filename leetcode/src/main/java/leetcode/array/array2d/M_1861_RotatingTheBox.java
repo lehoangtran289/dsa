@@ -4,9 +4,9 @@ import java.util.Arrays;
 
 public class M_1861_RotatingTheBox {
     public static void main(String[] args) {
-        char[][] box = {{'#','#','*','.','*','.'},
-                {'#','#','#','*','.','.'},
-                {'#','#','#','.','#','.'}};
+        char[][] box = {{'#', '#', '*', '.', '*', '.'},
+                {'#', '#', '#', '*', '.', '.'},
+                {'#', '#', '#', '.', '#', '.'}};
         System.out.println(Arrays.deepToString(rotateTheBox(box)));
     }
 

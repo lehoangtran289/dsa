@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
-public class _1584_MinCostToConnectAllPoints {
+public class M_1584_MinCostToConnectAllPoints {
     public static List<Edge> kruskal(int n, List<Edge> edges) {
         List<Edge> result = new ArrayList<>();
         edges.sort(Comparator.comparingInt(e -> e.weight));

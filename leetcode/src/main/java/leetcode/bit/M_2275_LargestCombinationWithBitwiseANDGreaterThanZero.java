@@ -2,7 +2,7 @@ package leetcode.bit;
 
 public class M_2275_LargestCombinationWithBitwiseANDGreaterThanZero {
     public static void main(String[] args) {
-        System.out.println(largestCombination(new int[]{16,16,48,71,62,12,24,14,17,18,19,20,10000}));
+        System.out.println(largestCombination(new int[]{16, 16, 48, 71, 62, 12, 24, 14, 17, 18, 19, 20, 10000}));
     }
 
     public static int largestCombination(int[] candidates) {

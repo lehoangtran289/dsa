@@ -6,9 +6,9 @@ import java.util.Map;
 
 public class M_3132_FindTheIntegerAddedToArray2 {
     public static void main(String[] args) {
-        System.out.println(minimumAddedInteger(new int[]{9,4,3,9,4}, new int[]{7,8,8})); // 4
-        System.out.println(minimumAddedInteger(new int[]{6,3,6,7}, new int[]{6,2})); // -1
-        System.out.println(minimumAddedInteger(new int[]{4,20,16,12,8}, new int[]{14,18,10})); // -2
+        System.out.println(minimumAddedInteger(new int[]{9, 4, 3, 9, 4}, new int[]{7, 8, 8})); // 4
+        System.out.println(minimumAddedInteger(new int[]{6, 3, 6, 7}, new int[]{6, 2})); // -1
+        System.out.println(minimumAddedInteger(new int[]{4, 20, 16, 12, 8}, new int[]{14, 18, 10})); // -2
     }
 
     public static int minimumAddedInteger(int[] nums1, int[] nums2) {

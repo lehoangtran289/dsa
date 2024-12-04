@@ -15,14 +15,14 @@ public class M_1593_SplitStringIntoMaxUniqueSubstrings {
      * Initialize an empty unordered set seen to track unique substrings encountered. </br>
      * Call the backtrack function starting from index 0 with the empty seen set.</br>
      * In the backtrack function:</br>
-     *     If start equals the size of the string s, return 0 (base case: no more substrings to add).</br>
-     *     Initialize maxCount to 0 to track the maximum number of unique substrings.</br>
-     *     Use a loop to iterate over all possible substrings starting from index start:</br>
-     *         For each end from start + 1 to the size of s, extract the substring s.substr(start, end - start).</br>
-     *         If the substring is unique (i.e., not found in seen):</br>
-     *              Insert the substring into the seen set.</br>
-     *              Recursively call backtrack for the next position (end) and update maxCount with the maximum of its current value and 1 + backtrack(s, end, seen) (including the current substring). </br>
-     *              Backtrack by removing the substring from the seen set to explore other possibilities.</br>
+     * If start equals the size of the string s, return 0 (base case: no more substrings to add).</br>
+     * Initialize maxCount to 0 to track the maximum number of unique substrings.</br>
+     * Use a loop to iterate over all possible substrings starting from index start:</br>
+     * For each end from start + 1 to the size of s, extract the substring s.substr(start, end - start).</br>
+     * If the substring is unique (i.e., not found in seen):</br>
+     * Insert the substring into the seen set.</br>
+     * Recursively call backtrack for the next position (end) and update maxCount with the maximum of its current value and 1 + backtrack(s, end, seen) (including the current substring). </br>
+     * Backtrack by removing the substring from the seen set to explore other possibilities.</br>
      * After evaluating all substrings, return maxCount.</br>
      */
 

@@ -12,7 +12,7 @@ public class E_20_ValidParenthesis {
 
         for (int i = 0; i < s.length(); ++i) {
             int c = s.charAt(i);
-            if (c == '{' || c == '[' || c == '(')  stack.add(c);
+            if (c == '{' || c == '[' || c == '(') stack.add(c);
             else if (stack.isEmpty()) return false;
 
             if (c == '}' && stack.pop() != '{') return false;

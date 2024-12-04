@@ -10,6 +10,9 @@ import java.util.Arrays;
  * To address this, we perform a second traversal in reverse preorder (root, right, left). <br>
  */
 public class H_2458_HeightOfBinaryTreeAfterSubtreeRemovalQueries {
+    static final int[] curMaxHeights = new int[11];
+    int curMaxHeight = 0;
+
     public static void main(String[] args) {
         TreeNode root = new TreeNode(5,
                 new TreeNode(8,
@@ -25,9 +28,6 @@ public class H_2458_HeightOfBinaryTreeAfterSubtreeRemovalQueries {
         System.out.println(Arrays.toString(new H_2458_HeightOfBinaryTreeAfterSubtreeRemovalQueries()
                 .treeQueries(root, new int[]{3, 2, 4, 8})));
     }
-
-    static final int[] curMaxHeights = new int[11];
-    int curMaxHeight = 0;
 
     public int[] treeQueries(TreeNode root, int[] queries) {
         treeTraverseLeft(root, 0);

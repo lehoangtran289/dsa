@@ -7,6 +7,16 @@ package leetcode.graph;
  * it should also be deleted (you need to continue doing that until you cannot).
  */
 public class M_1325_DeleteLeafWithTarget {
+    public TreeNode removeLeafNodes(TreeNode root, int target) {
+        if (root == null) return null;
+
+        root.left = removeLeafNodes(root.left, target);
+        root.right = removeLeafNodes(root.right, target);
+
+        if (root.left == null && root.right == null && root.val == target) return null;
+        return root;
+    }
+
     static class TreeNode {
         int val;
         TreeNode left;
@@ -24,14 +34,5 @@ public class M_1325_DeleteLeafWithTarget {
             this.left = left;
             this.right = right;
         }
-    }
-    public TreeNode removeLeafNodes(TreeNode root, int target) {
-        if (root == null) return null;
-
-        root.left = removeLeafNodes(root.left, target);
-        root.right = removeLeafNodes(root.right, target);
-
-        if (root.left == null && root.right == null && root.val == target) return null;
-        return root;
     }
 }

@@ -4,7 +4,7 @@ import java.util.Arrays;
 
 public class M_2601_PrimeSubtractionOperation {
     public static void main(String[] args) {
-        System.out.println(primeSubOperation(new int[] {5, 8, 3}));
+        System.out.println(primeSubOperation(new int[]{5, 8, 3}));
     }
 
     public static boolean primeSubOperation(int[] nums) {

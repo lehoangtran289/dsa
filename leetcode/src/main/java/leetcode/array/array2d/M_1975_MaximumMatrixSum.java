@@ -3,11 +3,11 @@ package leetcode.array.array2d;
 public class M_1975_MaximumMatrixSum {
     public static void main(String[] args) {
         System.out.println(maxMatrixSum(new int[][]{
-                {2,9,3},
-                {5,4,-4},
-                {1,7,1}}
+                {2, 9, 3},
+                {5, 4, -4},
+                {1, 7, 1}}
         )); // 34
-        System.out.println(maxMatrixSum(new int[][]{{1,2,3},{-1,-2,-3},{1,2,3}})); // 16
+        System.out.println(maxMatrixSum(new int[][]{{1, 2, 3}, {-1, -2, -3}, {1, 2, 3}})); // 16
     }
 
     // no need to keep track 0 - since minVal will be 0

@@ -116,6 +116,7 @@ public class _0_Tarjan_ConnectedComponents {
         // GET ALL BRIDGES
         // ======================================
         private int preCount; // preorder number counter, to track the order in which nodes are visited during DFS
+
         public Tarjan(List<Integer>[] graph) {
             V = graph.length;
             this.graph = graph;

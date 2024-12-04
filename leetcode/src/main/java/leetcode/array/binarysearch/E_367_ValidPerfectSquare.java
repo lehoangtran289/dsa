@@ -1,6 +1,6 @@
 package leetcode.array.binarysearch;
 
-public class _367_ValidPerfectSquare {
+public class E_367_ValidPerfectSquare {
     public static void main(String[] args) {
         System.out.println(isPerfectSquare(9));
     }

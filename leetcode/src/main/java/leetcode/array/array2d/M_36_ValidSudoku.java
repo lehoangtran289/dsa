@@ -6,9 +6,9 @@ import java.util.Set;
 public class M_36_ValidSudoku {
     public boolean isValidSudoku(char[][] board) {
         // validate rows
-        for (int i = 0; i < board.length; i ++) {
+        for (int i = 0; i < board.length; i++) {
             Set<Character> row = new HashSet<>();
-            for (int j = 0; j < board[0].length; j ++) {
+            for (int j = 0; j < board[0].length; j++) {
                 char cell = board[i][j];
                 if (cell != '.') {
                     if (row.contains(cell)) return false;
@@ -18,9 +18,9 @@ public class M_36_ValidSudoku {
         }
 
         // validate cols
-        for (int j = 0; j < board[0].length; j ++) {
+        for (int j = 0; j < board[0].length; j++) {
             Set<Character> col = new HashSet<>();
-            for (int i = 0; i < board.length; i ++) {
+            for (int i = 0; i < board.length; i++) {
                 char cell = board[i][j];
                 if (cell != '.') {
                     if (col.contains(cell)) return false;

@@ -3,14 +3,14 @@ package leetcode.array.array2d;
 import java.util.Arrays;
 
 public class M_2257_CountUnguardedCellsInTheGrid {
-    public static void main(String[] args) {
-        System.out.println(countUnguarded(4, 6, new int[][]{{0, 0}, {1, 1}, {2, 3}}, new int[][]{{0, 1}, {2, 2}, {1, 4}}));
-    }
-
     private static final int UNGUARDED = 0;
     private static final int GUARDED = 1;
     private static final int GUARD = 2;
     private static final int WALL = 3;
+
+    public static void main(String[] args) {
+        System.out.println(countUnguarded(4, 6, new int[][]{{0, 0}, {1, 1}, {2, 3}}, new int[][]{{0, 1}, {2, 2}, {1, 4}}));
+    }
 
     public static int countUnguarded(int m, int n, int[][] guards, int[][] walls) {
         int[][] map = new int[m][n];

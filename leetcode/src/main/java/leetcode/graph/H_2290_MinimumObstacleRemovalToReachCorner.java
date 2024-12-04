@@ -9,22 +9,6 @@ public class H_2290_MinimumObstacleRemovalToReachCorner {
         System.out.println(minimumObstacles(new int[][]{{0, 1, 1}, {1, 1, 0}, {1, 1, 0}}));
     }
 
-    static class Cell {
-        int x;
-        int y;
-        int weight;
-
-        public Cell(int x, int y, int weight) {
-            this.x = x;
-            this.y = y;
-            this.weight = weight;
-        }
-
-        public String toString() {
-            return x + "|" + y + "|" + weight;
-        }
-    }
-
     public static int minimumObstacles(int[][] grid) {
         int rows = grid.length;
         int cols = grid[0].length;
@@ -56,5 +40,21 @@ public class H_2290_MinimumObstacleRemovalToReachCorner {
         }
 
         return dist[rows - 1][cols - 1];
+    }
+
+    static class Cell {
+        int x;
+        int y;
+        int weight;
+
+        public Cell(int x, int y, int weight) {
+            this.x = x;
+            this.y = y;
+            this.weight = weight;
+        }
+
+        public String toString() {
+            return x + "|" + y + "|" + weight;
+        }
     }
 }

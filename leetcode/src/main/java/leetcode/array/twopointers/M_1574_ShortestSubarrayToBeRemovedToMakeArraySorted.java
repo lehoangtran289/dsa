@@ -27,8 +27,7 @@ public class M_1574_ShortestSubarrayToBeRemovedToMakeArraySorted {
             if (arr[l] <= arr[r]) {
                 res = Math.min(res, r - l - 1);
                 l++;
-            }
-            else r++;
+            } else r++;
         }
         //System.out.println(l + " " + r);
 

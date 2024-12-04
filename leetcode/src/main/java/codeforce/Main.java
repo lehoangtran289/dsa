@@ -6,6 +6,33 @@ import java.io.InputStreamReader;
 import java.util.StringTokenizer;
 
 public class Main {
+    public static void main(String[] args) {
+        MyScanner sc = new MyScanner();
+
+        // Start writing your solution here. -------------------------------------
+
+        int n = sc.nextInt();        // read input as integer
+        long k = sc.nextLong();       // read input as long
+        double d = sc.nextDouble();     // read input as double
+        String str = sc.next();           // read input as String
+        String s = sc.nextLine();       // read whole line as String
+
+        int result = 3 * n;
+        System.out.println(result);
+
+        int n1 = sc.nextInt();
+        int k1 = sc.nextInt();
+        int count = 0;
+        while (n1-- > 0) {
+            int x = sc.nextInt();
+            if (x % k1 == 0)
+                count++;
+        }
+        System.out.println(count);
+
+        // Stop writing your solution here. -------------------------------------
+    }
+
     static class MyScanner {
         BufferedReader br;
         StringTokenizer st;
@@ -50,32 +77,5 @@ public class Main {
             }
             return str;
         }
-    }
-
-    public static void main(String[] args) {
-        MyScanner sc = new MyScanner();
-
-        // Start writing your solution here. -------------------------------------
-
-        int n = sc.nextInt();        // read input as integer
-        long k = sc.nextLong();       // read input as long
-        double d = sc.nextDouble();     // read input as double
-        String str = sc.next();           // read input as String
-        String s = sc.nextLine();       // read whole line as String
-
-        int result = 3 * n;
-        System.out.println(result);
-
-        int n1 = sc.nextInt();
-        int k1 = sc.nextInt();
-        int count = 0;
-        while (n1-- > 0) {
-            int x = sc.nextInt();
-            if (x % k1 == 0)
-                count++;
-        }
-        System.out.println(count);
-
-        // Stop writing your solution here. -------------------------------------
     }
 }

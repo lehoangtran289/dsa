@@ -6,6 +6,21 @@ import java.io.InputStreamReader;
 import java.util.StringTokenizer;
 
 public class A {
+    public static void main(String[] args) {
+        MyScanner sc = new MyScanner();
+
+        // Start writing your solution here. -------------------------------------
+        int tests = sc.nextInt(); // number of test cases
+        while (tests-- > 0) {
+            int n = sc.nextInt();
+            int k = sc.nextInt();
+            if (k < n - 1) System.out.println(n);
+            else System.out.println(1);
+        }
+
+        // Stop writing your solution here. -------------------------------------
+    }
+
     static class MyScanner {
         BufferedReader br;
         StringTokenizer st;
@@ -50,20 +65,5 @@ public class A {
             }
             return str;
         }
-    }
-
-    public static void main(String[] args) {
-        MyScanner sc = new MyScanner();
-
-        // Start writing your solution here. -------------------------------------
-        int tests = sc.nextInt(); // number of test cases
-        while (tests-- > 0) {
-            int n = sc.nextInt();
-            int k = sc.nextInt();
-            if (k < n - 1) System.out.println(n);
-            else System.out.println(1);
-        }
-
-        // Stop writing your solution here. -------------------------------------
     }
 }

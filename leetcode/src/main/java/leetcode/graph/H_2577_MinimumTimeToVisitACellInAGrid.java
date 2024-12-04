@@ -4,18 +4,7 @@ import java.util.PriorityQueue;
 
 public class H_2577_MinimumTimeToVisitACellInAGrid {
     public static void main(String[] args) {
-        System.out.println(minimumTime(new int[][]{{0,1,3,2},{5,1,2,5},{4,3,8,6}}));
-    }
-
-    static class Cell {
-        int x;
-        int y;
-        int w;
-        public Cell(int x, int y, int w) {
-            this.x = x;
-            this.y = y;
-            this.w = w;
-        }
+        System.out.println(minimumTime(new int[][]{{0, 1, 3, 2}, {5, 1, 2, 5}, {4, 3, 8, 6}}));
     }
 
     /**
@@ -63,5 +52,17 @@ public class H_2577_MinimumTimeToVisitACellInAGrid {
         }
 
         return -1;
+    }
+
+    static class Cell {
+        int x;
+        int y;
+        int w;
+
+        public Cell(int x, int y, int w) {
+            this.x = x;
+            this.y = y;
+            this.w = w;
+        }
     }
 }

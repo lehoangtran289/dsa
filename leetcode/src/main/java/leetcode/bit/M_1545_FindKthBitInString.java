@@ -11,7 +11,7 @@ public class M_1545_FindKthBitInString {
         // generate until reach n or kth element
         for (int i = 1; i < n && k > str.length(); ++i) {
             str.append('1');
-            for (int j = str.length() - 2; j >=0; --j) {
+            for (int j = str.length() - 2; j >= 0; --j) {
                 if (str.charAt(j) == '1') {
                     str.append('0');
                 } else {

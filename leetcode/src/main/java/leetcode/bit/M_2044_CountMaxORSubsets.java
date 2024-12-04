@@ -17,7 +17,7 @@ public class M_2044_CountMaxORSubsets {
             int cur = 0;
 
             for (int i = 0; i < nums.length; ++i) {
-                if ( ((mask >> i) & 1) == 1 ) {
+                if (((mask >> i) & 1) == 1) {
                     cur |= nums[i];
                 }
             }

@@ -63,6 +63,6 @@ public class H_632_SmallestRangeCoverElementsFromKLists {
             }
         }
 
-        return new int[] {start, end};
+        return new int[]{start, end};
     }
 }

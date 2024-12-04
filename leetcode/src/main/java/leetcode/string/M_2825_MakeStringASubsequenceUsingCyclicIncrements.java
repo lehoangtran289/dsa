@@ -15,7 +15,7 @@ public class M_2825_MakeStringASubsequenceUsingCyclicIncrements {
             char c2 = str2.charAt(p2);
 
             if (c1 == c2 || (c1 + 1 - 'a') % 26 + 'a' == c2) {
-               p2++;
+                p2++;
             }
         }
 

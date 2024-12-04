@@ -20,16 +20,6 @@ public class M_662_MaximumWidthOfBinaryTree {
         System.out.println(widthOfBinaryTree(root));
     }
 
-    static class Pair {
-        TreeNode node;
-        int idx;
-        
-        public Pair(TreeNode node, int idx) {
-            this.node = node;
-            this.idx = idx;
-        }
-    }
-
     public static int widthOfBinaryTree(TreeNode root) {
         int res = 0;
 
@@ -58,5 +48,15 @@ public class M_662_MaximumWidthOfBinaryTree {
         }
 
         return res;
+    }
+
+    static class Pair {
+        TreeNode node;
+        int idx;
+
+        public Pair(TreeNode node, int idx) {
+            this.node = node;
+            this.idx = idx;
+        }
     }
 }

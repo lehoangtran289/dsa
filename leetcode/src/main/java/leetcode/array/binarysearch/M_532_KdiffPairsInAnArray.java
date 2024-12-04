@@ -4,7 +4,7 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
-public class _532_KdiffPairsInAnArray {
+public class M_532_KdiffPairsInAnArray {
     public static void main(String[] args) {
         System.out.println(findPairs(new int[]{1, 2, 3, 4, 5}, 1));
     }

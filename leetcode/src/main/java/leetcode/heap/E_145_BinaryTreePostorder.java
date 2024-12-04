@@ -3,7 +3,7 @@ package leetcode.heap;
 import java.util.ArrayList;
 import java.util.List;
 
-public class _145_BinaryTreePostorder {
+public class E_145_BinaryTreePostorder {
     public static void main(String[] args) {
         System.out.println(preorderTraversal(new TreeNode(1, null, new TreeNode(2, new TreeNode(3), null))));
     }

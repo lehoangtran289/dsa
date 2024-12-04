@@ -5,12 +5,6 @@ import java.util.List;
 import java.util.Stack;
 
 public class H_1106_ParseBooleanExp {
-    public static void main(String[] args) {
-        System.out.println(new H_1106_ParseBooleanExp().parseBoolExpr("|(&(t,f,t),!(t))")); // false
-        System.out.println(new H_1106_ParseBooleanExp().parseBoolExpr("!(&(f,t))")); // true
-        System.out.println(new H_1106_ParseBooleanExp().parseBoolExpr("!(&(f,|(f,&(|(f)),f,t)))")); // true
-    }
-
     public static final char AND = '&';
     public static final char OR = '|';
     public static final char NOT = '!';
@@ -19,6 +13,12 @@ public class H_1106_ParseBooleanExp {
     public static final char TRUE = 't';
     public static final char FALSE = 'f';
     public static final char DELIMITER = ',';
+
+    public static void main(String[] args) {
+        System.out.println(new H_1106_ParseBooleanExp().parseBoolExpr("|(&(t,f,t),!(t))")); // false
+        System.out.println(new H_1106_ParseBooleanExp().parseBoolExpr("!(&(f,t))")); // true
+        System.out.println(new H_1106_ParseBooleanExp().parseBoolExpr("!(&(f,|(f,&(|(f)),f,t)))")); // true
+    }
 
     public boolean parseBoolExpr(String str) {
         Stack<Character> stack = new Stack<>();

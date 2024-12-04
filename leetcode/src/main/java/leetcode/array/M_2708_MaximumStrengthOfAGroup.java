@@ -1,6 +1,6 @@
 package leetcode.array;
 
-public class _2708_MaximumStrengthOfAGroup {
+public class M_2708_MaximumStrengthOfAGroup {
     public static void main(String[] args) {
         int[] nums = new int[]{6, -3, -4, 8, 4, 7, 6, 4, 7, 7, -3, -6, 9};
         System.out.println(maxStrength(nums));

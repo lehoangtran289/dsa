@@ -2,11 +2,11 @@ package leetcode.heap;
 
 import java.util.PriorityQueue;
 
-public class _215_KthLargestElementInAnArray {
+public class M_215_KthLargestElementInAnArray {
     public static void main(String[] args) {
-        System.out.println(new _215_KthLargestElementInAnArray().findKthLargest(new int[]{3, 2, 1, 5, 6, 4}, 2));
-        System.out.println(new _215_KthLargestElementInAnArray().findKthLargest(new int[]{3, 2, 3, 1, 2, 4, 5, 5, 6}, 4));
-        System.out.println(new _215_KthLargestElementInAnArray().findKthLargest(new int[]{1}, 1));
+        System.out.println(new M_215_KthLargestElementInAnArray().findKthLargest(new int[]{3, 2, 1, 5, 6, 4}, 2));
+        System.out.println(new M_215_KthLargestElementInAnArray().findKthLargest(new int[]{3, 2, 3, 1, 2, 4, 5, 5, 6}, 4));
+        System.out.println(new M_215_KthLargestElementInAnArray().findKthLargest(new int[]{1}, 1));
     }
 
     public int findKthLargest(int[] nums, int k) {
