@@ -1,4 +1,4 @@
-package leetcode.contest.weekly426;
+package contest.weekly426;
 
 public class E_100501_SmallestNumberWithAllSetBits {
     public static void main(String[] args) {

@@ -1,4 +1,4 @@
-package leetcode.VPC;
+package contest.VPC;
 
 import java.io.BufferedReader;
 import java.io.File;

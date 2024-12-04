@@ -1,4 +1,4 @@
-package leetcode.VPC;
+package contest.VPC;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -13,9 +13,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.StringTokenizer;
 
-public class VPC_G_TramPhatSong {
+public class VPC_F_NoiTu {
+
     private static final boolean IS_LOCAL = true;
-    private static final String INPUT_FILE = "src/main/java/leetcode/VPC/input/D.inp";
+    private static final String INPUT_FILE = "src/main/java/leetcode/VPC/input/F.inp";
     private final static FastReader reader;
     private final static String YES = "YES";
     private final static String NO = "NO";
@@ -39,17 +40,28 @@ public class VPC_G_TramPhatSong {
 
             // INPUT -----------------------------------------------
             int n = readInt();
-            int x = readInt();
-            int y = readInt();
+            List<String> dict = new ArrayList<>();
+            for (int i = 0; i < n; ++i) {
+                dict.add(readStr());
+            }
 
-            int[][] stations = new int[n][3];
-            for (int i = 0; i < n; i++) {
-                int[] arr = intArray(3, false);
-                stations[i] = arr;
+            int q = readInt();
+            List<String> queries = new ArrayList<>();
+            for (int i = 0; i < q; ++i) {
+                queries.add(readStr());
             }
 
             // SOLUTION --------------------------------------------
-            out.println(sol(n, x, y, stations));
+
+            Trie trie = new Trie();
+            for (String s : dict) {
+                trie.insert(s);
+            }
+
+            for (String s : queries) {
+                List<String> res = new ArrayList<>();
+                out.println(sol(s, trie, 0, res));
+            }
 
             // ----------------------------------------------
             out.flush();
@@ -59,49 +71,23 @@ public class VPC_G_TramPhatSong {
         }
     }
 
-    public static long sol(int n, int x, int y, int[][] stations) {
-        List<Interval> xIntervals = new ArrayList<>();
-        List<Interval> yIntervals = new ArrayList<>();
-        for (int i = 0; i < n; i++) {
-            int xi = stations[i][0];
-            int yi = stations[i][1];
-            int wi = stations[i][2];
-
-            xIntervals.add(new Interval(Math.max(1, xi - wi), Math.min(x, xi + wi)));
-            yIntervals.add(new Interval(Math.max(1, yi - wi), Math.min(y, yi + wi)));
+    private static String sol(String s, Trie trie, int start, List<String> res) {
+        if (start == s.length()) {
+            return String.join(" ", res);
         }
 
-        long totalX = 0;
-        long totalY = 0;
-        List<Interval> mergedX = mergeIntervals(xIntervals);
-        List<Interval> mergedY = mergeIntervals(yIntervals);
-
-        for (Interval X : mergedX) {
-            totalX += X.end - X.start + 1;
-        }
-
-        for (Interval Y : mergedY) {
-            totalY += Y.end - Y.start + 1;
-        }
-
-        return totalX * y + totalY * x - totalX * totalY;
-    }
-
-    private static List<Interval> mergeIntervals(List<Interval> intervals) {
-        intervals.sort((a, b) -> a.start - b.start); // ascending
-        List<Interval> result = new ArrayList<>();
-
-        result.add(intervals.get(0));
-        for (int i = 1; i < intervals.size(); ++i) {
-            Interval cur = result.get(result.size() - 1);
-            Interval interval = intervals.get(i);
-            if (cur.end >= interval.start || cur.end + 1 == interval.start) {
-                cur.end = Math.max(cur.end, interval.end);
-            } else {
-                result.add(interval);
+        for (int i = start; i < s.length(); ++i) {
+            if (trie.search(s.substring(start, i + 1))) {
+                res.add(s.substring(start, i + 1));
+                String ans = sol(s, trie, i + 1, res);
+                if (!ans.equals("-1")) {
+                    return ans;
+                }
+                res.remove(res.size() - 1);
             }
         }
-        return result;
+
+        return "-1";
     }
 
     private static String[] stringArray(int n, boolean oneIndexed) {
@@ -119,11 +105,11 @@ public class VPC_G_TramPhatSong {
         return s;
     }
 
-    // ======================================================================================
-
     private static long readLong() {
         return reader.nextLong();
     }
+
+    // ======================================================================================
 
     private static int[] intArray(int n, boolean oneIndexed) {
         int i = 0;
@@ -241,13 +227,70 @@ public class VPC_G_TramPhatSong {
         return (a + b) % mod;
     }
 
-    static class Interval {
-        int start;
-        int end;
+    static class TrieNode {
+        TrieNode[] child = new TrieNode[26];
+        boolean isLeaf;
 
-        Interval(int start, int end) {
-            this.start = start;
-            this.end = end;
+        TrieNode() {
+            Arrays.fill(child, null);
+            isLeaf = false;
+        }
+    }
+
+    static class Trie {
+        TrieNode root;
+
+        Trie() {
+            root = new TrieNode();
+        }
+
+        void insert(String key) {
+            TrieNode node = root;
+            for (char chr : key.toCharArray()) {
+                int index = chr - 'a';
+                if (node.child[index] == null) {
+                    node.child[index] = new TrieNode(); // If node for current character does not exist then make a new node
+                }
+                node = node.child[index]; // Move the curr pointer to the newly created node
+            }
+            node.isLeaf = true;
+        }
+
+        boolean search(String key) {
+            TrieNode node = root;
+            for (char chr : key.toCharArray()) {
+                int index = chr - 'a';
+                if (node.child[index] == null) {
+                    return false;
+                }
+                node = node.child[index];
+            }
+            return node != null && node.isLeaf;
+        }
+
+        boolean startsWith(String prefix) {
+            TrieNode node = root;
+            for (char chr : prefix.toCharArray()) {
+                int index = chr - 'a';
+                if (node.child[index] == null) {
+                    return false;
+                }
+                node = node.child[index];
+            }
+            return node != null;
+        }
+
+        void display(TrieNode node, char[] str, int level) {
+            if (node.isLeaf) {
+                str[level] = '\0';
+                System.out.println(new String(str, 0, level));
+            }
+            for (int i = 0; i < 26; i++) {
+                if (node.child[i] != null) {
+                    str[level] = (char) (i + 'a');
+                    display(node.child[i], str, level + 1);
+                }
+            }
         }
     }
 
@@ -317,3 +360,4 @@ public class VPC_G_TramPhatSong {
         }
     }
 }
+

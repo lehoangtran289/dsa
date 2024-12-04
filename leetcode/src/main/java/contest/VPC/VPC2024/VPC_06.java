@@ -1,4 +1,4 @@
-package leetcode.VPC.VPC2024;
+package contest.VPC.VPC2024;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,4 +1,4 @@
-package leetcode.contest.weekly426;
+package contest.weekly426;
 
 import java.util.ArrayDeque;
 import java.util.ArrayList;
