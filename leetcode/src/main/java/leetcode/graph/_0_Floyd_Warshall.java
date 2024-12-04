@@ -1,4 +1,4 @@
-package leetcode.graphtheory;
+package leetcode.graph;
 
 public class _0_Floyd_Warshall {
     private static final int INF = Integer.MAX_VALUE;

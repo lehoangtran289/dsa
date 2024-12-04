@@ -1,4 +1,4 @@
-package leetcode.graphtheory;
+package leetcode.graph;
 
 /**
  * Given a binary tree root and an integer target, delete all the leaf nodes with value target.

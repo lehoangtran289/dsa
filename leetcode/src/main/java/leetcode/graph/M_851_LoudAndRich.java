@@ -1,4 +1,4 @@
-package leetcode.graphtheory;
+package leetcode.graph;
 
 import java.util.ArrayList;
 import java.util.Arrays;

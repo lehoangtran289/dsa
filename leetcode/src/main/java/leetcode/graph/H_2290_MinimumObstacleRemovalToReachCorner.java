@@ -1,4 +1,4 @@
-package leetcode.graphtheory;
+package leetcode.graph;
 
 import java.util.Arrays;
 import java.util.PriorityQueue;
