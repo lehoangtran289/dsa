@@ -17,16 +17,16 @@ public class E_112_PathSum {
     }
 
     public static boolean hasPathSum(TreeNode root, int targetSum) {
-        return dfs(root, targetSum);
+        return dfs(root, 0, targetSum);
     }
 
-    public static boolean dfs(TreeNode root, int sum) {
+    public static boolean dfs(TreeNode root, int sum, int target) {
         if (root == null) return false;
 
         if (root.left == null && root.right == null) {
-            if (sum == root.val) return true;
+            if (target == sum + root.val) return true;
         }
 
-        return dfs(root.left, sum - root.val) || dfs(root.right, sum - root.val);
+        return dfs(root.left, sum + root.val, target) || dfs(root.right, sum + root.val, target);
     }
 }
