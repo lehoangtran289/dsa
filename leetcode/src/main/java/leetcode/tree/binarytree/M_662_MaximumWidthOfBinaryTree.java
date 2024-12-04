@@ -20,21 +20,13 @@ public class M_662_MaximumWidthOfBinaryTree {
         System.out.println(widthOfBinaryTree(root));
     }
 
-    static class Pair<K, V> {
-        K key;
-        V value;
-
-        public Pair(K node, V pos) {
-            this.key = node;
-            this.value = pos;
-        }
-
-        public K getKey() {
-            return key;
-        }
-
-        public V getValue() {
-            return value;
+    static class Pair {
+        TreeNode node;
+        int idx;
+        
+        public Pair(TreeNode node, int idx) {
+            this.node = node;
+            this.idx = idx;
         }
     }
 
@@ -42,27 +34,27 @@ public class M_662_MaximumWidthOfBinaryTree {
         int res = 0;
 
         // The queue of elements [(node, col_index)]
-        Queue<Pair<TreeNode, Integer>> queue = new ArrayDeque<>();
-        queue.add(new Pair<>(root, 0));
+        Queue<Pair> queue = new ArrayDeque<>();
+        queue.add(new Pair(root, 0));
         while (!queue.isEmpty()) {
-            Pair<TreeNode, Integer> first = null;
-            Pair<TreeNode, Integer> last = null;
+            Pair first = null;
+            Pair last = null;
 
             // Iterate through the current level
             int size = queue.size();
             for (int i = 0; i < size; ++i) {
-                Pair<TreeNode, Integer> cur = queue.poll();
+                Pair cur = queue.poll();
                 if (first == null) first = cur;
                 last = cur;
 
-                TreeNode node = cur.getKey();
+                TreeNode node = cur.node;
                 if (node.left != null)
-                    queue.add(new Pair<>(node.left, 2 * cur.getValue()));
+                    queue.add(new Pair(node.left, 2 * cur.idx));
                 if (node.right != null)
-                    queue.add(new Pair<>(node.right, 2 * cur.getValue() + 1));
+                    queue.add(new Pair(node.right, 2 * cur.idx + 1));
             }
 
-            res = Math.max(res, last.getValue() - first.getValue() + 1);
+            res = Math.max(res, last.idx - first.idx + 1);
         }
 
         return res;
