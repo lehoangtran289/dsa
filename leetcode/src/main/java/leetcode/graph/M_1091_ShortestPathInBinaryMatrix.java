@@ -30,7 +30,7 @@ public class M_1091_ShortestPathInBinaryMatrix {
                 int c = cur[1] + direction[1];
 
                 if (Math.min(r, c) < 0 || Math.max(r, c) >= len
-                        || grid[r][c] == 1 || visited[r][c])
+                    || grid[r][c] == 1 || visited[r][c])
                     continue;
 
                 visited[r][c] = true;

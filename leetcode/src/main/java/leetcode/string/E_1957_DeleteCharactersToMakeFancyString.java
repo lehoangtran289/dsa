@@ -12,7 +12,7 @@ public class E_1957_DeleteCharactersToMakeFancyString {
 
         for (int i = 2; i < s.length(); ++i) {
             if (s.charAt(i) != result.charAt(result.length() - 1) ||
-                    s.charAt(i) != result.charAt(result.length() - 2)
+                s.charAt(i) != result.charAt(result.length() - 2)
             ) {
                 result.append(s.charAt(i));
             }

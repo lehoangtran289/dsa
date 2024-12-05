@@ -147,9 +147,9 @@ public class VPC_D_KetNoi {
         @Override
         public String toString() {
             return "Point{" +
-                    "x=" + x +
-                    ", y=" + y +
-                    '}';
+                   "x=" + x +
+                   ", y=" + y +
+                   '}';
         }
 
         public double dist(Point other) {
@@ -182,10 +182,10 @@ public class VPC_D_KetNoi {
         @Override
         public String toString() {
             return "Edge{" +
-                    "u=" + u +
-                    ", v=" + v +
-                    ", d=" + d +
-                    '}';
+                   "u=" + u +
+                   ", v=" + v +
+                   ", d=" + d +
+                   '}';
         }
     }
 

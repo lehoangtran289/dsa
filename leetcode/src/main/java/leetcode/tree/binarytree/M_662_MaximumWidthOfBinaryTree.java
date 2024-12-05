@@ -6,16 +6,16 @@ import java.util.Queue;
 public class M_662_MaximumWidthOfBinaryTree {
     public static void main(String[] args) {
         TreeNode root = new TreeNode(1,
-                new TreeNode(3,
-                        new TreeNode(5,
-                                new TreeNode(6),
-                                null),
-                        null),
-                new TreeNode(2,
-                        null,
-                        new TreeNode(9,
-                                new TreeNode(7),
-                                null))
+                                     new TreeNode(3,
+                                                  new TreeNode(5,
+                                                               new TreeNode(6),
+                                                               null),
+                                                  null),
+                                     new TreeNode(2,
+                                                  null,
+                                                  new TreeNode(9,
+                                                               new TreeNode(7),
+                                                               null))
         );
         System.out.println(widthOfBinaryTree(root));
     }

@@ -44,7 +44,7 @@ public class M_200_NumberOfIslands {
                 int newC = cur[1] + direction[1];
 
                 if (newR < 0 || newR >= grid.length || newC < 0 || newC >= grid[0].length
-                        || grid[newR][newC] != '1') // out of bounds image or not island
+                    || grid[newR][newC] != '1') // out of bounds image or not island
                     continue;
 
                 queue.offer(new int[]{newR, newC});

@@ -22,7 +22,7 @@ class GFG {
         g.addEdge(4, 4);
 
         System.out.println("Size of maximum matching is " +
-                g.hopcroftKarp());
+                           g.hopcroftKarp());
     }
 
     static class BipGraph {

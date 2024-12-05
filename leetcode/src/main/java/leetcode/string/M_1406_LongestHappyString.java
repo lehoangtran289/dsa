@@ -25,8 +25,8 @@ public class M_1406_LongestHappyString {
             // frequent character.
             if (
                     ans.length() >= 2 &&
-                            ans.charAt(ans.length() - 1) == p.character &&
-                            ans.charAt(ans.length() - 2) == p.character
+                    ans.charAt(ans.length() - 1) == p.character &&
+                    ans.charAt(ans.length() - 2) == p.character
             ) {
                 if (pq.isEmpty()) break;
 

@@ -9,7 +9,7 @@ public class M_1942_NumberOfSmallestOccupiedChair {
                 {7, 8}, {13, 14}, {15, 16}, {14, 15}, {10, 11}, {11, 12}, {2, 3}, {16, 17}
         };
         System.out.println(new M_1942_NumberOfSmallestOccupiedChair()
-                .smallestChair(intervals, 0));
+                                   .smallestChair(intervals, 0));
     }
 
     public int smallestChair(int[][] times, int targetFriend) {

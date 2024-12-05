@@ -198,7 +198,7 @@ class LazySegmentTreeSumRange {
         // range
         int mid = (ss + se) / 2;
         return getSumUtil(ss, mid, qs, qe, 2 * si + 1) +
-                getSumUtil(mid + 1, se, qs, qe, 2 * si + 2);
+               getSumUtil(mid + 1, se, qs, qe, 2 * si + 2);
     }
 
     // Return sum of elements in range from index qs (query

@@ -37,9 +37,9 @@ public class M_2684_MaximumNumberOfMovesInAGrid {
         for (int dir : dirs) {
             if (
                     r + dir >= 0 &&
-                            r + dir < grid.length &&
-                            c + 1 < grid[0].length &&
-                            grid[r + dir][c + 1] > grid[r][c]
+                    r + dir < grid.length &&
+                    c + 1 < grid[0].length &&
+                    grid[r + dir][c + 1] > grid[r][c]
             ) {
                 curMax = Math.max(curMax, 1 + dp(r + dir, c + 1, grid, dp));
             }

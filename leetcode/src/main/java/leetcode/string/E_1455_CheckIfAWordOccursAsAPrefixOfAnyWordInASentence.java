@@ -39,8 +39,11 @@ public class E_1455_CheckIfAWordOccursAsAPrefixOfAnyWordInASentence {
 
     private static boolean isPrefix(String str, String searchWord) {
         int p1 = 0, p2 = 0;
-        while (p1 < str.length() && p2 < searchWord.length()
-                && str.charAt(p1) == searchWord.charAt(p2)) {
+        while (
+                p1 < str.length() &&
+                p2 < searchWord.length() &&
+                str.charAt(p1) == searchWord.charAt(p2)
+        ) {
             p1++;
             p2++;
         }
