@@ -12,15 +12,16 @@ public class M_2554_MaximumNumberOfIntegersToChooseFromARangeI {
         Set<Integer> bannedSet = new HashSet<>();
         for (int num : banned) bannedSet.add(num);
 
-        int res = 0;
+        int count = 0;
+        int curSum = 0;
         for (int num = 1; num <= n; ++num) {
             if (bannedSet.contains(num)) continue;
-            if (maxSum < num) break;
+            if (curSum + num >= maxSum) break;
 
-            maxSum -= num;
-            res++;
+            curSum += num;
+            count++;
         }
 
-        return res;
+        return count;
     }
 }
