@@ -7,15 +7,15 @@ import java.util.PriorityQueue;
 
 public class M_Q3_DigitOperationsToMakeTwoIntegersEqual {
     public static void main(String[] args) {
-        System.out.println(minOperations(15, 88));
-        System.out.println(minOperations(10, 12));
+        System.out.println(minOperations(15, 88)); // 490
+        System.out.println(minOperations(10, 12)); // 88
+        System.out.println(minOperations(7, 7)); // -1
     }
 
     public static int minOperations(int n, int m) {
-        if (m == n) return n;
-
         boolean[] isPrime = buildPrimeFilter(10000);
         if (isPrime[m] || isPrime[n]) return -1;
+        if (m == n) return n;
 
         int[] cost = new int[10000];
         Arrays.fill(cost, Integer.MAX_VALUE);
@@ -89,10 +89,5 @@ public class M_Q3_DigitOperationsToMakeTwoIntegersEqual {
         }
 
         return isPrimes;
-    }
-
-    private static int getNumDigits(int num) {
-        if (num == 0) return 1;
-        return (int) Math.floor(Math.log10(num) + 1);
     }
 }
