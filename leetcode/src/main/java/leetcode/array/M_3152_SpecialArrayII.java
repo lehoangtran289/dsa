@@ -2,6 +2,12 @@ package leetcode.array;
 
 import java.util.Arrays;
 
+/**
+ *             [4, 3, 1, 6]
+ * prefix[]  = [0, 0, 1, 1]
+ * query_1: start = 0, end = 2 => prefix[end] - prefix[start] != 0 -> false
+ * query_2: start = 2, end = 3 => prefix[end] - prefix[start] == 0 -> true
+ */
 public class M_3152_SpecialArrayII {
     public static void main(String[] args) {
         System.out.println(Arrays.toString(isArraySpecial(new int[]{3, 4, 1, 2, 6}, new int[][]{{0, 4}})));
