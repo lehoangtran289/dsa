@@ -1,4 +1,4 @@
-package leetcode.array;
+package leetcode.array.binarysearch;
 
 public class M_1760_MinimumLimitOfBallsInABag {
     public static void main(String[] args) {

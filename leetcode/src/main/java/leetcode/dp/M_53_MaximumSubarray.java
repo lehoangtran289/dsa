@@ -1,4 +1,4 @@
-package leetcode.array;
+package leetcode.dp;
 
 public class M_53_MaximumSubarray {
     public static void main(String[] args) {

@@ -1,4 +1,4 @@
-package leetcode.array;
+package leetcode.array.prefixSum;
 
 import java.util.Arrays;
 import java.util.HashMap;
