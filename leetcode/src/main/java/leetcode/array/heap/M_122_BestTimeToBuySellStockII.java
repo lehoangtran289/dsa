@@ -1,4 +1,4 @@
-package leetcode.array;
+package leetcode.array.heap;
 
 import java.util.PriorityQueue;
 
