@@ -15,15 +15,17 @@ public class E_2558_TakeGiftsFromTheRichestPile {
      */
     public static long pickGifts(int[] gifts, int k) {
         PriorityQueue<Integer> pq = new PriorityQueue<>(Comparator.reverseOrder());
-        for (int g : gifts) pq.add(g);
-
-        while (k-- > 0 && !pq.isEmpty()) {
-            pq.add((int) Math.sqrt(pq.poll()));
+        long res = 0;
+        for (int g : gifts) {
+            pq.add(g);
+            res += g;
         }
 
-        long res = 0;
-        while (!pq.isEmpty()) {
-            res += pq.poll();
+        while (k-- > 0 && !pq.isEmpty()) {
+            int curGift = pq.poll();
+            int newGift = (int) Math.sqrt(curGift);
+            pq.add(newGift);
+            res += newGift - curGift;
         }
 
         return res;
