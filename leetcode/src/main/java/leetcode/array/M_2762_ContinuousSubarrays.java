@@ -53,7 +53,7 @@ public class M_2762_ContinuousSubarrays {
             r++;
         }
 
-        windowSize = r - l; // not + 1 because r is not included
+        windowSize = r - l; // no need + 1 because r++
         res += ((long) windowSize * (windowSize + 1)) / 2;
 
         return res;
