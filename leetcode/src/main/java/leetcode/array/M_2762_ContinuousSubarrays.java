@@ -25,11 +25,11 @@ public class M_2762_ContinuousSubarrays {
         long res = 0;
         int n = nums.length;
 
-        int l = 0, r, windowSize;
+        int l = 0, r = 0, windowSize;
         int max = Integer.MIN_VALUE;
         int min = Integer.MAX_VALUE;
 
-        for (r = 0; r < n; ++r) {
+        while (r < n) {
             max = Math.max(max, nums[r]);
             min = Math.min(min, nums[r]);
 
@@ -50,6 +50,7 @@ public class M_2762_ContinuousSubarrays {
                 windowSize = r - l; // no need + 1 because r is not included
                 res -= ((long) windowSize * (windowSize + 1)) / 2;
             }
+            r++;
         }
 
         windowSize = r - l; // not + 1 because r is not included
