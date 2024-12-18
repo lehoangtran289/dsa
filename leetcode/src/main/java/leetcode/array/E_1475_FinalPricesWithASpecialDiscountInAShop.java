@@ -8,6 +8,9 @@ public class E_1475_FinalPricesWithASpecialDiscountInAShop {
         System.out.println(Arrays.toString(finalPrices(new int[]{8, 4, 6, 2, 3})));
     }
 
+    /**
+     * finding the "next smaller element," which can be efficiently solved using a stack
+     */
     // Monotonic stack
     public static int[] finalPrices(int[] prices) {
         int n = prices.length;
@@ -15,7 +18,8 @@ public class E_1475_FinalPricesWithASpecialDiscountInAShop {
 
         int[] res = prices.clone();
         for (int i = 0; i < n; ++i) {
-            while (!stack.isEmpty() && prices[stack.peek()] >= prices[i]) {
+            Integer topIndex = stack.peek();
+            while (!stack.isEmpty() && prices[i] <= prices[topIndex]) {
                 res[stack.pop()] -= prices[i];
             }
             stack.add(i);
