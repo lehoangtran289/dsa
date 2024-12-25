@@ -50,9 +50,12 @@ public class M_2471_MinimumNumberOfOperationsToSortABinaryTreeByLevel {
             if (target[i] != levelVals[i]) {
                 res++;
 
-                int newIdx = map.get(target[i]);
-                map.put(levelVals[i], newIdx);
-                levelVals[newIdx] = levelVals[i];
+                int idx = map.get(target[i]);
+                int temp = levelVals[idx];
+                levelVals[idx] = levelVals[i];
+                levelVals[i] = temp;
+                map.put(levelVals[idx], idx);
+                map.put(levelVals[i], i);
             }
         }
         return res;
