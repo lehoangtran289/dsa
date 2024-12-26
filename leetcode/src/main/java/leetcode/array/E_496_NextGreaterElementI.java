@@ -3,6 +3,7 @@ package leetcode.array;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Stack;
 
 public class E_496_NextGreaterElementI {
     public static void main(String[] args) {
@@ -12,6 +13,31 @@ public class E_496_NextGreaterElementI {
         System.out.println(Arrays.toString(solution.nextGreaterElement(nums1, nums2)));
     }
 
+    /**
+     * Monotonic stack.
+     * Preprocess the stack to store the next greater element of each element in nums2.
+     */
+    public static int[] nextGreaterElement2(int[] nums1, int[] nums2) {
+        int[] res = new int[nums1.length];
+        Map<Integer, Integer> map = new HashMap<>(); // store element and its next greater element
+        Stack<Integer> stack = new Stack<>();
+
+        // preprocess stack
+        for (int num : nums2) {
+            while (!stack.isEmpty() && stack.peek() < num) {
+                map.put(stack.pop(), num);
+            }
+            stack.add(num);
+        }
+
+        for (int i = 0; i < nums1.length; ++i) {
+            res[i] = map.getOrDefault(nums1[i], -1);
+        }
+
+        return res;
+    }
+
+    // Using HashMap to store the index of each element in nums2
     public int[] nextGreaterElement(int[] nums1, int[] nums2) {
         int[] res = new int[nums1.length];
         Map<Integer, Integer> map = new HashMap<>();
