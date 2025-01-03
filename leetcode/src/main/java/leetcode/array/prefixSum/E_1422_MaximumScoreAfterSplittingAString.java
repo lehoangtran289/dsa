@@ -1,4 +1,4 @@
-package leetcode.array;
+package leetcode.array.prefixSum;
 
 public class E_1422_MaximumScoreAfterSplittingAString {
     public static void main(String[] args) {

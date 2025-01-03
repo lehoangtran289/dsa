@@ -1,4 +1,4 @@
-package leetcode.array;
+package leetcode.array.prefixSum;
 
 public class M_2270_NumberOfWaysToSplitArray {
     public static void main(String[] args) {
