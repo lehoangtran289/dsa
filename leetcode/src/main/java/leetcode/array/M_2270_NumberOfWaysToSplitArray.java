@@ -1,7 +1,5 @@
 package leetcode.array;
 
-import java.util.Arrays;
-
 public class M_2270_NumberOfWaysToSplitArray {
     public static void main(String[] args) {
         System.out.println(waysToSplitArray(new int[]{2, 3, 1, 0}));
