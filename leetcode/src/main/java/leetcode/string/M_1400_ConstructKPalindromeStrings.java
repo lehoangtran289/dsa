@@ -10,6 +10,9 @@ public class M_1400_ConstructKPalindromeStrings {
         System.out.println(canConstruct("leetcode", 3));
     }
 
+    /**
+     * Given a string s and an integer k, return true if you can use all the characters in s to construct k palindrome strings or false otherwise.
+     */
     public static boolean canConstruct(String s, int k) {
         if (s.length() < k) return false;
         if (s.length() == k) return true;
