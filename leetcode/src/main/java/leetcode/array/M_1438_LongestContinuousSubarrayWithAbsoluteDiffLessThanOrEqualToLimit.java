@@ -7,6 +7,7 @@ public class M_1438_LongestContinuousSubarrayWithAbsoluteDiffLessThanOrEqualToLi
         System.out.println(longestSubarray(new int[]{10, 1, 2, 4, 7, 2}, 5));
     }
 
+    // treemap to maintain max, min in window. Provide O(1) for get remove
     public static int longestSubarray(int[] nums, int limit) {
         int res = 0;
         TreeMap<Integer, Integer> map = new TreeMap<>();
