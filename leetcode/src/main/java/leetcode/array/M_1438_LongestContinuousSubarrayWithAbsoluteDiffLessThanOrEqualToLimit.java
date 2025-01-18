@@ -1,48 +1,26 @@
 package leetcode.array;
 
-import java.util.PriorityQueue;
+import java.util.TreeMap;
 
 public class M_1438_LongestContinuousSubarrayWithAbsoluteDiffLessThanOrEqualToLimit {
     public static void main(String[] args) {
         System.out.println(longestSubarray(new int[]{10, 1, 2, 4, 7, 2}, 5));
     }
 
-    static class Num {
-        int n;
-        int idx;
-
-        Num(int n, int idx) {
-            this.n = n;
-            this.idx = idx;
-        }
-
-        @Override
-        public String toString() {
-            return n + " " + idx;
-        }
-    }
-
     public static int longestSubarray(int[] nums, int limit) {
         int res = 0;
-        PriorityQueue<Num> minHeap = new PriorityQueue<>((a, b) -> a.n - b.n);
-        PriorityQueue<Num> maxHeap = new PriorityQueue<>((a, b) -> b.n - a.n);
+        TreeMap<Integer, Integer> map = new TreeMap<>();
 
         int l = 0;
         for (int r = 0; r < nums.length; ++r) {
-            minHeap.add(new Num(nums[r], r));
-            maxHeap.add(new Num(nums[r], r));
+            map.put(nums[r], map.getOrDefault(nums[r], 0) + 1);
 
-            while (maxHeap.peek().n - minHeap.peek().n > limit) {
+            while (Math.abs(map.firstKey() - map.lastKey()) > limit) {
                 l++;
-
-                // Remove elements from the heaps that are outside the current window
-                if (maxHeap.peek().idx < l) {
-                    maxHeap.poll();
-                }
-                if (minHeap.peek().idx < l) {
-                    minHeap.poll();
-                }
+                if (map.get(nums[l]) != 0) map.put(nums[l], map.get(nums[l]) - 1);
+                if (map.get(nums[l]) == 0) map.remove(nums[l]);
             }
+
             res = Math.max(res, Math.abs(r - l) + 1);
         }
 
