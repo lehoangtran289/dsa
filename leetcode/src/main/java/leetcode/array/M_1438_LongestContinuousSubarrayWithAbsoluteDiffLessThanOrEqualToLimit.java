@@ -15,6 +15,11 @@ public class M_1438_LongestContinuousSubarrayWithAbsoluteDiffLessThanOrEqualToLi
             this.n = n;
             this.idx = idx;
         }
+
+        @Override
+        public String toString() {
+            return n + " " + idx;
+        }
     }
 
     public static int longestSubarray(int[] nums, int limit) {
@@ -28,13 +33,13 @@ public class M_1438_LongestContinuousSubarrayWithAbsoluteDiffLessThanOrEqualToLi
             maxHeap.add(new Num(nums[r], r));
 
             while (maxHeap.peek().n - minHeap.peek().n > limit) {
-                l = Math.min(maxHeap.peek().idx, minHeap.peek().idx) + 1;
+                l++;
 
                 // Remove elements from the heaps that are outside the current window
-                while (maxHeap.peek().idx < l) {
+                if (maxHeap.peek().idx < l) {
                     maxHeap.poll();
                 }
-                while (minHeap.peek().idx < l) {
+                if (minHeap.peek().idx < l) {
                     minHeap.poll();
                 }
             }
