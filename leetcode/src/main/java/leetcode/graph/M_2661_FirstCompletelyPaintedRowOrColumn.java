@@ -12,9 +12,9 @@ public class M_2661_FirstCompletelyPaintedRowOrColumn {
         int rows = mat.length;
         int cols = mat[0].length;
 
-        Map<Integer, int[]> idxMap = new HashMap<>();
-        Map<Integer, Integer> rowMap = new HashMap<>();
-        Map<Integer, Integer> colMap = new HashMap<>();
+        Map<Integer, int[]> idxMap = new HashMap<>(); // value -> [row, col]
+        Map<Integer, Integer> rowMap = new HashMap<>(); // row -> #cols
+        Map<Integer, Integer> colMap = new HashMap<>(); // col -> #rows
 
         for (int i = 0; i < rows; ++i) {
             rowMap.put(i, cols);
