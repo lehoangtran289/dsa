@@ -17,6 +17,8 @@ public class M_2017_GridGame {
         for (int i = 0; i < grid[0].length; ++i) {
             firstRowSum -= grid[0][i];
 
+            // we compute the smallest value among the largest outcomes of these two strategies
+            // (because the goal is to reduce the highest possible points the second robot can collect)
             res = Math.min(res, Math.max(firstRowSum, secondRowSum));
             secondRowSum += grid[1][i];
         }
