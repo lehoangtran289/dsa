@@ -1,4 +1,4 @@
-package leetcode.graph;
+package leetcode.array;
 
 public class M_1267_CountServersThatCommunicate {
     public static void main(String[] args) {
