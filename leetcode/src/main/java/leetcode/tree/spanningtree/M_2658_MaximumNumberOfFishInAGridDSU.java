@@ -13,17 +13,17 @@ public class M_2658_MaximumNumberOfFishInAGridDSU {
         DisjointSet dsu = new DisjointSet(grid);
         for (int i = 0; i < rows; ++i) {
             for (int j = 0; j < cols; ++j) {
-                if (grid[i][j] != 0) {
-                    int index = calIndex(i, j, cols);
+                if (grid[i][j] == 0) continue;
 
-                    for (int[] dir : dirs) {
-                        int nextX = i + dir[0];
-                        int nextY = j + dir[1];
+                int curIndex = calIndex(i, j, cols);
 
-                        if (isCellValid(grid, nextX, nextY, rows, cols)) {
-                            int nextIndex = calIndex(nextX, nextY, cols);
-                            dsu.union(index, nextIndex);
-                        }
+                for (int[] dir : dirs) {
+                    int nextX = i + dir[0];
+                    int nextY = j + dir[1];
+
+                    if (isCellValid(grid, nextX, nextY, rows, cols)) {
+                        int nextIndex = calIndex(nextX, nextY, cols);
+                        dsu.union(curIndex, nextIndex);
                     }
                 }
             }
