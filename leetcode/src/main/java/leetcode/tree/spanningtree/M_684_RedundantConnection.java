@@ -16,9 +16,8 @@ public class M_684_RedundantConnection {
 
         int[] res = new int[2];
         for (int[] e : edges) {
-            if (dsu.union(e[0], e[1])) {
-                res[0] = e[0];
-                res[1] = e[1];
+            if (dsu.unionAndIsCycle(e[0], e[1])) {
+                res = e;
             }
         }
 
@@ -41,7 +40,8 @@ public class M_684_RedundantConnection {
             return parent[x];
         }
 
-        public boolean union(int x, int y) {
+        // If the nodes are already in the same component, we’ve found a redundant edge and return
+        public boolean unionAndIsCycle(int x, int y) {
             int rootX = find(x);
             int rootY = find(y);
             if (rootX == rootY) return true;
