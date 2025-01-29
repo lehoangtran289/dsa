@@ -1,4 +1,4 @@
-package leetcode.tree.binarytree;
+package leetcode.graph.tree.binarytree;
 
 import java.util.ArrayDeque;
 import java.util.Collections;

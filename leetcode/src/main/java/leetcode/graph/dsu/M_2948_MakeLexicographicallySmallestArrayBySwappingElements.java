@@ -1,4 +1,4 @@
-package leetcode.tree.spanningtree;
+package leetcode.graph.dsu;
 
 import java.util.ArrayDeque;
 import java.util.Arrays;

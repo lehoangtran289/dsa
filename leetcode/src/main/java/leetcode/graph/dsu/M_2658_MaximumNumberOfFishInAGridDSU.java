@@ -1,4 +1,4 @@
-package leetcode.tree.spanningtree;
+package leetcode.graph.dsu;
 
 public class M_2658_MaximumNumberOfFishInAGridDSU {
     public static void main(String[] args) {
