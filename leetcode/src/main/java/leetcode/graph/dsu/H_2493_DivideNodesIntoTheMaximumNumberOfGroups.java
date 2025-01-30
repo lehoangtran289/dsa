@@ -15,6 +15,8 @@ public class H_2493_DivideNodesIntoTheMaximumNumberOfGroups {
 
     /**
      * BFS + DSU solution
+     * DSU -> group components
+     * BFS -> find number of groups inside a component
      */
     public static int magnificentSets(int n, int[][] edges) {
         List<Integer>[] adjLst = new List[n + 1];
@@ -32,32 +34,31 @@ public class H_2493_DivideNodesIntoTheMaximumNumberOfGroups {
             dsu.union(x, y);
         }
 
-        Map<Integer, Integer> componentGroupMap = new HashMap<>();
-
+        Map<Integer, Integer> componentToGroupNumMap = new HashMap<>();
         for (int i = 0; i < n; ++i) {
-            int numGroups = getNumGroup(adjLst, i, n);
+            int numGroups = getMaxNumGroup(adjLst, i, n);
             if (numGroups == -1) return -1;
 
             int root = dsu.find(i);
-            componentGroupMap.put(
+            componentToGroupNumMap.put(
                     root,
                     Math.max(
                             numGroups,
-                            componentGroupMap.getOrDefault(root, 0)
+                            componentToGroupNumMap.getOrDefault(root, 0)
                     )
             );
         }
 
         // Calculate the total number of groups across all components
         int res = 0;
-        for (int numberOfGroups : componentGroupMap.values()) {
+        for (int numberOfGroups : componentToGroupNumMap.values()) {
             res += numberOfGroups;
         }
         return res;
     }
 
     // Function to calculate the number of groups for a given component starting from srcNode
-    private static int getNumGroup(List<Integer>[] adjLst, int src, int n) {
+    private static int getMaxNumGroup(List<Integer>[] adjLst, int src, int n) {
         Queue<Integer> queue = new ArrayDeque<>();
         int[] levelArr = new int[n];
         Arrays.fill(levelArr, -1);
