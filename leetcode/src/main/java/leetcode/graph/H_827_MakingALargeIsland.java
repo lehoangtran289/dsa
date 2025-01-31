@@ -15,25 +15,33 @@ public class H_827_MakingALargeIsland {
         System.out.println(largestIsland(new int[][]{{1, 1}, {1, 0}}));
     }
 
+    /**
+     * Assign each island an id,
+     * Then try to switch each 0 -> 1 and connect island to see which one results in the largest island.
+     */
     public static int largestIsland(int[][] grid) {
         int rows = grid.length;
         int cols = grid[0].length;
         int[][] dirs = new int[][]{{-1, 0}, {1, 0}, {0, -1}, {0, 1}}; // left, right, up, down
-        Map<Integer, Integer> islandSizeMap = new HashMap<>(); // id, size
+        int result = 0;
 
-        int res = 0;
-        int idx = 2;
+        Map<Integer, Integer> islandSizeMap = new HashMap<>(); // id, size
+        int idx = 2; // init id
         for (int i = 0; i < rows; ++i) {
             for (int j = 0; j < cols; ++j) {
                 if (grid[i][j] == 1) {
+                    // assign id to each island
                     int curSize = calSize(grid, dirs, i, j, idx);
                     islandSizeMap.put(idx, curSize);
                     idx++;
-                    res = Math.max(res, curSize);
+
+                    // update result to current max island size
+                    result = Math.max(result, curSize);
                 }
             }
         }
 
+        // traverse 0 and switch to 1
         for (int i = 0; i < rows; ++i) {
             for (int j = 0; j < cols; ++j) {
                 if (grid[i][j] != 0) continue;
@@ -51,13 +59,14 @@ public class H_827_MakingALargeIsland {
                 for (int id : connected) {
                     sum += islandSizeMap.getOrDefault(id, 0);
                 }
-                res = Math.max(res, sum + 1);
+                result = Math.max(result, sum + 1);
             }
         }
 
-        return res;
+        return result;
     }
 
+    // BFS
     private static int calSize(int[][] grid, int[][] dirs, int x, int y, int idx) {
         boolean[][] visited = new boolean[grid.length][grid[0].length];
         Queue<Cell> queue = new ArrayDeque<>();
