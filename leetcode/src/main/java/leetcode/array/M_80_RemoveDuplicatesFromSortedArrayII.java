@@ -5,18 +5,22 @@ public class M_80_RemoveDuplicatesFromSortedArrayII {
         System.out.println(removeDuplicates(new int[]{1, 1, 1, 2, 2, 3}));
     }
 
+    // two pointer to update the array in place
     public static int removeDuplicates(int[] nums) {
         int n = nums.length;
         if (n < 2) return n;
 
         int pos = 0;
         for (int i = 0; i < n - 1; ++i) {
+            // handle first element
             nums[pos++] = nums[i];
 
+            // handle next duplicate element
             if (nums[i] == nums[i + 1]) {
                 nums[pos++] = nums[i++];
             }
 
+            // skip duplicates
             while (i < n - 1 && nums[i] == nums[i + 1]) {
                 i++;
             }
