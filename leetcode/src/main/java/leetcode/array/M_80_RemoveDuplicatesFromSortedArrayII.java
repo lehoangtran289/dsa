@@ -10,9 +10,9 @@ public class M_80_RemoveDuplicatesFromSortedArrayII {
         if (n < 2) return n;
 
         int pos = 0;
-        int i = 0;
+        for (int i = 0; i < n - 1; ++i) {
+            nums[pos++] = nums[i];
 
-        while (i < n - 1) {
             if (nums[i] == nums[i + 1]) {
                 nums[pos++] = nums[i++];
             }
@@ -20,8 +20,6 @@ public class M_80_RemoveDuplicatesFromSortedArrayII {
             while (i < n - 1 && nums[i] == nums[i + 1]) {
                 i++;
             }
-
-            nums[pos++] = nums[i++];
         }
 
         // handle last element
