@@ -5,6 +5,10 @@ public class E_3105_LongestStrictlyIncreasingOrStrictlyDecreasingSubarray {
         System.out.println(longestMonotonicSubarray(new int[]{1,4,3,3,2}));
     }
 
+    /**
+     * Time complexity: O(2 * N) ~ O(N)
+     * Space complexity: O(1)
+     */
     public static int longestMonotonicSubarray(int[] nums) {
         int n = nums.length;
         int res = 0;
