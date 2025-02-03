@@ -10,29 +10,25 @@ public class E_3105_LongestStrictlyIncreasingOrStrictlyDecreasingSubarray {
         int res = 0;
 
         // strictly increasing
-        for (int i = 0; i < n; ++i) {
-            int len = 1;
-            for (int j = i + 1; j < n; ++j) {
-                if (nums[j] > nums[j - 1]) {
-                    len++;
-                } else {
-                    break;
-                }
+        int incr = 1;
+        for (int i = 1; i < n; ++i) {
+            if (nums[i] > nums[i - 1]) {
+                incr++;
+            } else {
+                incr = 1;
             }
-            res = Math.max(res, len);
+            res = Math.max(res, incr);
         }
 
         // strictly decreasing
-        for (int i = 0; i < n; ++i) {
-            int len = 1;
-            for (int j = i + 1; j < n; ++j) {
-                if (nums[j] < nums[j - 1]) {
-                    len++;
-                } else {
-                    break;
-                }
+        int decr = 1;
+        for (int i = 1; i < n; ++i) {
+            if (nums[i] < nums[i - 1]) {
+                decr++;
+            } else {
+                decr = 1;
             }
-            res = Math.max(res, len);
+            res = Math.max(res, decr);
         }
 
         return res;
