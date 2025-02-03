@@ -10,7 +10,7 @@ public class M_80_RemoveDuplicatesFromSortedArrayII {
     // two pointer to update the array in place
     public static int removeDuplicates(int[] nums) {
         int n = nums.length;
-        if (n < 2) return n;
+        if (n < MAX_DUPLICATES) return n;
 
         int pos = 0;
         for (int i = 0; i < n - 1; ++i) {
