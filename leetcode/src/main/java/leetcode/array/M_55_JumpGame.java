@@ -28,12 +28,12 @@ public class M_55_JumpGame {
      * If you run out of gasoline, you can not go further.
      */
     public static boolean canJump2(int[] nums) {
-        int gasoline = nums[0];
+        int gas = nums[0];
         for (int i = 1; i < nums.length; i++) {
-            if (gasoline == 0) {
+            if (gas == 0) {
                 return false;
             }
-            gasoline = Math.max(gasoline - 1, nums[i]);
+            gas = Math.max(gas - 1, nums[i]);
         }
         return true;
     }
