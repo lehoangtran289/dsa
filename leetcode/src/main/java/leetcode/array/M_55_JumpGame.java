@@ -33,7 +33,7 @@ public class M_55_JumpGame {
             if (gasoline == 0) {
                 return false;
             }
-            gasoline = Math.max(gasoline-1, nums[i]);
+            gasoline = Math.max(gasoline - 1, nums[i]);
         }
         return true;
     }
