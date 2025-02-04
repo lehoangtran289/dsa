@@ -18,4 +18,23 @@ public class M_55_JumpGame {
 
         return false;
     }
+
+    /**
+     * Another way to solve the problem:
+     * ----
+     * having X liters of gasoline at start.
+     * -1 every time go to next station.
+     * But at every station tank can be filled up with a new one containing station provided liters of gasoline.
+     * If you run out of gasoline, you can not go further.
+     */
+    public static boolean canJump2(int[] nums) {
+        int gasoline = nums[0];
+        for (int i = 1; i < nums.length; i++) {
+            if (gasoline == 0) {
+                return false;
+            }
+            gasoline = Math.max(gasoline-1, nums[i]);
+        }
+        return true;
+    }
 }
