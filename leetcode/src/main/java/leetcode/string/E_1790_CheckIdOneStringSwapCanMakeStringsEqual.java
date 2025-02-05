@@ -9,13 +9,11 @@ public class E_1790_CheckIdOneStringSwapCanMakeStringsEqual {
     }
 
     public static boolean areAlmostEqual(String s1, String s2) {
-        int n = s1.length();
-
         ArrayDeque<Character> q1 = new ArrayDeque<>();
         ArrayDeque<Character> q2 = new ArrayDeque<>();
         int diffCount = 0;
 
-        for (int i = 0; i < n; ++i) {
+        for (int i = 0; i < s1.length(); ++i) {
             char c1 = s1.charAt(i);
             char c2 = s2.charAt(i);
 
