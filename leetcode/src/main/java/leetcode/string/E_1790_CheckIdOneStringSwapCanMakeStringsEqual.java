@@ -22,11 +22,12 @@ public class E_1790_CheckIdOneStringSwapCanMakeStringsEqual {
             if (c1 != c2) {
                 q1.add(c1);
                 q2.add(c2);
-                diffCount++;
-            }
-        }
 
-        if (diffCount != 0 && diffCount != 2) return false;
+                diffCount++;
+                if (diffCount > 2) return false;
+            }
+
+        }
 
         while (!q1.isEmpty() && !q2.isEmpty()) {
             if (q1.pollFirst() != q2.pollLast()) return false;
