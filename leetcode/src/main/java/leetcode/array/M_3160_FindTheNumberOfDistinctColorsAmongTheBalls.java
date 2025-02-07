@@ -17,16 +17,14 @@ public class M_3160_FindTheNumberOfDistinctColorsAmongTheBalls {
             int ballIdx = queries[i][0];
             int newColor = queries[i][1];
 
-            // remove old color
-            if (ballMap.containsKey(ballIdx)) {
-                int prevColor = ballMap.get(ballIdx);
+            // set new color and decrease count of old color
+            int prevColor = ballMap.getOrDefault(ballIdx, 0);
+            ballMap.put(ballIdx, newColor);
 
+            if (colorMap.containsKey(prevColor)) {
                 colorMap.put(prevColor, colorMap.get(prevColor) - 1);
                 if (colorMap.get(prevColor) == 0) colorMap.remove(prevColor);
             }
-
-            // set new color
-            ballMap.put(ballIdx, newColor);
             colorMap.put(newColor, colorMap.getOrDefault(newColor, 0) + 1);
 
             // set result
