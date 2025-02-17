@@ -21,14 +21,15 @@ public class H_489_RobotRoomCleaner {
             int nextX = x + DIRS[newDir][0];
             int nextY = y + DIRS[newDir][1];
 
+            // Move forward if there is no obstacle in front of the robot.
             if (
                     !visited.contains(new Cell(nextX, nextY)) &&
                     robot.move()
             ) {
-                backtrack(robot, visited, nextX, nextY, newDir);
-                goBack(robot);
+                backtrack(robot, visited, nextX, nextY, newDir); // Explore next cells backtrack(new_cell, new_direction)
+                goBack(robot); // Backtrack, i.e. go back to the previous cell.
             }
-            robot.turnRight(); // clockwise
+            robot.turnRight(); // Turn right because now there is an obstacle (or a virtual obstacle) just in front.
         }
     }
 
