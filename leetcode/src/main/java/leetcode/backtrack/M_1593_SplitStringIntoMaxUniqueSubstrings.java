@@ -28,9 +28,7 @@ public class M_1593_SplitStringIntoMaxUniqueSubstrings {
 
     public int maxUniqueSplit(String s) {
         Set<String> seen = new HashSet<>();
-
-        int start = 0;
-        return backtrack(s, start, seen);
+        return backtrack(s, 0, seen);
     }
 
     // idea: find all possible substring and count

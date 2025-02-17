@@ -41,7 +41,7 @@ public class H_1368_MinimumCostToMakeAtLeastOneValidPathInAGrid {
         PriorityQueue<Cell> pq = new PriorityQueue<>((a, b) -> a.cost - b.cost);
         pq.add(new Cell(0, 0, costs[0][0]));
 
-        int[][] dirs = new int[][]{{0, 1}, {0, -1}, {1, 0}, {-1, 0}}; // left, right, up, down
+        int[][] dirs = new int[][]{{0, -1}, {0, 1}, {-1, 0}, {1, 0}}; // left, right, up, down
         while (!pq.isEmpty()) {
             Cell cur = pq.poll();
 

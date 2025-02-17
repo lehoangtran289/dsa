@@ -8,7 +8,7 @@ public class M_2658_MaximumNumberOfFishInAGridDSU {
     public static int findMaxFish(int[][] grid) {
         int rows = grid.length;
         int cols = grid[0].length;
-        int[][] dirs = new int[][]{{-1, 0}, {1, 0}, {0, -1}, {0, 1}}; // left, right, up, down
+        int[][] dirs = new int[][]{{0, -1}, {0, 1}, {-1, 0}, {1, 0}}; // left, right, up, down
 
         DisjointSet dsu = new DisjointSet(grid);
         for (int i = 0; i < rows; ++i) {

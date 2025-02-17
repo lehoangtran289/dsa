@@ -45,7 +45,7 @@ public class H_407_TrappingRainWaterII {
         int res = 0;
 
         // Direction arrays
-        int[][] dirs = {{0, -1}, {0, 1}, {1, 0}, {-1, 0}}; // left, right, up, down
+        int[][] dirs = {{0, -1}, {0, 1}, {-1, 0}, {1, 0}}; // left, right, up, down
 
         // Process cells in the boundary (min-heap will always pop the smallest height)
         while (!pq.isEmpty()) {

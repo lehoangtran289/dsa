@@ -37,7 +37,7 @@ public class M_2658_MaximumNumberOfFishInAGrid {
     }
 
     private static int bfs(int[][] grid, int i, int j, boolean[][] visited) {
-        int[][] dirs = new int[][]{{-1, 0}, {1, 0}, {0, -1}, {0, 1}}; // left, right, up, down
+        int[][] dirs = new int[][]{{0, -1}, {0, 1}, {-1, 0}, {1, 0}}; // left, right, up, down
 
         Queue<Cell> queue = new ArrayDeque<>();
         queue.add(new Cell(i, j));

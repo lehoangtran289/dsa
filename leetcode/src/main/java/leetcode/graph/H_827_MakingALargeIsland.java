@@ -22,7 +22,7 @@ public class H_827_MakingALargeIsland {
     public static int largestIsland(int[][] grid) {
         int rows = grid.length;
         int cols = grid[0].length;
-        int[][] dirs = new int[][]{{-1, 0}, {1, 0}, {0, -1}, {0, 1}}; // left, right, up, down
+        int[][] dirs = new int[][]{{0, -1}, {0, 1}, {-1, 0}, {1, 0}}; // left, right, up, down
         int result = 0;
 
         Map<Integer, Integer> islandSizeMap = new HashMap<>(); // id, size
