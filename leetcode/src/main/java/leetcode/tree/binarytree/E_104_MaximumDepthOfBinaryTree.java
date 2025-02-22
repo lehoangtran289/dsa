@@ -1,4 +1,4 @@
-package leetcode.graph.tree.binarytree;
+package leetcode.tree.binarytree;
 
 public class E_104_MaximumDepthOfBinaryTree {
     public static void main(String[] args) {
