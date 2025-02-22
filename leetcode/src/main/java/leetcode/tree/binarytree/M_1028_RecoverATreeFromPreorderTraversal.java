@@ -10,7 +10,7 @@ public class M_1028_RecoverATreeFromPreorderTraversal {
     }
 
     public static TreeNode recoverFromPreorder(String traversal) {
-        List<TreeNode> levels = new ArrayList<>();
+        List<TreeNode> levelNodes = new ArrayList<>();
         int i = 0;
 
         while (i < traversal.length()) {
@@ -29,11 +29,23 @@ public class M_1028_RecoverATreeFromPreorderTraversal {
                 i++;
             }
 
-            System.out.println(level + " " + nodeVal);
+            // build tree
+            // System.out.println(level + " " + nodeVal);
             TreeNode node = new TreeNode(nodeVal);
 
+            if (level >= levelNodes.size()) {
+                levelNodes.add(node);
+            } else {
+                levelNodes.set(level, node);
+            }
+
+            if (level != 0) {
+                TreeNode parent = levelNodes.get(level - 1);
+                if (parent.left == null) parent.left = node;
+                else if (parent.right == null) parent.right = node;
+            }
         }
 
-        return null;
+        return levelNodes.get(0);
     }
 }
