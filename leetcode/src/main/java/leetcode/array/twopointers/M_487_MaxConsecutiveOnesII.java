@@ -1,4 +1,4 @@
-package leetcode.array;
+package leetcode.array.twopointers;
 
 public class M_487_MaxConsecutiveOnesII {
     public static void main(String[] args) {
