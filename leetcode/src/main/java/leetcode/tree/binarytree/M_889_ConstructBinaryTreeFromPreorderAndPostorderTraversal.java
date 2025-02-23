@@ -41,13 +41,14 @@ public class M_889_ConstructBinaryTreeFromPreorderAndPostorderTraversal {
         }
 
         // left child root value in preorder, (next to root)
-        int leftRoot = preorder[preStartId + 1];
+        int leftRootVal = preorder[preStartId + 1];
 
         // number of nodes in left-subtree by searching postorder position
-        int leftNodesCount = postOrderIndexMap.get(leftRoot) - postStartId + 1;
+        int leftNodesCount = postOrderIndexMap.get(leftRootVal) - postStartId + 1;
 
         // construct tree, root = preorder[startId]
-        TreeNode root = new TreeNode(preorder[preStartId]);
+        int rootVal = preorder[preStartId];
+        TreeNode root = new TreeNode(rootVal);
 
         root.left = constructTree(
                 preStartId + 1,                    // left root
