@@ -11,6 +11,12 @@ import java.util.Queue;
 public class M_2467_MostProfitablePathInATree {
     public static void main(String[] args) {
         System.out.println(mostProfitablePath(
+                new int[][]{{0, 1}, {1, 2}, {2, 3}},
+                3,
+                new int[]{-5644, -6018, 1188, -8502}
+        ));
+
+        System.out.println(mostProfitablePath(
                 new int[][]{{0, 1}, {1, 2}, {1, 3}, {3, 4}},
                 3,
                 new int[]{-2, 4, 2, -4, 6}
@@ -22,42 +28,66 @@ public class M_2467_MostProfitablePathInATree {
 
         // construct adjacency list
         List<Integer>[] adj = new List[n];
-
         for (int i = 0; i < adj.length; ++i) {
             adj[i] = new ArrayList<>();
         }
-
         for (int[] e : edges) {
             adj[e[0]].add(e[1]);
             adj[e[1]].add(e[0]);
         }
 
-        // BFS to find the path from bob to 0
+        // BFS to find the path from bob to 0 --> < node, time >
         Map<Integer, Integer> bobPath = bobPath(adj, bob);
 
         // BFS to find dist from Alice to all leaf nodes and retrieve max profit
-        int maxProfit = amount[0];
+        int maxProfit = Integer.MIN_VALUE;
 
+        Queue<int[]> queue = new ArrayDeque<>();
         boolean[] visited = new boolean[n];
-        Queue<Integer> queue = new ArrayDeque<>();
-        queue.add(0);
+        queue.add(new int[]{0, amount[0], 0}); // <node, profit, time>
         visited[0] = true;
 
-        // track the path
-        Integer[] prev = new Integer[n]; // track path from src to all reachable vertices
-        Arrays.fill(prev, -1);
-
         while (!queue.isEmpty()) {
-            int levelSize = queue.size();
+            int[] cur = queue.poll();
+            int node = cur[0];
+            int profit = cur[1];
+            int time = cur[2];
 
-            for (int i = 0; i < levelSize; ++i) {
-                int u = queue.poll();
+            for (int neighbor : adj[node]) {
+                if (visited[neighbor]) continue;
+
+                visited[neighbor] = true;
+                int neighborTime = time + 1;
+                int neighborProfit = profit;
+
+                if (bobPath.containsKey(neighbor)) {
+                    int bobTime = bobPath.get(neighbor);
+
+                    if (bobTime == neighborTime) {              // meet at same node
+                        neighborProfit += amount[neighbor] / 2;
+                    } else if (bobTime > neighborTime) {        // Alice reaches this node before Bob
+                        neighborProfit += amount[neighbor];
+                    }
+                } else {
+                    neighborProfit += amount[neighbor];
+                }
+                queue.add(new int[]{neighbor, neighborProfit, neighborTime});
+            }
+
+            // left node
+            if (adj[node].size() == 1 && node != 0) {
+                maxProfit = Math.max(maxProfit, profit);
             }
         }
 
         return maxProfit;
     }
 
+    /**
+     * BFS to find the path from bob to 0. </br>
+     *
+     * @return < node, time >
+     */
     private static Map<Integer, Integer> bobPath(List<Integer>[] adj, int bob) {
         int n = adj.length;
 
@@ -83,7 +113,9 @@ public class M_2467_MostProfitablePathInATree {
             }
         }
 
-        Map<Integer, Integer> path = new HashMap<>();
+        // construct path
+        Map<Integer, Integer> result = new HashMap<>();
+
         List<Integer> pathList = new ArrayList<>();
         int cur = 0;
         while (cur != -1) {
@@ -92,8 +124,8 @@ public class M_2467_MostProfitablePathInATree {
         }
 
         for (int i = 0; i < pathList.size(); ++i) {
-            path.put(pathList.get(i), pathList.size() - i - 1);
+            result.put(pathList.get(i), pathList.size() - i - 1);
         }
-        return path;
+        return result;
     }
 }
