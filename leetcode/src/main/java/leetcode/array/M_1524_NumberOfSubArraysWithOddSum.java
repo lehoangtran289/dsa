@@ -6,6 +6,10 @@ public class M_1524_NumberOfSubArraysWithOddSum {
         System.out.println(numOfSubarrays(new int[]{2, 4, 6})); // 0
     }
 
+    /**
+     * If current prefix sum is even, add the number of odd subarrays
+     * If current prefix sum is odd, add the number of even subarrays
+     */
     public static int numOfSubarrays(int[] arr) {
         int modulo = (int) (Math.pow(10, 9) + 7);
 
