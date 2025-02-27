@@ -12,7 +12,7 @@ public class M_873_LengthOfLongestFibonacciSubsequence {
 
     /**
      * Bruteforce approach. Try every start pair in the array
-     * TC: O(n^2)
+     * TC: O(n^2 * log(max(arr)))
      */
     public static int lenLongestFibSubseq(int[] arr) {
         Set<Integer> set = new HashSet<>();
