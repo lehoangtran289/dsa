@@ -7,6 +7,11 @@ public class M_1143_LongestCommonSubsequence {
 
     /**
      * LCS memo
+     * Complexity Analysis
+     * Time complexity : O(M⋅N).
+     * This time, solving each subproblem has a cost of O(1). Again, there are M⋅N subproblems, and so we get a total time complexity of O(M⋅N).
+     * Space complexity : O(M⋅N).
+     * We need to store the answer for each of the M⋅N subproblems.
      */
     private int[][] dp;
     public int longestCommonSubsequence(String text1, String text2) {
@@ -53,12 +58,20 @@ public class M_1143_LongestCommonSubsequence {
 
     /**
      * LCS bottom up
+     * Complexity Analysis
+     * Time complexity : O(M⋅N).
+     * We're solving M⋅N subproblems. Solving each subproblem is an O(1) operation.
+     * Space complexity : O(M⋅N).
+     * We're allocating a 2D array of size M⋅N to save the answers to subproblems.
      */
     public int longestCommonSubsequence2(String text1, String text2) {
         int[][] dp = new int[text1.length() + 1][text2.length() + 1];
 
         for (int i = text1.length() - 1; i >= 0; --i) {
             for (int j = text2.length() - 1; j >= 0; --j) {
+                //there were two cases.
+                //1. The first letter of each string is the same.
+                //2. The first letter of each string is different.
                 if (text1.charAt(i) == text2.charAt(j)) {
                     dp[i][j] = 1 + dp[i + 1][j + 1];
                 } else {
