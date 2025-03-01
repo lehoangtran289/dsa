@@ -1,4 +1,4 @@
-package leetcode.array;
+package leetcode.array.slidingwindow;
 
 import java.util.Arrays;
 import java.util.HashMap;

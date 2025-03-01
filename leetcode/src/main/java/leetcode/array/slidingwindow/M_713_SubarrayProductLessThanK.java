@@ -1,4 +1,4 @@
-package leetcode.array.twopointers;
+package leetcode.array.slidingwindow;
 
 public class M_713_SubarrayProductLessThanK {
     public static void main(String[] args) {

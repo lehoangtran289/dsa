@@ -1,4 +1,4 @@
-package leetcode.array;
+package leetcode.array.slidingwindow;
 
 public class M_80_RemoveDuplicatesFromSortedArrayII {
     public static void main(String[] args) {

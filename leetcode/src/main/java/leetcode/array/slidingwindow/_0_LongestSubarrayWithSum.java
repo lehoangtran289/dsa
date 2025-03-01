@@ -1,4 +1,4 @@
-package leetcode.array.twopointers;
+package leetcode.array.slidingwindow;
 
 public class _0_LongestSubarrayWithSum {
     public static void main(String[] args) {

@@ -1,4 +1,4 @@
-package leetcode.array.twopointers;
+package leetcode.array.slidingwindow;
 
 public class M_1567_MaxLenSubArrWithPositiveProduct {
     public static void main(String[] args) {

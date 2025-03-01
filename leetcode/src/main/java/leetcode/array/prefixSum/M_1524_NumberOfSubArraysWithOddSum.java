@@ -1,4 +1,4 @@
-package leetcode.array;
+package leetcode.array.prefixSum;
 
 public class M_1524_NumberOfSubArraysWithOddSum {
     public static void main(String[] args) {
