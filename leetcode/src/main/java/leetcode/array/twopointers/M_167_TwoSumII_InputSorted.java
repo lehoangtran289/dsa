@@ -22,19 +22,17 @@ public class M_167_TwoSumII_InputSorted {
      * Two pointers approach.
      */
     public int[] twoSumTwoPointers(int[] numbers, int target) {
-        int lo = 0;
-        int hi = numbers.length - 1;
-
-        while (lo < hi) {
-            int sum = numbers[lo] + numbers[hi];
-            if (sum == target) {
-                return new int[]{lo + 1, hi + 1};
-            } else if (sum < target) {
-                lo++;
+        int l = 0, r = numbers.length - 1;
+        while (l <= r) {
+            if (numbers[l] + numbers[r] < target) {
+                l++;
+            } else if (numbers[l] + numbers[r] > target) {
+                r--;
             } else {
-                hi--;
+                return new int[]{l + 1, r + 1};
             }
         }
+
         return null;
     }
 
