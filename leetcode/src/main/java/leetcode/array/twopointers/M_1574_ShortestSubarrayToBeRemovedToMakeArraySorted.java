@@ -1,4 +1,4 @@
-package leetcode.array.slidingwindow;
+package leetcode.array.twopointers;
 
 public class M_1574_ShortestSubarrayToBeRemovedToMakeArraySorted {
     public static void main(String[] args) {

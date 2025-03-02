@@ -1,4 +1,4 @@
-package leetcode.array.slidingwindow;
+package leetcode.array.twopointers;
 
 public class M_11_ContainerWithMostWater {
     public static void main(String[] args) {
