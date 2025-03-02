@@ -2,6 +2,7 @@ package leetcode.array.twopointers;
 
 import java.util.Arrays;
 
+// Neetcode two pointers 2
 public class M_167_TwoSumII_InputSorted {
 
     public static void main(String[] args) {
