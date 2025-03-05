@@ -1,4 +1,4 @@
-package leetcode.backtrack;
+package leetcode.math;
 
 public class M_1780_CheckIfNumberIsASumOfPowersOfThree {
     public static void main(String[] args) {
