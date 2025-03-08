@@ -11,30 +11,30 @@ public class M_2523_ClosestPrimeNumbersInRange {
     }
 
     public static int[] closestPrimes(int left, int right) {
-        int[] res = new int[2];
         boolean[] isPrime = isPrime(right);
-        int minLength = Integer.MAX_VALUE;
-        int prev = 0;
 
-        for (int i = right; i >= left; --i) {
+        int[] res = new int[]{-1, -1};
+        int minLength = 1000_000;
+        int prev = -1000_000;
+
+        for (int i = left; i <= right; ++i) {
             if (!isPrime[i]) continue;
 
-            if (prev != 0 && prev - i <= minLength) {
-                minLength = prev - i;
-                res[0] = i;
-                res[1] = prev;
+            int diff = i - prev;
+            if (diff < minLength) {
+                minLength = diff;
+                res[0] = prev;
+                res[1] = i;
             }
+
             prev = i;
         }
 
-        if (res[0] == 0) {
-            return new int[]{-1, -1};
-        }
         return res;
     }
 
     private static boolean[] isPrime(int n) {
-        if (n <= 1) return new boolean[2];
+        if (n <= 1) return new boolean[]{false, false};
 
         boolean[] isPrimes = new boolean[n + 1];
         Arrays.fill(isPrimes, true);
