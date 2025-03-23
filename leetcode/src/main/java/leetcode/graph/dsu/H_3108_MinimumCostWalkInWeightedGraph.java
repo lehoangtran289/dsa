@@ -1,4 +1,4 @@
-package leetcode.graph;
+package leetcode.graph.dsu;
 
 import java.util.Arrays;
 import java.util.HashMap;

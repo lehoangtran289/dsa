@@ -1,4 +1,4 @@
-package leetcode.graph;
+package leetcode.graph.topo;
 
 import java.util.ArrayDeque;
 import java.util.ArrayList;

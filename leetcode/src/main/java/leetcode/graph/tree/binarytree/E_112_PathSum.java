@@ -1,4 +1,4 @@
-package leetcode.tree.binarytree;
+package leetcode.graph.tree.binarytree;
 
 public class E_112_PathSum {
     public static void main(String[] args) {
