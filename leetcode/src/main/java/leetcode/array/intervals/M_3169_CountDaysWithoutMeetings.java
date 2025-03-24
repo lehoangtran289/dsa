@@ -8,8 +8,8 @@ import java.util.TreeMap;
 
 public class M_3169_CountDaysWithoutMeetings {
     public static void main(String[] args) {
-        System.out.println(countDays3(8, new int[][]{{3, 4}, {4, 8}, {2, 5}, {3, 8}})); // 1
-        System.out.println(countDays(6, new int[][]{{1, 6}})); // 0
+        System.out.println(countDays(14, new int[][]{{6, 11}, {7, 13}, {8, 9}, {5, 8}, {3, 13}, {11, 13}, {1, 3}, {5, 10}, {8, 13}, {3, 9}}));
+        System.out.println(countDays(8, new int[][]{{3, 4}, {4, 8}, {2, 5}, {3, 8}})); // 1
     }
 
     /**
@@ -22,24 +22,19 @@ public class M_3169_CountDaysWithoutMeetings {
         merged.add(meetings[0]);
         for (int[] meeting : meetings) {
             int[] cur = merged.get(merged.size() - 1);
-            if (meeting[0] < cur[1]) {
+            if (meeting[0] <= cur[1]) {
                 cur[1] = Math.max(cur[1], meeting[1]);
             } else {
                 merged.add(meeting);
             }
         }
 
-        int res = 0;
-        int freeDay = 1;
+        int meetingDays = 0;
         for (int[] meeting : merged) {
-            if (freeDay < meeting[0]) {
-                res += meeting[0] - freeDay;
-            }
-            freeDay = meeting[1] + 1;
+            meetingDays += meeting[1] - meeting[0] + 1;
         }
 
-        res += days - freeDay + 1;
-        return res;
+        return days - meetingDays;
     }
 
     /**
