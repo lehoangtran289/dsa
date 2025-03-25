@@ -2,7 +2,7 @@ package leetcode.dp;
 
 public class H_1770_MaximumScoreFromPerformingMultiplicationOperations {
     // -----------------------------------------------------------------------------------------------------------------
-    // Top down approach
+    // DP Top down approach
     // -----------------------------------------------------------------------------------------------------------------
     private int[] nums;
     private int[] multipliers;
@@ -34,7 +34,7 @@ public class H_1770_MaximumScoreFromPerformingMultiplicationOperations {
     }
 
     // -----------------------------------------------------------------------------------------------------------------
-    // Bottom up approach
+    // DP Bottom up approach
     // -----------------------------------------------------------------------------------------------------------------
     public int maximumScore2(int[] nums, int[] multipliers) {
         int n = nums.length;
