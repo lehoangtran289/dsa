@@ -7,6 +7,9 @@ public class M_322_CoinChange {
     private int[] coins;
     private Map<Integer, Integer> memo;
 
+    /**
+     *  F(S) = F(S - ci) + 1, for i = 0 -> n - 1
+     */
     public int coinChange(int[] coins, int amount) {
         this.coins = coins;
         this.memo = new HashMap<>();
