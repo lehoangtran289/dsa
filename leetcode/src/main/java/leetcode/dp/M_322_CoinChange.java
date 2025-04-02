@@ -27,9 +27,9 @@ public class M_322_CoinChange {
 
             if (next != Integer.MAX_VALUE) {
                 res = Math.min(res, next + 1);
-                memo.put(amount, res);
             }
         }
+        memo.put(amount, res);
 
         return res;
     }
