@@ -1,6 +1,6 @@
 package leetcode.array.prefixSum;
 
-public class E_2873_MaximumValueOfAnOrderedTripletI {
+public class M_2874_MaximumValueOfAnOrderedTripletII {
     public long maximumTripletValue(int[] nums) {
         int n = nums.length;
         int[] maxLeft = new int[n];
