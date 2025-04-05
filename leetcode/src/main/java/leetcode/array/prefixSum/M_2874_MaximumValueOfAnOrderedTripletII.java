@@ -1,21 +1,21 @@
 package leetcode.array.prefixSum;
 
-public class E_2873_MaximumValueOfAnOrderedTripletI {
+public class M_2874_MaximumValueOfAnOrderedTripletII {
     public long maximumTripletValue(int[] nums) {
         int n = nums.length;
         int[] maxLeft = new int[n];
         int[] maxRight = new int[n];
 
-        int curMaxLeft = 0;
+        int maxLeftSoFar = 0;
         for (int i = 0; i < n; ++i) {
-            maxLeft[i] = Math.max(curMaxLeft, nums[i]);
-            curMaxLeft = maxLeft[i];
+            maxLeftSoFar = Math.max(maxLeftSoFar, nums[i]);
+            maxLeft[i] = maxLeftSoFar;
         }
 
-        int curMaxRight = 0;
+        int maxRightSoFar = 0;
         for (int i = n - 1; i >= 0; --i) {
-            maxRight[i] = Math.max(curMaxRight, nums[i]);
-            curMaxRight = maxRight[i];
+            maxRightSoFar = Math.max(maxRightSoFar, nums[i]);
+            maxRight[i] = maxRightSoFar;
         }
 
         long res = 0;
