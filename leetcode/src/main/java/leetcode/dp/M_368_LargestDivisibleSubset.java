@@ -18,7 +18,7 @@ public class M_368_LargestDivisibleSubset {
 
         List<Integer> maxSubset = new ArrayList<>();
 
-        for (int i = 0; i < n; ++i) {
+        for (int i = n - 1; i >= 0; --i) {
             List<Integer> subset = dp(i);
             if (subset.size() > maxSubset.size()) maxSubset = subset;
         }
@@ -29,10 +29,9 @@ public class M_368_LargestDivisibleSubset {
     private List<Integer> dp(int i) {
         // base cases
         if (memo.containsKey(i)) return memo.get(i);
-
         List<Integer> maxSubset = new ArrayList<>();
 
-        for (int j = 0; j < i; ++j) {
+        for (int j = i - 1; j >= 0; --j) {
             if (nums[i] % nums[j] == 0) {
                 List<Integer> subset = dp(j);
                 if (subset.size() > maxSubset.size()) maxSubset = subset;
