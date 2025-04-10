@@ -1,6 +1,7 @@
 package leetcode.string.trie;
 
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 
 public class M_139_WordBreak {
@@ -10,6 +11,44 @@ public class M_139_WordBreak {
         System.out.println(new M_139_WordBreak().wordBreak(s, wordDict));
     }
 
+    /**
+     * ------------------------------------------------
+     * Top-down DP
+     * ------------------------------------------------
+     */
+    private String s;
+    private HashSet<String> wordDict;
+    private Boolean[] memo;
+
+    public boolean wordBreak2(String s, List<String> wordDict) {
+        this.s = s;
+        this.wordDict = new HashSet<>(wordDict);
+        this.memo = new Boolean[s.length()];
+
+        return dp(0);
+    }
+
+    private boolean dp(int i) {
+        if (i == s.length()) return true;
+        if (memo[i] != null) return memo[i];
+
+        for (int j = i + 1; j <= s.length(); ++j) {
+            if (
+                    wordDict.contains(s.substring(i, j))
+                    && dp(j)
+            ) {
+                return memo[i] = true;
+            }
+        }
+
+        return memo[i] = false;
+    }
+
+    /**
+     * ------------------------------------------------
+     * Trie + DP
+     * ------------------------------------------------
+     */
     public boolean wordBreak(String s, List<String> wordDict) {
         Trie trie = new Trie();
         for (String word : wordDict) {
