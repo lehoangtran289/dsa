@@ -11,7 +11,12 @@ public class M_300_LongestIncreasingSubsequence {
 
     /**
      * Bottom up DP approach.
-     * <p>
+     * ----------------------------------
+     * Let's say we know dp[0], dp[1], and dp[2].
+     * How can we find dp[3] given this information?
+     * Well, since dp[2] represents the length of the longest increasing subsequence that ends with nums[2],
+     * if nums[3] > nums[2], then we can simply take the subsequence ending at i = 2 and append nums[3] to it, increasing the length by 1
+     * ----------------------------------
      * Time complexity: O(n^2)
      * Space complexity: O(n)
      * dp[i] = 1 OR dp[j] + 1 for j < i and nums[j] < nums[i], where dp[j] is the length of the longest increasing subsequence ending at index j.
