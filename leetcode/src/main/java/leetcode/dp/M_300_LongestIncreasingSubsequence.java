@@ -5,33 +5,65 @@ import java.util.Arrays;
 public class M_300_LongestIncreasingSubsequence {
     public static void main(String[] args) {
         M_300_LongestIncreasingSubsequence obj = new M_300_LongestIncreasingSubsequence();
-        int[] nums = new int[]{10, 9, 2, 5, 3, 7, 101, 18};
-        System.out.println(obj.lengthOfLIS(nums)); // 4
+        int[] nums = new int[]{1, 3, 6, 7, 9, 4, 10, 5, 6};
+        System.out.println(obj.lengthOfLIS2(nums)); // 6
     }
 
     /**
+     * Bottom up DP approach.
+     * <p>
      * Time complexity: O(n^2)
      * Space complexity: O(n)
-     * Dynamic programming approach.
-     * LIS[i] = 1 OR LIS[j] + 1 for j < i and nums[j] < nums[i], where LIS[j] is the length of the longest increasing subsequence ending at index j.
+     * dp[i] = 1 OR dp[j] + 1 for j < i and nums[j] < nums[i], where dp[j] is the length of the longest increasing subsequence ending at index j.
      */
     public int lengthOfLIS(int[] nums) {
         int[] dp = new int[nums.length];
         Arrays.fill(dp, 1);
 
-        int maxLength = 0;
-        for (int i = 1; i < nums.length; ++i) {
-            for (int j = 0; j < i; ++j) {
-                if (nums[j] < nums[i]) {
+        for (int i = 0; i < nums.length; ++i) {
+            for (int j = 0; j <= i; ++j) {
+                if (nums[i] > nums[j]) {
                     dp[i] = Math.max(dp[i], dp[j] + 1);
                 }
             }
         }
 
-        for (int n : dp) {
-            maxLength = Math.max(maxLength, n);
+        int res = 0;
+        for (int num : dp) {
+            res = Math.max(res, num);
         }
 
-        return maxLength;
+        return res;
+    }
+
+    /**
+     * Top down DP approach
+     */
+    private int[] nums;
+    private int[] memo; // memo[i] = length of longest increasing subsequence ending at index i
+
+    public int lengthOfLIS2(int[] nums) {
+        this.nums = nums;
+        this.memo = new int[nums.length + 1];
+        Arrays.fill(memo, 1);
+
+        int res = 0;
+        for (int i = 0; i < nums.length; ++i) {
+            res = Math.max(res, dp(i));
+        }
+
+        return res;
+    }
+
+    private int dp(int i) {
+        if (memo[i] != 1) return memo[i];
+
+        for (int j = 0; j < i; ++j) {
+            if (nums[i] > nums[j]) {
+                memo[i] = Math.max(memo[i], dp(j) + 1);
+            }
+        }
+
+        return memo[i];
     }
 }
