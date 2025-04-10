@@ -8,7 +8,7 @@ public class M_139_WordBreak {
     public static void main(String[] args) {
         String s = "aaaaaaa";
         List<String> wordDict = List.of("aaaa", "aaa");
-        System.out.println(new M_139_WordBreak().wordBreak(s, wordDict));
+        System.out.println(new M_139_WordBreak().wordBreak2(s, wordDict));
     }
 
     /**
@@ -34,8 +34,8 @@ public class M_139_WordBreak {
 
         for (int j = i + 1; j <= s.length(); ++j) {
             if (
-                    wordDict.contains(s.substring(i, j))
-                    && dp(j)
+                    wordDict.contains(s.substring(i, j)) // prefix should in dict
+                    && dp(j) // check if the rest of the string can be segmented
             ) {
                 return memo[i] = true;
             }
