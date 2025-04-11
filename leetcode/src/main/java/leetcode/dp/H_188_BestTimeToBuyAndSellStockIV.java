@@ -2,6 +2,13 @@ package leetcode.dp;
 
 public class H_188_BestTimeToBuyAndSellStockIV {
 
+    public static void main(String[] args) {
+        System.out.println(new H_188_BestTimeToBuyAndSellStockIV().maxProfit(
+                2,
+                new int[]{2, 4, 1, 7, 3, 6, 5}
+        )); // 9
+    }
+
     /**
      * ----------------------------------------------
      * Top-down DP
