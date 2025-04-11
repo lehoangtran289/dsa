@@ -1,4 +1,4 @@
-package leetcode.dp;
+package leetcode.array;
 
 /**
  * Count #numbers in [low, high] that has 2 * n digits
