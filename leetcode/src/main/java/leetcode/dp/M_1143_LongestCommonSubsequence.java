@@ -6,15 +6,20 @@ public class M_1143_LongestCommonSubsequence {
     }
 
     /**
-     * LCS memo
-     * Complexity Analysis
-     * Time complexity : O(M⋅N).
+     * Top down DP approach
+     * ----------------------------------
+     * TC O(M⋅N)
      * This time, solving each subproblem has a cost of O(1). Again, there are M⋅N subproblems, and so we get a total time complexity of O(M⋅N).
-     * Space complexity : O(M⋅N).
+     * SC : O(M⋅N).
      * We need to store the answer for each of the M⋅N subproblems.
      */
     private int[][] dp;
+    private String text1;
+    private String text2;
+    
     public int longestCommonSubsequence(String text1, String text2) {
+        this.text1 = text1;
+        this.text2 = text2;
         dp = new int[text1.length() + 1][text2.length() + 1];
 
         for (int i = 0; i < dp.length; ++i) {
@@ -23,18 +28,13 @@ public class M_1143_LongestCommonSubsequence {
             }
         }
 
-        return solve(text1, text2, 0, 0);
+        return dp(0, 0);
     }
 
-    private int solve(
-            String text1,
-            String text2,
-            int p1,
-            int p2
-    ) {
-        // Check whether we've already solved this sub problem.
-        // This also covers the base cases where p1 == text1.length
-        // or p2 == text2.length
+    /**
+     * Counting DP
+     */
+    private int dp(int p1, int p2) {
         if (p1 >= text1.length() || p2 >= text2.length()) {
             return 0;
         }
@@ -43,11 +43,11 @@ public class M_1143_LongestCommonSubsequence {
         }
 
         if (text1.charAt(p1) == text2.charAt(p2)) {
-            dp[p1][p2] = solve(text1, text2, p1 + 1, p2 + 1) + 1;
+            dp[p1][p2] = dp(p1 + 1, p2 + 1) + 1;
         } else {
             dp[p1][p2] = Math.max(
-                    solve(text1, text2, p1 + 1, p2),
-                    solve(text1, text2, p1, p2 + 1)
+                    dp(p1 + 1, p2),
+                    dp(p1, p2 + 1)
             );
         }
 
