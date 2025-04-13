@@ -13,17 +13,16 @@ public class M_1922_CountGoodNumbers {
     }
 
     // Fast exponentiation % MOD
+    // idea: 3 ^ 10 = 3 ^ (2 * 5) = (3 ^ 2) ^ (10 / 2)
+    // idea2 : 3 ^ 9 = 3 ^ (1 + 2 * 4) = 3 * [(3 ^ 2) ^ (9 / 2)]
     private long power(long base, long exponent) {
         long res = 1;
 
-        // Calculate the exponentiation using binary exponentiation
         while (exponent > 0) {
-            // If the exponent is odd, multiply the result by the base
-            if (exponent % 2 == 1) {
+            if ((exponent & 1) == 1) { // odd exponent
                 res = (res * base) % MOD;
             }
 
-            // Square the base and halve the exponent
             base = (base * base) % MOD;
             exponent /= 2;
         }
