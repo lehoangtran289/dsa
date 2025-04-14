@@ -31,6 +31,8 @@ public class E_141_LinkedListCycle {
      *  ------------------------------------------------
      *  Fast and Slow pointer
      *  - Use two pointers, one moving twice as fast as the other
+     * <br>
+     *  -> Useful for detecting cycles in linked lists
      *  ------------------------------------------------
      *  TC O(n)
      *  SC O(1)
