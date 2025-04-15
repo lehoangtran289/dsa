@@ -53,18 +53,19 @@ public class M_560_SubarraySumEqualsK {
      * HASHMAP O(n)
      */
     public static int subarraySum3(int[] nums, int k) {
+        Map<Integer, Integer> freq = new HashMap<>();
         int res = 0;
-        int sum = 0;
+        int curSum = 0;
 
-        Map<Integer, Integer> map = new HashMap<>();
-        map.put(0, 1);
         for (int num : nums) {
-            sum += num;
-            if (map.containsKey(sum - k)) {
-                res += map.get(sum - k);
-            }
-            map.put(sum, map.getOrDefault(sum, 0) + 1);
+            curSum += num;
+
+            if (curSum == k) res++;
+            res += freq.getOrDefault(curSum - k, 0);
+
+            freq.put(curSum, freq.getOrDefault(curSum, 0) + 1);
         }
+
         return res;
     }
 }
