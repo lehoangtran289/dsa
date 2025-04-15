@@ -5,6 +5,10 @@ import leetcode.graph.tree.binarytree.TreeNode;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Find a number of continuous subarrays/submatrices/tree paths that sum to target
+ * => use prefix sum
+ */
 public class M_437_PathSumIII {
     private int targetSum;
     private int count = 0;
