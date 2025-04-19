@@ -16,18 +16,18 @@ public class M_2563_CountTheNumberOfFairPairs {
         Arrays.sort(nums);
 
         // upper + 1 since we need sum <= upper
-        return lowerBound(nums, upper + 1) - lowerBound(nums, lower);
+        return countLessThan(nums, upper + 1) - countLessThan(nums, lower);
     }
 
     /**
      * 2 pointers, find total pairs that have sum < upper
      */
-    private static long lowerBound(int[] nums, int upper) {
+    private static long countLessThan(int[] nums, int target) {
         long res = 0;
         int l = 0, h = nums.length - 1;
 
         while (l <= h) {
-            if (nums[l] + nums[h] < upper) {
+            if (nums[l] + nums[h] < target) {
                 res += h - l;
                 l++;
             } else {
