@@ -50,20 +50,25 @@ public class M_560_SubarraySumEqualsK {
     }
 
     /**
-     * HASHMAP O(n)
+     * 3. PREFIX SUM + HASHMAP O(n)
+     * [1, 1, 1] -> [1, 2, 3]
+     * - prefSum = k -> res++
+     * - prefSum = X + k -> res += map[X]
+     * <p>
+     * TC: O(n)
+     * SC: O(n)
      */
     public static int subarraySum3(int[] nums, int k) {
-        Map<Integer, Integer> freq = new HashMap<>();
         int res = 0;
-        int curSum = 0;
+        Map<Integer, Integer> prefMap = new HashMap<>();
+        int prefixSum = 0;
 
         for (int num : nums) {
-            curSum += num;
+            prefixSum += num;
+            if (prefixSum == k) res++;
 
-            if (curSum == k) res++;
-            res += freq.getOrDefault(curSum - k, 0);
-
-            freq.put(curSum, freq.getOrDefault(curSum, 0) + 1);
+            res += prefMap.getOrDefault(prefixSum - k, 0);
+            prefMap.put(prefixSum, prefMap.getOrDefault(prefixSum, 0) + 1);
         }
 
         return res;
