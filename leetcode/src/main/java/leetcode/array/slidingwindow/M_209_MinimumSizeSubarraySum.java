@@ -14,14 +14,12 @@ public class M_209_MinimumSizeSubarraySum {
 
         for (int r = 0; r < n; ++r) {
             sum += nums[r];
-            if (sum < target) continue;
 
             while (l <= r && sum >= target) {
                 sum -= nums[l];
                 l++;
+                res = Math.min(res, r - l + 2);
             }
-
-            res = Math.min(res, r - l + 2);
         }
 
         return res == n + 1 ? 0 : res;
