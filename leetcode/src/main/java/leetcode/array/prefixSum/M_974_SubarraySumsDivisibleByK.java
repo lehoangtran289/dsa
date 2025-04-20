@@ -21,7 +21,7 @@ public class M_974_SubarraySumsDivisibleByK {
             prefixSum += num;
             int mod = ((prefixSum % k) + k) % k; // handle negative numbers
 
-            if (mod == 0) res++; // no need to check modGroups since % k = 0
+            if (mod == 0) res++; // no need to check modGroups since sum[0...i] % k = 0
 
             if (modGroups[mod] > 0) {
                 res += modGroups[mod];
