@@ -23,9 +23,7 @@ public class M_974_SubarraySumsDivisibleByK {
 
             if (mod == 0) res++; // no need to check modGroups since sum[0...i] % k = 0
 
-            if (modGroups[mod] > 0) {
-                res += modGroups[mod];
-            }
+            res += modGroups[mod]; // count all previous prefix sums that has same mod
             modGroups[mod]++;
         }
 
