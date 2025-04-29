@@ -5,6 +5,9 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+/**
+ * The number of distinct elements in the subarray is equal to the number of distinct elements in the whole array.
+ */
 public class M_2799_CountCompleteSubarraysInAnArray {
 
     public static void main(String[] args) {
@@ -18,8 +21,7 @@ public class M_2799_CountCompleteSubarraysInAnArray {
      */
     public static int countCompleteSubarrays(int[] nums) {
         Set<Integer> seen = new HashSet<>();
-        for (int num : nums)
-            seen.add(num);
+        for (int num : nums) seen.add(num);
         int uniqueCount = seen.size();
 
         Map<Integer, Integer> freq = new HashMap<>();
@@ -31,12 +33,12 @@ public class M_2799_CountCompleteSubarraysInAnArray {
             freq.put(nums[r], freq.getOrDefault(nums[r], 0) + 1);
 
             while (l <= r && freq.size() == uniqueCount) {
-                res += n - r;
-
                 freq.put(nums[l], freq.get(nums[l]) - 1);
                 if (freq.get(nums[l]) == 0) freq.remove(nums[l]);
                 l++;
             }
+
+            res += l;
         }
 
         return res;
