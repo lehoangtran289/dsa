@@ -38,6 +38,7 @@ public class M_2799_CountCompleteSubarraysInAnArray {
                 l++;
             }
 
+            // For current r, there are l subarrays ending at r that have D distinct elements.
             res += l;
         }
 
