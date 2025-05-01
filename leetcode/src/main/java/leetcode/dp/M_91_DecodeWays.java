@@ -11,6 +11,11 @@ public class M_91_DecodeWays {
      * Idea: 2 option: 1 digit OR 2 digits
      * State: current index of string
      * Relation: dp(i) = dp(i + 1) || dp(i) = dp(i + 1) + dp(i + 2)
+     *
+     * ----------------------------------
+     * TC: O(n)
+     * Memoization helps in pruning the recursion tree and hence decoding for an index only once.
+     * Thus, this solution is linear time complexity.
      */
     public int numDecodings(String s) {
         this.s = s;
