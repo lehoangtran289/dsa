@@ -55,7 +55,7 @@ public class E_706_DesignHashMap {
 
     // -----------------------------------------------------------------------
 
-    private static final int capacity = 1_000;
+    private static final int capacity = 2069; // should be a prime number
     private final List<Bucket> hashMap;
 
     public E_706_DesignHashMap() {
