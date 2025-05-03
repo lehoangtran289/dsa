@@ -1,6 +1,7 @@
 package leetcode.array.heap;
 
 import java.util.PriorityQueue;
+import java.util.Queue;
 
 public class M_215_KthLargestElementInAnArray {
     public static void main(String[] args) {
@@ -9,19 +10,21 @@ public class M_215_KthLargestElementInAnArray {
         System.out.println(new M_215_KthLargestElementInAnArray().findKthLargest(new int[]{1}, 1));
     }
 
+    /**
+     * Min Heap size k
+     * TC: O(n * log(k)) since operation cost in heap is O(log(k))
+     * SC: O(k)
+     */
     public int findKthLargest(int[] nums, int k) {
-        PriorityQueue<Integer> pq = new PriorityQueue<>();
-        for (int i = 0; i < nums.length; i++) {
-            if (i < k) {
-                pq.offer(nums[i]);
-                continue;
-            }
-            if (pq.peek() < nums[i]) {
-                pq.poll();
-                pq.offer(nums[i]);
+        Queue<Integer> queue = new PriorityQueue<>(); // min heap
+
+        for (int num : nums) {
+            queue.add(num);
+            if (queue.size() > k) {
+                queue.poll();
             }
         }
 
-        return pq.peek();
+        return queue.peek();
     }
 }
