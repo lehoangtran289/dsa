@@ -40,7 +40,7 @@ public class M_353_DesignSnakeGame {
         int nextY = curHead.y + dir[1];
 
         // assume that the snake does not eat food -> reduce its tail temporarily
-        Cell tail = snake.peekLast();
+        Cell tail = snake.pollLast();
         snakePath.remove(new Cell(tail.x, tail.y));
 
         // check if the snake step is valid (no wall touch, no eat itself)
@@ -58,8 +58,7 @@ public class M_353_DesignSnakeGame {
 
             // give back the previously reduced tail
             snakePath.add(new Cell(tail.x, tail.y));
-        } else {
-            snake.pollLast();
+            snake.add(tail);
         }
 
         // add new step at head
