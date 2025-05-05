@@ -16,25 +16,26 @@ public class M_227_BasicCalculatorII {
     public int calculate(String s) {
         Stack<Integer> stack = new Stack<>();
         int curNum = 0;
-        char prev = '+';
+        char sign = '+'; // default sign
 
         for (int i = 0; i < s.length(); ++i) {
             char c = s.charAt(i);
+
             if (isDigit(c)) {
                 curNum = curNum * 10 + (c - '0');
             }
 
             if ((!isDigit(c) && c != ' ') || i == s.length() - 1) {
-                if (prev == '+') {
-                    stack.push(curNum);
-                } else if (prev == '-') {
-                    stack.push(-curNum);
-                } else if (prev == '*') {
-                    stack.push(stack.pop() * curNum);
-                } else if (prev == '/') {
-                    stack.push(stack.pop() / curNum);
+                if (sign == '+') {
+                    stack.add(curNum);
+                } else if (sign == '-') {
+                    stack.add(-curNum);
+                } else if (sign == '*') {
+                    stack.add(curNum * stack.pop());
+                } else if (sign == '/') {
+                    stack.add(stack.pop() / curNum);
                 }
-                prev = c;
+                sign = c;
                 curNum = 0;
             }
         }
