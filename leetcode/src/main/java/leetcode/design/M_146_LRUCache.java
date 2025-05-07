@@ -30,8 +30,8 @@ public class M_146_LRUCache {
     public void put(int key, int value) {
         if (map.containsKey(key)) {
             ListNode node = map.get(key);
-            remove(node);
             node.val = value;
+            remove(node);
             addLast(node);
         } else {
             ListNode node = new ListNode(key, value);
