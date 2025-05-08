@@ -1,4 +1,4 @@
-package leetcode.graph;
+package leetcode.graph.dijkstra;
 
 import java.util.Arrays;
 import java.util.PriorityQueue;
