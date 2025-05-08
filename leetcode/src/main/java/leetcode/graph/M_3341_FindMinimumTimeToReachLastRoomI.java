@@ -16,6 +16,13 @@ public class M_3341_FindMinimumTimeToReachLastRoomI {
 
     private final int[][] DIRS = new int[][]{{-1, 0},{1, 0}, {0, -1}, {0, 1}}; // U, D, L, R
 
+    /**
+     * ---------------------------------------------------------------
+     * Dijkstra's algorithm
+     * ---------------------------------------------------------------
+     * TC: O(n * m * log(n * m))
+     * SC: O(n * m)
+     */
     public int minTimeToReach(int[][] grid) {
         int n = grid.length;
         int m = grid[0].length;
