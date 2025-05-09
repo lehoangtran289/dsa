@@ -1,6 +1,6 @@
 package leetcode.dp;
 
-public class M_53_MaximumSubarray {
+public class g {
     public static void main(String[] args) {
         System.out.println(maxSubArrayKadane(new int[]{5, 4, -1, 7, 8})); // 23
     }
@@ -18,18 +18,24 @@ public class M_53_MaximumSubarray {
         return res;
     }
 
+    /**
+     * Kadane approach
+     * -----------------------
+     * Idea: at each index i-th, determines if elements before index i-th are "worth" keeping, or if they should be "discarded"
+     * If adding a number make current sum smaller -> start at new position
+     * -----------------------
+     * TC: O(n)
+     * SC: O(1)
+     */
     public static int maxSubArrayKadane(int[] nums) {
-        // Initialize our variables using the first element.
-        int currSum = nums[0];
-        int maxSum = nums[0];
+        int res = nums[0];
+        int cur = nums[0];
 
-        // Start with the 2nd element since we already used the first one.
-        for (int i = 1; i < nums.length; i++) {
-            // If current_subarray is negative, throw it away. Otherwise, keep adding to it.
-            currSum = Math.max(nums[i], currSum + nums[i]);
-            maxSum = Math.max(maxSum, currSum);
+        for (int i = 1; i < nums.length; ++i) {
+            cur = Math.max(cur + nums[i], nums[i]);
+            res = Math.max(res, cur);
         }
 
-        return maxSum;
+        return res;
     }
 }
