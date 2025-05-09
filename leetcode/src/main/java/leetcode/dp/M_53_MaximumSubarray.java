@@ -1,8 +1,11 @@
 package leetcode.dp;
 
-public class g {
+public class M_53_MaximumSubarray {
     public static void main(String[] args) {
-        System.out.println(maxSubArrayKadane(new int[]{5, 4, -1, 7, 8})); // 23
+        int[] input = new int[]{-2, 1, -3, 4, -1, 2, 1, -5, 4};
+
+        System.out.println(maxSubArrayKadane(input)); // 6
+        maxSubArrayKadane2(input);
     }
 
     public static int maxSubArrayDp(int[] nums) {
@@ -37,5 +40,32 @@ public class g {
         }
 
         return res;
+    }
+
+    /**
+     * Kadane approach with start and end index
+     */
+    public static void maxSubArrayKadane2(int[] nums) {
+        int res = nums[0];
+        int cur = nums[0];
+        int start = 0, end = 0;
+
+        for (int i = 1; i < nums.length; ++i) {
+            if (cur < 0) {
+                cur = nums[i];
+                start = i;
+            } else {
+                cur += nums[i];
+            }
+
+            if (cur > res) {
+                res = cur;
+                end = i;
+            }
+        }
+
+        System.out.println("Max sum subarray: " + res);
+        System.out.println("Start index: " + start);
+        System.out.println("End index: " + end);
     }
 }
