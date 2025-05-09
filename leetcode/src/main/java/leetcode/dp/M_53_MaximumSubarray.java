@@ -22,7 +22,7 @@ public class M_53_MaximumSubarray {
     }
 
     /**
-     * Kadane approach
+     * Kadane approach / DP with O(1) space
      * -----------------------
      * Idea: at each index i-th, determines if elements before index i-th are "worth" keeping, or if they should be "discarded"
      * If adding a number make current sum smaller -> start at new position
