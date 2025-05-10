@@ -32,6 +32,7 @@ public class M_873_LengthOfLongestFibonacciSubsequence {
             indexMap.put(arr[i], i);
         }
 
+        // process dp, check every pair of i-th and j-th
         for (int i = 0; i < n; ++i) {
             for (int j = i - 1; j >= 0; --j) {
                 int diff = arr[i] - arr[j];
@@ -39,6 +40,7 @@ public class M_873_LengthOfLongestFibonacciSubsequence {
                 if (indexMap.containsKey(diff)) {
                     int k = indexMap.get(diff);
 
+                    // check if k-th is before j-th -> valid fib sequence
                     if (diff < arr[j]) {
                         dp[i][j] = dp[j][k] + 1;
                     } else {
