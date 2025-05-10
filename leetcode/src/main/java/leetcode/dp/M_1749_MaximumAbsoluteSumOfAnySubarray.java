@@ -1,4 +1,4 @@
-package leetcode.array.prefixSum;
+package leetcode.dp;
 
 public class M_1749_MaximumAbsoluteSumOfAnySubarray {
     public static void main(String[] args) {
@@ -7,20 +7,24 @@ public class M_1749_MaximumAbsoluteSumOfAnySubarray {
         System.out.println(maxAbsoluteSum(new int[]{2, -5, 1, -4, 3, -2})); // 8
     }
 
+    /**
+     * Kadane approach
+     * -----------------------
+     * TC: O(n)
+     * SC: O(1)
+     */
     public static int maxAbsoluteSum(int[] nums) {
-        int curSum = 0;
-        int maxSum = 0;
-        int minSum = 0;
-        int res = 0;
+        int curMin = 0, minSum = 0;
+        int curMax = 0, maxSum = 0;
 
         for (int num : nums) {
-            curSum += num;
-            maxSum = Math.max(maxSum, curSum);
-            minSum = Math.min(minSum, curSum);
+            curMin = Math.min(curMin + num, num);
+            minSum = Math.min(minSum, curMin);
 
-            res = Math.max(res, Math.abs(maxSum - minSum));
+            curMax = Math.max(curMax + num, num);
+            maxSum = Math.max(maxSum, curMax);
         }
 
-        return res;
+        return Math.max(Math.abs(maxSum), Math.abs(minSum));
     }
 }
