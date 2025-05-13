@@ -1,5 +1,7 @@
 package leetcode.array;
 
+import leetcode.utils.Pair;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
@@ -8,29 +10,6 @@ import java.util.PriorityQueue;
 import java.util.Set;
 
 public class M_373_FindKPairsWithSmallestSums {
-    static class Pair<K, V> {
-        K k;
-        V value;
-
-        public Pair(K k, V value) {
-            this.k = k;
-            this.value = value;
-        }
-
-        @Override
-        public boolean equals(Object o) {
-            if (this == o) return true;
-            if (!(o instanceof Pair)) return false;
-            Pair<?, ?> pair = (Pair<?, ?>) o;
-            return k.equals(pair.k) && value.equals(pair.value);
-        }
-
-        @Override
-        public int hashCode() {
-            return 31 * k.hashCode() + value.hashCode();
-        }
-    }
-
     public List<List<Integer>> kSmallestPairs(int[] nums1, int[] nums2, int k) {
         int n = nums1.length, m = nums2.length;
         List<List<Integer>> res = new ArrayList<>();
