@@ -15,6 +15,9 @@ public class M_714_BestTimeToBuyAndSellStockWithTransactionFee {
      * relation:
      * if j = 1 ~ hold stock -> dp(i, 1) = max(dp(i + 1, 1) + prices[i] - fee, dp(i + 1, 0))
      * if j = 0 ~ not hold stock -> dp(i, 0) = max(dp(i + 1, 1) - prices[i], dp(i + 1, 0))
+     * -------------------------
+     * TC: O(n)
+     * SC: O(n)
      */
     public int maxProfit(int[] prices, int fee) {
         int n = prices.length;
