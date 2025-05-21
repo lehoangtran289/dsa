@@ -30,30 +30,28 @@ public class M_1136_ParallelCourses {
 
         // process topo sort
         int res = 0;
-        List<Integer> sortedCourses = new ArrayList<>();
-        Queue<Integer> courseQueue = new ArrayDeque<>();
+        int sortedCourses = 0;
+        Queue<Integer> queue = new ArrayDeque<>();
 
         for (int i = 0; i < n; ++i) {
-            if (indegree[i] == 0) courseQueue.add(i);
+            if (indegree[i] == 0) queue.add(i);
         }
 
-        int semesterCourses = courseQueue.size();
-        while (!courseQueue.isEmpty()) {
-            int u = courseQueue.poll();
-            sortedCourses.add(u);
-            semesterCourses--;
+        while (!queue.isEmpty()) {
+            res++;
+            int size = queue.size();
 
-            for (int v : adj[u]) {
-                indegree[v]--;
-                if (indegree[v] == 0) courseQueue.add(v);
-            }
+            for (int i = 0; i < size; ++i) {
+                int u = queue.poll();
+                sortedCourses++;
 
-            if (semesterCourses == 0) {
-                semesterCourses = courseQueue.size();
-                res++;
+                for (int v : adj[u]) {
+                    indegree[v]--;
+                    if (indegree[v] == 0) queue.add(v);
+                }
             }
         }
 
-        return sortedCourses.size() != n ? -1 : res;
+        return sortedCourses != n ? -1 : res;
     }
 }
