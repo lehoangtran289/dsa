@@ -7,18 +7,22 @@ public class E_69_MySqrtX {
     }
 
     public static int mySqrt(int x) {
-        if (x == 0) return 0;
+        if (x == 0 || x == 1) return x;
 
-        int lo = 0;
-        int hi = Integer.MAX_VALUE;
-        while (lo < hi - 1) {
-            int mid = hi - (hi - lo) / 2;
-            if (mid <= x / mid) {
-                lo = mid;
+        int res = 0;
+        int l = 0, r = x;
+
+        while (l <= r) {
+            int mid = l + (r - l) / 2;
+
+            if (mid > x / mid) {
+                r = mid - 1;
             } else {
-                hi = mid;
+                res = mid;
+                l = mid + 1;
             }
         }
-        return lo;
+
+        return res;
     }
 }
