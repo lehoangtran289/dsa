@@ -1,6 +1,6 @@
 package codility;
 
-public class _1_BinaryGap {
+public class _1_E_BinaryGap {
 
     public static void main(String[] args) {
         System.out.println(solution(9)); // 2

@@ -2,7 +2,7 @@ package codility;
 
 import java.util.Stack;
 
-public class _7_Fish {
+public class _7_E_Fish {
 
     public static void main(String[] args) {
         System.out.println(solution(new int[]{4, 3, 2, 1, 5}, new int[]{0, 1, 0, 0, 0})); // 2

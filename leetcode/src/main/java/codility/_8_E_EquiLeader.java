@@ -3,7 +3,7 @@ package codility;
 import java.util.HashMap;
 import java.util.Map;
 
-public class _8_EquiLeader {
+public class _8_E_EquiLeader {
     public int solution(int[] A) {
         int n = A.length;
 

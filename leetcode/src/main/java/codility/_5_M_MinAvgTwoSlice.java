@@ -1,10 +1,17 @@
 package codility;
 
-public class _5_MinAvgTwoSlice {
+public class _5_M_MinAvgTwoSlice {
     public static void main(String[] args) {
         System.out.println(solution(new int[] {-3, -5, -8, -4, -10}));
     }
 
+    /**
+     * Idea: Iterate through the array and calculate the average of two and three consecutive elements.
+     * why? Because the minimum average slice can only be of size 2 or 3.
+     * -------------------
+     * TC: O(N)
+     * SC: O(1)
+     */
     public static int solution(int[] A) {
         // Implement your solution here
         int n = A.length;

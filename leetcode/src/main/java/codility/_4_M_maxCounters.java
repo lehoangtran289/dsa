@@ -2,7 +2,7 @@ package codility;
 
 import java.util.Arrays;
 
-public class _4_maxCounters {
+public class _4_M_maxCounters {
     public static void main(String[] args) {
         System.out.println(Arrays.toString(solution(5, new int[]{3, 4, 4, 6, 1, 4, 4}))); // [3, 2, 2, 4, 2]
     }
