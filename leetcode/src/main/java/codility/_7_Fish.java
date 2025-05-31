@@ -5,10 +5,16 @@ import java.util.Stack;
 public class _7_Fish {
 
     public static void main(String[] args) {
-        System.out.println(solution(new int[]{4, 3, 2, 1, 5}, new int[]{0, 1, 0, 0, 0})); // Expected output: 2
+        System.out.println(solution(new int[]{4, 3, 2, 1, 5}, new int[]{0, 1, 0, 0, 0})); // 2
+        System.out.println(solution(new int[]{4, 3, 2, 1, 5}, new int[]{1, 0, 1, 0, 1})); // 3
+        System.out.println(solution(new int[]{4, 3, 2, 1, 5}, new int[]{1, 1, 1, 0, 0})); // 1
+        System.out.println(solution(new int[]{4, 3, 2, 1, 5}, new int[]{0, 0, 0, 1, 1})); // 5
     }
 
     /**
+     * Idea: Use a stack to keep track of the downstream fishes.
+     * Upstream fishes is alive if there is no downstream fish before it
+     * -------------------
      * TC: O(N)
      * SC: O(N)
      */
@@ -16,7 +22,6 @@ public class _7_Fish {
         // Implement your solution here
         int res = 0;
         int n = A.length;
-        Stack<Integer> stack0 = new Stack<>();
         Stack<Integer> stack1 = new Stack<>();
 
         for (int i = 0; i < n; ++i) {
@@ -27,17 +32,14 @@ public class _7_Fish {
                 }
 
                 if (stack1.isEmpty()) {
-                    stack0.add(A[i]);
+                    res++;
                 }
             } else if (B[i] == 1) {
                 // downstream fish -> not affect previous upstream fishes -> reset stack0
-                res += stack0.size();
-                stack0 = new Stack<>();
-
                 stack1.add(A[i]);
             }
         }
 
-        return res + stack0.size() + stack1.size();
+        return res + stack1.size();
     }
 }
