@@ -43,14 +43,19 @@ public class M_53_MaximumSubarray {
     }
 
     /**
-     * Kadane approach with start and end index
+     * Kadane approach return start and end indices
+     * -----------------------
+     * TC: O(n)
+     * SC: O(1)
      */
     public static void maxSubArrayKadane2(int[] nums) {
+        if (nums == null || nums.length == 0) return;
+
         int res = nums[0];
         int cur = nums[0];
         int start = 0, end = 0;
 
-        for (int i = 1; i < nums.length; ++i) {
+        for (int i = 0; i < nums.length; ++i) {
             if (cur < 0) {
                 cur = nums[i];
                 start = i;
