@@ -4,70 +4,43 @@ import java.util.Arrays;
 
 public class M_34_FindFirstAndLastInSortedArray {
     public static void main(String[] args) {
-        M_34_FindFirstAndLastInSortedArray obj = new M_34_FindFirstAndLastInSortedArray();
-        System.out.println(Arrays.toString(obj.searchRange(new int[]{5, 7, 7, 8, 8, 10}, 8)));
+        System.out.println(Arrays.toString(searchRange(new int[]{5, 7, 7, 8, 8, 10}, 8)));
     }
 
-    public int first(int[] nums, int target) {
-        int ans = -1;
-        int low = 0, high = nums.length - 1;
-        while (low <= high) {
-            int mid = (low + high) / 2;
-            if (nums[mid] == target) {
-                ans = mid;
-                high = mid - 1;
-            } else if (nums[mid] < target) {
-                low = mid + 1;
-            } else {
-                high = mid - 1;
-            }
-        }
-        return ans;
+    /**
+     * Binary Search
+     * -----------------------
+     * Idea: Find the first and last occurrence of the target using binary search
+     * -----------------------
+     * TC: O(log n)
+     * SC: O(1)
+     */
+    public static int[] searchRange(int[] nums, int target) {
+        int first = findBound(nums, target, true);
+        if (first == -1) return new int[] {-1, -1};
+
+        int last = findBound(nums, target, false);
+        return new int[]{first, last};
     }
 
-    public int last(int[] nums, int target) {
-        int ans = -1;
-        int low = 0, high = nums.length - 1;
-        while (low <= high) {
-            int mid = (low + high) / 2;
-            if (nums[mid] == target) {
-                ans = mid;
-                low = mid + 1;
-            } else if (nums[mid] < target) {
-                low = mid + 1;
-            } else {
-                high = mid - 1;
-            }
-        }
-        return ans;
-    }
+    private static int findBound(int[] nums, int target, boolean isFirst) {
+        int res = -1;
+        int l = 0, r = nums.length - 1;
 
-    public int[] searchRange(int[] nums, int target) {
-        if (nums.length == 0) return new int[]{-1, -1};
+        while (l <= r) {
+            int mid = l + (r - l) / 2;
 
-        int lo = 0, hi = nums.length - 1;
-        int index = -1;
-        while (lo <= hi) {
-            int mid = hi - (hi - lo) / 2;
             if (nums[mid] == target) {
-                index = mid;
-                break;
+                res = mid;
+                if (isFirst) r = mid - 1;
+                else l = mid + 1;
             } else if (nums[mid] > target) {
-                hi = mid - 1;
+                r = mid - 1;
             } else {
-                lo = mid + 1;
+                l = mid + 1;
             }
         }
-        if (index == -1) return new int[]{-1, -1};
 
-        int first = index, last = index;
-        while (first >= 0 && nums[first] == target) {
-            first--;
-        }
-        while (last < nums.length && nums[last] == target) {
-            last++;
-        }
-
-        return new int[]{first + 1, last - 1};
+        return res;
     }
 }
