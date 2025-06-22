@@ -8,51 +8,53 @@ public class M_1898_MaximumNumberOfRemovableChars {
 
     /**
      * Binary Search to search for k - max number of first indexes in removable
+     * --------------------
+     * TC: O(n * log m) where n = s.length, m = removable.length
+     * SC: O(n)
      */
     public static int maximumRemovals(String s, String p, int[] removable) {
-        int lo = 0, hi = removable.length;
+        int res = 0;
+        int l = 0, r = removable.length;
 
-        char[] sChars = s.toCharArray();
-        char[] pChars = p.toCharArray();
-        int max = 0;
-        while (lo <= hi) {
-            int mid = lo + (hi - lo) / 2;
+        while (l <= r) {
+            int mid = l + (r - l) / 2;
 
-            // mark remove char as *
-            for (int i = 0; i < mid; ++i) {
-                sChars[removable[i]] = '*';
-            }
-
-            // validate
-            if (isSubsequence(sChars, pChars)) {
-                lo = mid + 1;
-                max = Math.max(max, mid);
+            if (isValidRemove(s, p, removable, mid)) {
+                res = mid;
+                l = mid + 1;
             } else {
-                hi = mid - 1;
-            }
-
-            // restore *
-            for (int i = 0; i < mid; ++i) {
-                sChars[removable[i]] = s.charAt(removable[i]);
+                r = mid - 1;
             }
         }
-        return max;
+
+        return res;
     }
 
-    public static boolean isSubsequence(char[] s, char[] p) {
-        if (p.length == 0) return true;
-        if (s.length == 0) return false;
+    private static boolean isValidRemove(String s, String p, int[] removeable, int length) {
+        char[] sChars = s.toCharArray();
+        for (int i = 0; i < length; ++i) {
+            sChars[removeable[i]] = '.';
+        }
 
-        int i = 0, j = 0;
-        while (i < s.length && j < p.length) {
-            if (s[i] == p[j]) {
-                i++;
-                j++;
+        return isSubsequence(sChars, p);
+    }
+
+    /**
+     * Check if s2 is subsequence of s1
+     */
+    private static boolean isSubsequence(char[] s1, String s2) {
+        int p1 = 0, p2 = 0;
+
+        while (p1 < s1.length && p2 < s2.length()) {
+            if (s1[p1] == s2.charAt(p2)) {
+                p1++;
+                p2++;
             } else {
-                i++;
+                p1++;
             }
         }
-        return j == p.length;
+
+        return p2 == s2.length();
     }
 
 }
