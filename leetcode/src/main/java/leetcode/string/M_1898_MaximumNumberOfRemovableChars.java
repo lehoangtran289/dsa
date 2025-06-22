@@ -3,6 +3,8 @@ package leetcode.string;
 public class M_1898_MaximumNumberOfRemovableChars {
 
     public static void main(String[] args) {
+        String s = "1,2,3,n,n,4,5,n,n,n,n";
+        String[] split = s.split(",");
         System.out.println(maximumRemovals("qlevcvgzfpryiqlwy", "qlecfqlw", new int[]{12, 5}));
     }
 
