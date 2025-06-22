@@ -11,7 +11,7 @@ public class Interview {
     }
 
     public static String solution(String str) {
-        if (str == null || str.length() == 0) return "";
+        if (str == null || str.isEmpty()) return "";
 
         StringBuilder res = new StringBuilder();
         char curChar = str.charAt(0);
