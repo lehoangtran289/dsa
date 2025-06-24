@@ -30,7 +30,7 @@ public class M_2086_MinimumNumberOfFoodBucketsToFeedTheHamsters {
             if (c == 'H') hCount++;
         }
 
-        // count overlap hamster
+        // count overlap hamsters H . H
         int overlapCount = 0;
         for (int i = 0; i < n - 2; ++i) {
             if (arr[i] == 'H' && arr[i + 1] == '.' && arr[i + 2] == 'H') {
@@ -39,6 +39,7 @@ public class M_2086_MinimumNumberOfFoodBucketsToFeedTheHamsters {
             }
         }
 
+        // result = total hamsters - overlap hamsters
         return hCount - overlapCount;
     }
 }
