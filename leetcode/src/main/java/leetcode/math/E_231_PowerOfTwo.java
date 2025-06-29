@@ -1,4 +1,4 @@
-package leetcode.bit;
+package leetcode.math;
 
 public class E_231_PowerOfTwo {
     public static void main(String[] args) {
@@ -29,14 +29,14 @@ public class E_231_PowerOfTwo {
         return (n & (n - 1)) == 0;
     }
 
-    public boolean isPowerOfTwo2(int n) {
-        int pow = 0;
-
-        while (pow <= 32) {
-            if (Math.pow(2, pow) == n) return true;
-            pow++;
+    /**
+     * iteration
+     */
+    public boolean isPowerOfTwo3(int n) {
+        if (n <= 0) return false;
+        while (n % 2 == 0) {
+            n /= 2;
         }
-
-        return false;
+        return n == 1;
     }
 }
