@@ -24,6 +24,9 @@ public class Q3_PartitionArrayToMinimizeXOR {
         return res;
     }
 
+    /**
+     * Check if we can partition the array into k parts such that xor of each part is <= limit
+     */
     private static boolean canPartition(
             int[] nums,
             int index,
