@@ -1,4 +1,4 @@
-package leetcode.graph.tree.fenwicktree;
+package leetcode.tree.fenwicktree;
 
 public class M_307_RangeSumQueryMutable {
     private final int[] nums;

@@ -1,9 +1,9 @@
-package leetcode.graph.tree.binarytree;
+package leetcode.tree.binarytree;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class E_144_BinaryTreePreorder {
+public class E_145_BinaryTreePostorder {
     public static void main(String[] args) {
         System.out.println(preorderTraversal(new TreeNode(1, null, new TreeNode(2, new TreeNode(3), null))));
     }
@@ -16,9 +16,9 @@ public class E_144_BinaryTreePreorder {
 
     private static void visit(TreeNode root, List<Integer> res) {
         if (root == null) return;
-        res.add(root.val);
         visit(root.left, res);
         visit(root.right, res);
+        res.add(root.val);
     }
 }
 

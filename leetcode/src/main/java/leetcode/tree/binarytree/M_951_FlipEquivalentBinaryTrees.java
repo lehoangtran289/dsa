@@ -1,4 +1,4 @@
-package leetcode.graph.tree.binarytree;
+package leetcode.tree.binarytree;
 
 public class M_951_FlipEquivalentBinaryTrees {
     public static void main(String[] args) {
