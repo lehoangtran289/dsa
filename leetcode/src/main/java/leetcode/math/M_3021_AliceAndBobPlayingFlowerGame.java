@@ -13,9 +13,9 @@ public class M_3021_AliceAndBobPlayingFlowerGame {
      */
     public long flowerGame(int n, int m) {
         long oddsInFirst = countOddInRange(1, n);
-        long evensInFirst = countEvenInRange(1, n);
+        long evensInFirst = n - oddsInFirst;
         long oddsInSecond = countOddInRange(1, m);
-        long evensInSecond = countEvenInRange(1, m);
+        long evensInSecond = m - oddsInSecond;
 
         return oddsInFirst * evensInSecond + evensInFirst * oddsInSecond;
     }
