@@ -7,7 +7,7 @@ public class M_3446_SortMatrixByDiagonals {
         M_3446_SortMatrixByDiagonals obj = new M_3446_SortMatrixByDiagonals();
         System.out.println(Arrays.deepToString(obj.sortMatrix(new int[][]
                 {{1,7,3},{9,8,2},{4,5,6}}
-        ))); // [[8,2,3],[9,6,7],[4,5,1]]
+        ))); //  [[8,2,3],[9,6,7],[4,5,1]]
     }
 
     public int[][] sortMatrix(int[][] grid) {
