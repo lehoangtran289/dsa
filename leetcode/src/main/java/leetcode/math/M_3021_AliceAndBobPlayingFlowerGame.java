@@ -12,6 +12,7 @@ public class M_3021_AliceAndBobPlayingFlowerGame {
      *  (x, y) must has different parity
      */
     public long flowerGame(int n, int m) {
+        // count odds and evens in both ranges
         long oddsInFirst = countOddInRange(1, n);
         long evensInFirst = n - oddsInFirst;
         long oddsInSecond = countOddInRange(1, m);
@@ -23,12 +24,6 @@ public class M_3021_AliceAndBobPlayingFlowerGame {
     private int countOddInRange(int x, int y) {
         if ((x & 1) == 0) x++;
         if ((y & 1) == 0) y--;
-        return x <= y ? (y - x) / 2 + 1 : 0;
-    }
-
-    private int countEvenInRange(int x, int y) {
-        if ((x & 1) == 1) x++;
-        if ((y & 1) == 1) y--;
         return x <= y ? (y - x) / 2 + 1 : 0;
     }
 }
