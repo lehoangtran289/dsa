@@ -1,47 +1,48 @@
 package leetcode.array.array2d;
 
-import java.util.HashSet;
-import java.util.Set;
-
 public class M_36_ValidSudoku {
-    public boolean isValidSudoku(char[][] board) {
-        // validate rows
-        for (int i = 0; i < board.length; i++) {
-            Set<Character> row = new HashSet<>();
-            for (int j = 0; j < board[0].length; j++) {
-                char cell = board[i][j];
-                if (cell != '.') {
-                    if (row.contains(cell)) return false;
-                    row.add(cell);
-                }
-            }
-        }
 
-        // validate cols
-        for (int j = 0; j < board[0].length; j++) {
-            Set<Character> col = new HashSet<>();
-            for (int i = 0; i < board.length; i++) {
-                char cell = board[i][j];
-                if (cell != '.') {
-                    if (col.contains(cell)) return false;
-                    col.add(cell);
+    /**
+     * Simulation
+     * -------------
+     * Time: O(1) since board size (9x9), if board size n x n, then O(n^2)
+     * Space: O(1) since board size (9x9)
+     */
+    public boolean isValidSudoku(char[][] board) {
+        // validate rows and columns
+        for (int i = 0; i < 9; ++i) {
+            int[] row = new int[10];
+            int[] col = new int[10];
+
+            for (int j = 0; j < 9; ++j) {
+                char rowCell = board[i][j];
+                char colCell = board[j][i];
+
+                if (rowCell != '.') {
+                    row[rowCell - '0']++;
+                    if (row[rowCell - '0'] > 1) return false;
+                }
+
+                if (colCell != '.') {
+                    col[colCell - '0']++;
+                    if (col[colCell - '0'] > 1) return false;
                 }
             }
         }
 
         // validate boxes
-        for (int i = 0; i < board.length; i += 3) {
-            for (int j = 0; j < board[0].length; j += 3) {
+        for (int i = 0; i < 9; i += 3) {
+            for (int j = 0; j < 9; j += 3) {
+                int[] box = new int[10];
 
-                // validate box
-                Set<Character> box = new HashSet<>();
+                // filling box elements
                 for (int r = 0; r < 3; ++r) {
                     for (int c = 0; c < 3; ++c) {
-                        char cell = board[i + r][j + c];
-                        if (cell != '.') {
-                            if (box.contains(cell)) return false;
-                            box.add(cell);
-                        }
+                        char val = board[i + r][j + c];
+                        if (val == '.') continue;
+
+                        box[val - '0']++;
+                        if (box[val - '0'] > 1) return false;
                     }
                 }
             }
