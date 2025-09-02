@@ -1,6 +1,42 @@
 package leetcode.array.array2d;
 
+import java.util.Arrays;
+
+/**
+ * Sane problem: 3027. Find the Number of Ways to Place People II
+ */
 public class M_3025_FindTheNumberOfWaysToPlacePeopleI {
+
+    /**
+     * Sorting + greedy
+     * -------------
+     * Time: O(n^2)
+     * Space: O(1)
+     */
+    public int numberOfPairs(int[][] points) {
+        // Sort by x ascending, then y descending
+        Arrays.sort(points, (a, b) -> a[0] == b[0] ? Integer.compare(b[1], a[1]) : Integer.compare(a[0], b[0]));
+
+        int res = 0;
+
+        // for each upper left point
+        for (int i = 0; i < points.length - 1; i++) {
+            int[] pointA = points[i];
+            int yMin = Integer.MIN_VALUE;
+            int yMax = pointA[1];
+
+            // check possible bottom right points
+            for (int j = i + 1; j < points.length; j++) {
+                int[] pointB = points[j];
+
+                if (pointB[1] > yMin && pointB[1] <= yMax) {
+                    res++;
+                    yMin = pointB[1];
+                }
+            }
+        }
+        return res;
+    }
 
     /**
      * Simulation - Brute Force
@@ -8,7 +44,7 @@ public class M_3025_FindTheNumberOfWaysToPlacePeopleI {
      * Time: O(n^3)
      * Space: O(1)
      */
-    public int numberOfPairs(int[][] points) {
+    public int numberOfPairs1(int[][] points) {
         int res = 0;
         for (int i = 0; i < points.length - 1; ++i) {
             for (int j = i + 1; j < points.length; ++j) {
