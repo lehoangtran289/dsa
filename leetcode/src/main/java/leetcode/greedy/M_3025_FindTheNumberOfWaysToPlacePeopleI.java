@@ -25,7 +25,10 @@ public class M_3025_FindTheNumberOfWaysToPlacePeopleI {
             int yMin = Integer.MIN_VALUE;
             int yMax = pointA[1];
 
-            // check possible bottom right points
+            // * check possible bottom right points
+            // since points are sorted by x -> should not care about comparing x_A and x_B, and yMax is static
+            // when choosing B2, it should higher (>) than the last B1 to ensure the property that B_j is in bottom right,
+            //      and between A and B_j there is no other points
             for (int j = i + 1; j < points.length; j++) {
                 int[] pointB = points[j];
 
