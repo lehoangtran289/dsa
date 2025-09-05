@@ -33,6 +33,7 @@ public class M_523_ContinuousSubarraySum {
         for (int i = 0; i < n; ++i) {
             int mod = prefixSum[i] % k;
 
+            // handle case when first pref sum element % k = 0
             if (mod == 0 && i >= 1) return true;
 
             if (map.containsKey(mod)) {
