@@ -10,7 +10,7 @@ public class M_2327_NumberOfPeopleAwareOfASecret {
     public int peopleAwareOfSecret(int n, int delay, int forget) {
         final int MOD = (int) 1e9 + 7;
 
-        // knows[i] = number of people knows at day i
+        // knows[i] = number of new people knows at day i
         long[] knows = new long[n + 1];
         knows[1] = 1;
 
