@@ -14,12 +14,11 @@ public class M_2327_NumberOfPeopleAwareOfASecret {
         long[] knows = new long[n + 1];
         knows[1] = 1;
 
-        // iterate for each day
+        // iterate for each day and update the range [i + delay, i + forget - 1] with new people
         for (int i = 1; i <= n; ++i) {
             int l = i + delay;
             int r = Math.min(n, i + forget - 1);
 
-            // update range of [delay, forget]
             for (int j = l; j <= r; ++j) {
                 knows[j] = (knows[j] + knows[i]) % MOD;
             }
