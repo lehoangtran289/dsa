@@ -24,6 +24,7 @@ public class M_2327_NumberOfPeopleAwareOfASecret {
             }
         }
 
+        // sum up the people who still know the secret
         long res = 0;
         for (int i = n - forget + 1; i <= n; ++i) {
             res = (res + knows[i]) % MOD;
