@@ -1,15 +1,17 @@
 package leetcode.array.array2d;
 
 /**
- * Bitmask technique
+ * Bit operations / Bitmask technique
  * -------------
  * 2 most commonly used operations: get (&) and set (|)
  * -------------
- * 1. Get: To check if the ith bit is set (1) or not (0)
+ * 1. Get (AND &): To check if the ith bit is set (1) or not (0)
  *    - num & (1 << i) > 0 means ith bit is set
  *    - num & (1 << i) == 0 means ith bit is not set
- * 2. Set: To set the ith bit to 1
+ * 2. Set (OR |): To set the ith bit to 1
  *    - num |= (1 << i)
+ * 3. Unset (XOR ^): To set the ith bit to 0
+ *   - num ^= (1 << i)
  */
 public class M_36_ValidSudoku {
 
