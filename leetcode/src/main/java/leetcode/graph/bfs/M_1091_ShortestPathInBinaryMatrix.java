@@ -1,42 +1,67 @@
 package leetcode.graph.bfs;
 
-import java.util.ArrayDeque;
-import java.util.Deque;
+import java.util.*;
 
 public class M_1091_ShortestPathInBinaryMatrix {
     public static void main(String[] args) {
         System.out.println(shortestPathBinaryMatrix(new int[][]{{0, 0, 0}, {1, 1, 0}, {1, 1, 0}}));
     }
 
+    static class Cell {
+        int x;
+        int y;
+        int dist;
+
+        Cell(int x, int y, int dist) {
+            this.x = x;
+            this.y = y;
+            this.dist = dist;
+        }
+    }
+
+    /**
+     * BFS
+     * -----------------------
+     * TC: O(N^2)
+     * SC: O(N^2)
+     */
     public static int shortestPathBinaryMatrix(int[][] grid) {
-        int len = grid.length;
-        if (grid[0][0] == 1 || grid[len - 1][len - 1] == 1)
-            return -1;
+        final int[][] dirs = new int[][]{{0, -1}, {0, 1}, {-1, 0}, {1, 0}, {-1, -1}, {-1, 1}, {1, 1}, {1, -1}};
+        int n = grid.length;
 
-        int[][] directions = new int[][]{{0, 1}, {1, 0}, {0, -1}, {-1, 0}, {1, 1}, {-1, -1}, {-1, 1}, {1, -1}};
-        boolean[][] visited = new boolean[len][len];
-        Deque<int[]> queue = new ArrayDeque<>();
+        if (grid[0][0] == 1 || grid[n - 1][n - 1] == 1) return -1;
 
+        Queue<Cell> queue = new ArrayDeque<>();
+        boolean[][] visited = new boolean[n][n];
+
+        queue.add(new Cell(0, 0, 1));
         visited[0][0] = true;
-        queue.add(new int[]{0, 0, 1}); // r, c, distance
 
         while (!queue.isEmpty()) {
-            int[] cur = queue.poll();
-            if (cur[0] == len - 1 && cur[1] == len - 1) // reach dest
-                return cur[2];
+            Cell cur = queue.poll();
 
-            for (int[] direction : directions) {
-                int r = cur[0] + direction[0];
-                int c = cur[1] + direction[1];
+            if (cur.x == n - 1 && cur.y == n - 1) return cur.dist;
 
-                if (Math.min(r, c) < 0 || Math.max(r, c) >= len
-                    || grid[r][c] == 1 || visited[r][c])
-                    continue;
+            for (int[] d : dirs) {
+                int nextX = cur.x + d[0];
+                int nextY = cur.y + d[1];
+                int nextDist = cur.dist + 1;
 
-                visited[r][c] = true;
-                queue.add(new int[]{r, c, cur[2] + 1}); // r, c, new distance
+                if (
+                        isCellValid(nextX, nextY, n, n)
+                        && !visited[nextX][nextY]
+                        && grid[nextX][nextY] == 0
+                ) {
+                    queue.add(new Cell(nextX, nextY, nextDist));
+                    visited[nextX][nextY] = true;
+                }
             }
         }
+
         return -1;
+    }
+
+    private static boolean isCellValid(int x, int y, int rows, int cols) {
+        return x >= 0 && x < rows && y >= 0 && y < cols;
     }
 }
