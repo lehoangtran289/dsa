@@ -1,10 +1,15 @@
 package leetcode.graph.dijkstra;
 
 import java.util.PriorityQueue;
+import java.util.Queue;
 
 public class H_407_TrappingRainWaterII {
     public static void main(String[] args) {
-
+        System.out.println(trapRainWater(new int[][]{
+                {1, 4, 3, 1, 3, 2},
+                {3, 2, 1, 3, 2, 4},
+                {2, 3, 3, 2, 3, 1}
+        })); // 4
     }
 
     static class Cell {
@@ -20,69 +25,54 @@ public class H_407_TrappingRainWaterII {
     }
 
     public static int trapRainWater(int[][] heightMap) {
-        int rows = heightMap.length;
-        int cols = heightMap[0].length;
-
-        boolean[][] visited = new boolean[rows][cols];
-        PriorityQueue<Cell> pq = new PriorityQueue<>((a, b) -> a.h - b.h);
-
-        // Add the first and last row cells to the boundary and mark them as visited
-        for (int i = 0; i < cols; ++i) {
-            pq.add(new Cell(0, i, heightMap[0][i]));
-            pq.add(new Cell(rows - 1, i, heightMap[rows - 1][i]));
-            visited[0][i] = true;
-            visited[rows - 1][i] = true;
-        }
-
-        // Add the first and last column cells to the boundary and mark them as visited
-        for (int i = 0; i < rows; ++i) {
-            pq.add(new Cell(i, 0, heightMap[i][0]));
-            pq.add(new Cell(i, cols - 1, heightMap[i][cols - 1]));
-            visited[i][0] = true;
-            visited[i][cols - 1] = true;
-        }
+        final int[][] DIRS = new int[][]{{0, -1}, {0, 1}, {-1, 0}, {1, 0}}; // L, R, U, D
+        int rows = heightMap.length, cols = heightMap[0].length;
 
         int res = 0;
+        boolean[][] visited = new boolean[rows][cols];
+        Queue<Cell> pq = new PriorityQueue<>((a, b) -> a.h - b.h);
 
-        // Direction arrays
-        int[][] dirs = {{0, -1}, {0, 1}, {-1, 0}, {1, 0}}; // left, right, up, down
+        // init 4 edges
+        for (int i = 0; i < rows; ++i) {
+            visited[i][0] = true;
+            visited[i][cols - 1] = true;
+            pq.add(new Cell(i, 0, heightMap[i][0]));
+            pq.add(new Cell(i, cols - 1, heightMap[i][cols - 1]));
+        }
 
-        // Process cells in the boundary (min-heap will always pop the smallest height)
+        for (int j = 0; j < cols; ++j) {
+            visited[0][j] = true;
+            visited[rows - 1][j] = true;
+            pq.add(new Cell(0, j, heightMap[0][j]));
+            pq.add(new Cell(rows - 1, j, heightMap[rows - 1][j]));
+        }
+
+        // BFS
         while (!pq.isEmpty()) {
-            // Pop the cell with the smallest height from the boundary
             Cell cur = pq.poll();
 
-            // Explore all 4 neighboring cells
-            for (int[] dir : dirs) {
+            for (int[] dir : DIRS) {
                 int nextX = cur.x + dir[0];
                 int nextY = cur.y + dir[1];
 
-                if (
-                        isValidCell(nextX, nextY, rows, cols) &&
-                        !visited[nextX][nextY]
-                ) {
-                    int nextH = heightMap[nextX][nextY];
+                if (!isCellValid(nextX, nextY, rows, cols) || visited[nextX][nextY]) continue;
 
-                    // If the neighbor's height is less than the current boundary height, water can be trapped
-                    if (nextH < cur.h) {
-                        res += cur.h - nextH;
+                int nextH = heightMap[nextX][nextY];
 
-                        // Push the neighbor into the boundary with updated height (to prevent water leakage)
-                        pq.add(new Cell(nextX, nextY, cur.h));
-                    } else {
-                        pq.add(new Cell(nextX, nextY, nextH));
-                    }
-
-                    visited[nextX][nextY] = true;
+                // If the neighbor's height < cur height, water can be trapped
+                if (cur.h > nextH) {
+                    res += cur.h - nextH;
+                    nextH = cur.h;
                 }
+                pq.add(new Cell(nextX, nextY, nextH));
+                visited[nextX][nextY] = true;
             }
-
         }
 
         return res;
     }
 
-    private static boolean isValidCell(int x, int y, int rows, int cols) {
-        return x >= 0 && y >= 0 && x < rows && y < cols;
+    private static boolean isCellValid(int x, int y, int rows, int cols) {
+        return x >= 0 && x < rows && y >= 0 && y < cols;
     }
 }
