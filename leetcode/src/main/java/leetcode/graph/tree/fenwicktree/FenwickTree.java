@@ -1,4 +1,4 @@
-package leetcode.tree.fenwicktree;
+package leetcode.graph.tree.fenwicktree;
 
 public class FenwickTree {
     private final int[] tree;

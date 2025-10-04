@@ -1,4 +1,4 @@
-package leetcode.tree.segmenttree;
+package leetcode.graph.tree.segmenttree;
 
 import java.util.Arrays;
 

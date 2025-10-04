@@ -1,6 +1,6 @@
 package leetcode.array.prefixSum;
 
-import leetcode.tree.binarytree.TreeNode;
+import leetcode.graph.tree.binarytree.TreeNode;
 
 import java.util.HashMap;
 import java.util.Map;

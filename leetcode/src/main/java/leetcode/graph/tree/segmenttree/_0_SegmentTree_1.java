@@ -1,4 +1,4 @@
-package leetcode.tree.segmenttree;
+package leetcode.graph.tree.segmenttree;
 
 // implement segment tree with lazy update propagation
 public class _0_SegmentTree_1 {
