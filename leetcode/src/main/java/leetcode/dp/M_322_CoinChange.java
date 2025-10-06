@@ -14,7 +14,8 @@ public class M_322_CoinChange {
     private Map<Integer, Integer> memo;
 
     /**
-     *  F(S) = min(F(S - c_i)) + 1, for i = 0 -> n - 1
+     *  DP Top Down with Memoization
+     *  Relation: F(S) = min(F(S - c_i)) + 1, for i = 0 -> n - 1
      *  -----------------------
      *  TC: O(S * n) - S is the amount, n is the number of coins
      *  SC: O(S)
