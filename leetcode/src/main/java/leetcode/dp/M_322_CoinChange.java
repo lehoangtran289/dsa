@@ -4,36 +4,42 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class M_322_CoinChange {
+    public static void main(String[] args) {
+        M_322_CoinChange solution = new M_322_CoinChange();
+        System.out.println(solution.coinChange(new int[]{1, 2, 5}, 11)); // 3
+        System.out.println(solution.coinChange(new int[]{2}, 3)); // -1
+    }
+
     private int[] coins;
     private Map<Integer, Integer> memo;
 
     /**
-     *  F(S) = F(S - ci) + 1, for i = 0 -> n - 1
+     *  F(S) = min(F(S - c_i)) + 1, for i = 0 -> n - 1
+     *  -----------------------
+     *  TC: O(S * n) - S is the amount, n is the number of coins
+     *  SC: O(S)
      */
     public int coinChange(int[] coins, int amount) {
         this.coins = coins;
         this.memo = new HashMap<>();
 
-        int res = dp(amount);
-        return res == Integer.MAX_VALUE ? -1 : res;
+        return dp(amount);
     }
 
     private int dp(int amount) {
+        if (amount < 0) return -1;
         if (amount == 0) return 0;
         if (memo.containsKey(amount)) return memo.get(amount);
 
         int res = Integer.MAX_VALUE;
         for (int c : coins) {
-            if (amount < c) continue;
+            int best = dp(amount - c);
 
-            int next = dp(amount - c);
-
-            if (next != Integer.MAX_VALUE) {
-                res = Math.min(res, next + 1);
+            if (best < res && best >= 0) {
+                res = best + 1;
             }
         }
-        memo.put(amount, res);
-
-        return res;
+        memo.put(amount, res == Integer.MAX_VALUE ? -1 : res);
+        return memo.get(amount);
     }
 }
