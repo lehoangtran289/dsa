@@ -1,5 +1,6 @@
 package leetcode.dp;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -42,5 +43,27 @@ public class M_322_CoinChange {
         }
         memo.put(amount, res == Integer.MAX_VALUE ? -1 : res);
         return memo.get(amount);
+    }
+
+    /**
+     * DP Bottom Up
+     * -----------------------
+     * TC: O(S * n) - S is the amount, n is the number of coins
+     * SC: O(S)
+     */
+    public int coinChange2(int[] coins, int amount) {
+        int[] dp = new int[amount + 10];
+        Arrays.fill(dp, amount + 10); // fill with max value
+        dp[0] = 0;
+
+        for (int i = 1; i <= amount; ++i) {
+            for (int c : coins) {
+                if (i >= c)
+                    dp[i] = Math.min(dp[i], dp[i - c] + 1);
+            }
+        }
+
+
+        return dp[amount] > amount ? -1 : dp[amount];
     }
 }
