@@ -5,6 +5,13 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class M_740_DeleteAndEarn {
+
+    /**
+     * DP Bottom Up
+     * -----------------------
+     * TC: O(N log N) - N is the length of nums
+     * SC: O(N)
+     */
     public int deleteAndEarn(int[] nums) {
         // get each num frequency into a Map
         Map<Integer, Integer> freq = new HashMap<>();
@@ -22,7 +29,7 @@ public class M_740_DeleteAndEarn {
         int[] dp = new int[arr.length];
         if (arr.length == 1) return freq.get(arr[0]);
 
-        // base cases. for i, state = 2 options: take or skip
+        // base cases. for i, state = 2 options: take or skip (not take)
         dp[0] = freq.get(arr[0]);
         if (arr[1] - 1 == arr[0]) {
             dp[1] = Math.max(
