@@ -16,42 +16,37 @@ public class M_901_OnlineStockSpan {
 
     static class Stock {
         int price;
-        int id;
         int span;
 
-        Stock(int price, int id, int span) {
+        Stock(int price, int span) {
             this.price = price;
-            this.id = id;
             this.span = span;
         }
     }
 
-    private int curId;
     private final Stack<Stock> stockStack;
 
     public M_901_OnlineStockSpan() {
-        this.curId = -1;
         this.stockStack = new Stack<>();
     }
 
     /**
-     * Monotonic Stack, store (price, id, span)
+     * Monotonic Stack, store (price, span)
      * TC: O(n) amortized
      * SC: O(n)
      */
     public int next(int price) {
         int span = 1;
-        curId++;
 
         while (
                 !stockStack.isEmpty()
                 && stockStack.peek().price <= price
         ) {
             Stock prevStock = stockStack.pop();
-            span = Math.max(span, curId - prevStock.id + prevStock.span);
+            span += prevStock.span;
         }
 
-        stockStack.push(new Stock(price, curId, span));
+        stockStack.push(new Stock(price, span));
         return span;
     }
 }
