@@ -1,15 +1,13 @@
 package leetcode.array.stack;
 
+import java.util.Arrays;
 import java.util.Stack;
 
 public class M_739_DailyTemperatures {
     public static void main(String[] args) {
-        int[] temperatures = {73, 74, 75, 71, 69, 72, 76, 73};
-        int[] result = dailyTemperatures(temperatures);
-        for (int days : result) {
-            System.out.print(days + " ");
-        }
-        // Output: [1, 1, 4, 2, 1, 1, 0, 0]
+        System.out.println(Arrays.toString(
+                dailyTemperatures2(new int[]{73, 74, 75, 71, 69, 72, 76, 73}))
+        ); // [1, 1, 4, 2, 1, 1, 0, 0]
     }
 
     /**
@@ -17,17 +15,17 @@ public class M_739_DailyTemperatures {
      * TC: O(n)
      * SC: O(2 * n)
      */
-    public static int[] dailyTemperatures(int[] temp) {
-        int n = temp.length;
+    public static int[] dailyTemperatures(int[] temperatures) {
+        int n = temperatures.length;
         Stack<int[]> stack = new Stack<>(); // [val, index]
         int[] answer = new int[n];
 
         for (int i = 0; i < n; ++i) {
-            while (!stack.isEmpty() && temp[i] > stack.peek()[0]) {
+            while (!stack.isEmpty() && temperatures[i] > stack.peek()[0]) {
                 int prevIdx = stack.pop()[1];
                 answer[prevIdx] = i - prevIdx;
             }
-            stack.push(new int[] {temp[i], i});
+            stack.push(new int[] {temperatures[i], i});
         }
 
         return answer;
@@ -38,19 +36,22 @@ public class M_739_DailyTemperatures {
      * TC: O(n)
      * SC: O(n)
      */
-    public static int[] dailyTemperatures2(int[] temp) {
-        int n = temp.length;
-        Stack<Integer> stack = new Stack<>();
-        int[] answer = new int[n];
+    public static int[] dailyTemperatures2(int[] temperatures) {
+        int n = temperatures.length;
+        Stack<Integer> tempIdStack = new Stack<>();
+        int[] res = new int[n];
 
         for (int i = 0; i < n; i++) {
-            while (!stack.isEmpty() && temp[i] > temp[stack.peek()]) {
-                int prevIdx = stack.pop();
-                answer[prevIdx] = i - prevIdx;
+            while (
+                    !tempIdStack.isEmpty()
+                    && temperatures[tempIdStack.peek()] < temperatures[i]
+            ) {
+                int prevIdx = tempIdStack.pop();
+                res[prevIdx] = i - prevIdx;
             }
-            stack.push(i);
+            tempIdStack.add(i);
         }
 
-        return answer;
+        return res;
     }
 }
