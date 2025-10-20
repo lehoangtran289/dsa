@@ -1,5 +1,6 @@
 package leetcode.design;
 
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.TreeSet;
@@ -21,57 +22,48 @@ public class M_2353_DesignAFoodRatingSystem {
     }
 
     static class FoodRatings {
-        private final Map<String, Food> foodMap;
-        private final Map<String, TreeSet<Food>> cuisineMap;
+        private final String[] cuisines;
+        private final int[] ratings;
+        private final Map<String, Integer> foodMap;
+        private final Map<String, TreeSet<String>> cuisineMap;
 
-        public FoodRatings(String[] foods, String[] cuisines, int[] rates) {
+        public FoodRatings(String[] foods, String[] cuisines, int[] ratings) {
+            this.cuisines = cuisines;
+            this.ratings = ratings;
             this.foodMap = new HashMap<>();
             this.cuisineMap = new HashMap<>();
 
             for (int i = 0; i < foods.length; ++i) {
-                foodMap.put(foods[i], new Food(foods[i], cuisines[i], rates[i]));
+                foodMap.put(foods[i], i);
 
-                if (cuisineMap.containsKey(cuisines[i])) {
-                    cuisineMap.get(cuisines[i]).add(foodMap.get(foods[i]));
-                } else {
-                    TreeSet<Food> foodSet = new TreeSet<>((a, b) -> {
-                        if (a.rating == b.rating) return a.food.compareTo(b.food);
-                        return b.rating - a.rating;
-                    });
-                    foodSet.add(foodMap.get(foods[i]));
-                    cuisineMap.put(cuisines[i], foodSet);
+                if (!cuisineMap.containsKey(cuisines[i])) {
+                    cuisineMap.put(cuisines[i], new TreeSet<>(new FoodRatingComparator()));
                 }
+                cuisineMap.get(cuisines[i]).add(foods[i]);
+            }
+        }
+
+        private class FoodRatingComparator implements Comparator<String> {
+            @Override
+            public int compare(String a, String b) {
+                return ratings[foodMap.get(a)] != ratings[foodMap.get(b)]
+                        ? ratings[foodMap.get(b)] - ratings[foodMap.get(a)]
+                        : a.compareTo(b);
             }
         }
 
         public void changeRating(String food, int newRating) {
-            String curCuisine = foodMap.get(food).cuisine;
+            int foodIndex = foodMap.get(food);
+            String cuisine = cuisines[foodIndex];
 
-            TreeSet<Food> foodSet = cuisineMap.get(curCuisine);
-            foodSet.remove(foodMap.get(food));
-            foodMap.put(food, new Food(food, curCuisine, newRating));
-            foodSet.add(foodMap.get(food));
+            cuisineMap.get(cuisine).remove(food);
+
+            ratings[foodIndex] = newRating;
+            cuisineMap.get(cuisine).add(food);
         }
 
         public String highestRated(String cuisine) {
-            return cuisineMap.get(cuisine).first().food;
-        }
-    }
-
-    static class Food {
-        String food;
-        String cuisine;
-        int rating;
-
-        public Food(String food, String cuisine, int rating) {
-            this.food = food;
-            this.cuisine = cuisine;
-            this.rating = rating;
-        }
-
-        @Override
-        public boolean equals(Object obj) {
-            return food.equals(((Food) obj).food);
+            return cuisineMap.get(cuisine).first();
         }
     }
 }
