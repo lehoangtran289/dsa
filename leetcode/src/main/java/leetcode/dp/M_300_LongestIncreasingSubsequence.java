@@ -45,7 +45,7 @@ public class M_300_LongestIncreasingSubsequence {
      * Top down DP approach
      */
     private int[] nums;
-    private int[] memo; // memo[i] = length of longest increasing subsequence ending at index i
+    private int[] memo; // memo[i] = length of longest increasing subsequence starting at index i
 
     public int lengthOfLIS2(int[] nums) {
         this.nums = nums;
