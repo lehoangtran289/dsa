@@ -1,8 +1,10 @@
 package leetcode.array.intervals;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.TreeMap;
 
-public class M_3346_MaximumFrequencyOfAnElementAfterPerformingOperationsI {
+public class H_3347_MaximumFrequencyOfAnElementAfterPerformingOperationsII {
 
     /**
      * Line sweep + difference array using TreeMap
