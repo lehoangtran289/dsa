@@ -1,6 +1,8 @@
 package leetcode.graph.tree.binarytree;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * 0. Max Sum of Non-Adjacent Nodes in a Binary Tree
@@ -33,9 +35,11 @@ public class _0_MaxSumNonAdjacentNodes {
     }
 
     /**
-     * Top-down DP with memoization
+     * Top down DP
      * ---------------------------
      * Idea: DP tree
+     * General problem: find max sum of non-adjacent nodes in a tree
+     * ---------------------------
      * int f[MAX][2];
      *
      * Void dfs(int u, int par) {
