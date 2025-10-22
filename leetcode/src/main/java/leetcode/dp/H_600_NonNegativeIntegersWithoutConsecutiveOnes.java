@@ -12,9 +12,7 @@ public class H_600_NonNegativeIntegersWithoutConsecutiveOnes {
      * TC: O(log n) ~ where n is range number
      * SC: O(log n)
      */
-    private String bits;
-    private int len;
-    private Integer[][][] dp; // pos, isTight(0/1), prevBit(0/1) -> count
+    private int n;
 
     public static void main(String[] args) {
         H_600_NonNegativeIntegersWithoutConsecutiveOnes solution =
@@ -23,11 +21,12 @@ public class H_600_NonNegativeIntegersWithoutConsecutiveOnes {
         System.out.println(solution.findIntegers(1)); // 2
         System.out.println(solution.findIntegers(2)); // 3
     }
+    private int len;
+    private Integer[][][] dp; // pos, isTight(0/1), prevBit(0/1) -> count
 
     public int findIntegers(int n) {
-        String bits = Integer.toBinaryString(n);
-        this.bits = bits;
-        this.len = bits.length();
+        this.n = n;
+        this.len = Integer.SIZE - Integer.numberOfLeadingZeros(n);
         this.dp = new Integer[len][2][2];
 
         return dp(0, 1, 0); // start from pos = 0 ~ MSB
@@ -38,7 +37,9 @@ public class H_600_NonNegativeIntegersWithoutConsecutiveOnes {
         if (dp[pos][isTight][prevBit] != null) return dp[pos][isTight][prevBit];
 
         // get limit range if tight
-        int limit = (isTight == 1) ? bits.charAt(pos) - '0' : 1;
+        // limit range = bit value at pos in n
+        int bitValue = n >> (len - 1 - pos) & 1;
+        int limit = (isTight == 1) ? bitValue : 1;
 
         int count = 0;
         for (int i = 0; i <= limit; ++i) {
