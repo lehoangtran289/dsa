@@ -24,6 +24,29 @@ public class E_3289_TheTwoSneakyNumbersOfDigitville {
     }
 
     /**
+     * In-place marking
+     * ----------------
+     * Idea: mark visited numbers by +n
+     * ----------------
+     * TC: O(n)
+     * SC: O(1)
+     */
+    public int[] getSneakyNumbers1(int[] nums) {
+        int n = nums.length - 2; // true n
+        int[] res = new int[2];
+        int resIndex = 0;
+
+        for (int i = 0; i < nums.length; ++i) {
+            int index = nums[i] % n;
+
+            if (nums[index] >= n) res[resIndex++] = index;
+            else nums[index] += n;
+        }
+
+        return res;
+    }
+
+    /**
      * Math
      * ----------------
      * Formula:
@@ -33,7 +56,7 @@ public class E_3289_TheTwoSneakyNumbersOfDigitville {
      * TC: O(n)
      * SC: O(1)
      */
-    public int[] getSneakyNumbers1(int[] nums) {
+    public int[] getSneakyNumbers2(int[] nums) {
         int n = nums.length - 2; // true n
         int sum = 0, squareSum = 0;
 
