@@ -1,6 +1,7 @@
 package leetcode.array.prefixSum;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
 
 public class M_1248_CountNumberOfNiceSubarrays {
 

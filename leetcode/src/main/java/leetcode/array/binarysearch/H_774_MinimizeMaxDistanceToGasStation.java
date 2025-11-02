@@ -1,6 +1,7 @@
 package leetcode.array.binarysearch;
 
-import java.util.*;
+import java.util.PriorityQueue;
+import java.util.Queue;
 
 public class H_774_MinimizeMaxDistanceToGasStation {
     public static void main(String[] args) {

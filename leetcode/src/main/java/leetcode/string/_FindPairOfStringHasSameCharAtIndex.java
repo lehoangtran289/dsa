@@ -1,6 +1,8 @@
 package leetcode.string;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 public class _FindPairOfStringHasSameCharAtIndex {
     public static void main(String[] args) {

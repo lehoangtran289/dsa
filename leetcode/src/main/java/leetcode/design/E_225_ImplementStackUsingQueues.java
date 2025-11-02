@@ -1,6 +1,7 @@
 package leetcode.design;
 
-import java.util.*;
+import java.util.ArrayDeque;
+import java.util.Queue;
 
 public class E_225_ImplementStackUsingQueues {
 

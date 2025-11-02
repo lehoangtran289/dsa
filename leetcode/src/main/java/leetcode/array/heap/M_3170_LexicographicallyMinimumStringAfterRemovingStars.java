@@ -1,6 +1,7 @@
 package leetcode.array.heap;
 
-import java.util.*;
+import java.util.PriorityQueue;
+import java.util.Queue;
 
 public class M_3170_LexicographicallyMinimumStringAfterRemovingStars {
     public static void main(String[] args) {

@@ -1,6 +1,9 @@
 package leetcode.array.array2d;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 public class M_3446_SortMatrixByDiagonals {
     public static void main(String[] args) {

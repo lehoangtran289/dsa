@@ -1,7 +1,5 @@
 package leetcode.array.array2d;
 
-import java.util.Arrays;
-
 public class M_2257_CountUnguardedCellsInTheGrid {
     private static final int UNGUARDED = 0;
     private static final int GUARDED = 1;
@@ -42,7 +40,6 @@ public class M_2257_CountUnguardedCellsInTheGrid {
                 }
             }
         }
-        System.out.println(Arrays.deepToString(map));
 
         int res = 0;
         for (int[] row : map) {

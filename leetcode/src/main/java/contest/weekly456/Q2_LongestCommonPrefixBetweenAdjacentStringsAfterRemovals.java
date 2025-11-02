@@ -1,6 +1,9 @@
 package contest.weekly456;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.TreeMap;
 
 public class Q2_LongestCommonPrefixBetweenAdjacentStringsAfterRemovals {
     public static void main(String[] args) {

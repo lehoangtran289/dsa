@@ -1,6 +1,7 @@
 package leetcode.dp;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class M_120_Triangle {
     public static void main(String[] args) {

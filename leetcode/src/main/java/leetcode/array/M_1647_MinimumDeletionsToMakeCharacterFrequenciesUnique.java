@@ -1,6 +1,7 @@
 package leetcode.array;
 
-import java.util.*;
+import java.util.HashSet;
+import java.util.Set;
 
 public class M_1647_MinimumDeletionsToMakeCharacterFrequenciesUnique {
     public static void main(String[] args) {

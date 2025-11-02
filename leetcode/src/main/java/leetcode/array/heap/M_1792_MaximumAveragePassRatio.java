@@ -1,6 +1,7 @@
 package leetcode.array.heap;
 
-import java.util.*;
+import java.util.PriorityQueue;
+import java.util.Queue;
 
 public class M_1792_MaximumAveragePassRatio {
     public static void main(String[] args) {

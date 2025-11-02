@@ -1,6 +1,8 @@
 package leetcode.array.intervals;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.PriorityQueue;
+import java.util.Queue;
 
 public class M_1353_MaximumNumberOfEventsThatCanBeAttended {
     public static void main(String[] args) {

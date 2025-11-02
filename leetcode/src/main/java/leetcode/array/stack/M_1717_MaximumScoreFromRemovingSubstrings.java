@@ -1,6 +1,6 @@
 package leetcode.array.stack;
 
-import java.util.*;
+import java.util.Stack;
 
 public class M_1717_MaximumScoreFromRemovingSubstrings {
     public static void main(String[] args) {

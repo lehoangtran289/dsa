@@ -1,6 +1,6 @@
 package leetcode.array;
 
-import java.util.*;
+import java.util.List;
 
 public class M_3350_AdjacentIncreasingSubarraysDetectionII {
 

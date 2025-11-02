@@ -1,6 +1,8 @@
 package leetcode.array;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 public class E_594_LongestHarmoniousSubsequence {
     public static void main(String[] args) {
