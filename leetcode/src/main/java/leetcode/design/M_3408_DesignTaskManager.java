@@ -26,6 +26,9 @@ public class M_3408_DesignTaskManager {
 
     /**
      * Priority Queue + HashMap with Lazy Deletion
+     * Lazy deletion in a priority queue is a technique where,
+     * instead of immediately removing an element when a "delete" or "decrease-key" operation is requested,
+     * the element is merely marked as "deleted" or "invalid" in a separate data structure.
      * --------------------------------------------
      * TC: Initialization takes O(nlogn)
      *      Add and edit each take O(log(n+m))
