@@ -15,6 +15,6 @@ public class M_307_RangeSumQueryMutable {
     }
 
     public int sumRange(int left, int right) {
-        return tree.query(right) - tree.query(left - 1);
+        return tree.rangeSum(left, right);
     }
 }
