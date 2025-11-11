@@ -1,5 +1,8 @@
 package leetcode.dp;
 
+/**
+ * <a href="https://leetcode.com/discuss/post/1200320/thief-with-a-knapsack-a-series-of-crimes-lcdd/">ref</a>.</a>
+ */
 public class _0_Knapsack {
     public static void main(String[] args) {
         System.out.println(new _0_Knapsack().knapsack(
@@ -11,7 +14,7 @@ public class _0_Knapsack {
 
     /**
      * ----------------------------------------------
-     * Top-down DP
+     * Top-down Knapsack DP
      * ----------------------------------------------
      */
     private int[] weights;
@@ -45,7 +48,7 @@ public class _0_Knapsack {
 
     /**
      * ----------------------------------------------
-     * Bottom-up DP
+     * Bottom-up 2D DP
      * ----------------------------------------------
      */
     public int knapsack2(int[] weights, int[] profits, int capacity) {
@@ -53,7 +56,7 @@ public class _0_Knapsack {
         int[][] dp = new int[n + 1][capacity + 1];
 
         for (int i = 1; i <= n; ++i) {
-            for (int w = 1; w <= capacity; ++w) {
+            for (int w = 1; w <= capacity; ++w) { // current capacity
                 int index = i - 1; // 0-based index for weights and profits
 
                 if (weights[index] > w) {
@@ -68,5 +71,26 @@ public class _0_Knapsack {
         }
 
         return dp[n][capacity];
+    }
+
+    /**
+     * ----------------------------------------------
+     * Bottom-up 1D DP
+     * ----------------------------------------------
+     */
+    public int knapsack3(int[] weights, int[] profits, int capacity) {
+        int n = weights.length;
+        int[] dp = new int[capacity + 1];
+
+        for (int i = 0; i < n; ++i) {
+            for (int w = capacity; w >= weights[i]; --w) { // current capacity
+                dp[w] = Math.max(
+                        dp[w], // not take
+                        dp[w - weights[i]] + profits[i] // take
+                );
+            }
+        }
+
+        return dp[capacity];
     }
 }
