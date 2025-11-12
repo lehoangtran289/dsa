@@ -1,17 +1,87 @@
 package leetcode.dp;
 
+/**
+ * Variation of the 0/1 Knapsack problem.
+ */
 public class M_416_PartitionEqualSubsetSum {
+    /**
+     * Top down dp
+     * --------------------------------
+     * TC: O(n*sum)
+     * SC: O(n*sum)
+     */
+    private int[] nums;
+
     public static void main(String[] args) {
-        System.out.println(new M_416_PartitionEqualSubsetSum().canPartition2(
+        System.out.println(new M_416_PartitionEqualSubsetSum().canPartition1(
                 new int[]{1, 5, 11, 5}
         )); // true
     }
 
     /**
-     * TOP DOWN DP
-     * This problem is a variation of the 0/1 Knapsack problem.
+     * Bottom up DP 1D
+     * --------------------------------
+     * dp[sum] = can we achieve <sum> using cur element
+     * e.g:
+     * num = 2 -> traverse from sum -> 2, if we can achieve <sum>
+     * if we can, that means dp[sum] = true or dp[sum - 2] = true
+     * => dp[sum] = dp[sum] || dp[sum - 2]
+     * --------------------------------
+     * TC: O(n*sum)
+     * SC: O(sum)
      */
-    private int[] nums;
+    public boolean canPartition0(int[] nums) {
+        int sum = 0;
+        for (int num : nums) sum += num;
+
+        if (sum % 2 != 0) return false;
+        sum /= 2;
+
+        int n = nums.length;
+        boolean[] dp = new boolean[sum + 1];
+        dp[0] = true;
+
+        for (int num : nums) {
+            for (int j = sum; j >= num; --j) {
+                dp[j] = dp[j] || dp[j - num];
+            }
+        }
+
+        return dp[sum];
+    }
+
+    /**
+     * Bottom up DP 2D
+     * * dp[i][sum] = can we achieve subset <sum> using first <i> elements
+     * * dp[i][sum] = dp[i - 1][sum] || dp[i - 1][sum - nums[i]] // not take || take
+     * --------------------------------
+     * TC: O(n*sum)
+     * SC: O(n*sum)
+     */
+    public boolean canPartition1(int[] nums) {
+        int n = nums.length;
+
+        int total = 0;
+        for (int num : nums) total += num;
+        if (total % 2 != 0) return false;
+        int subsetSum = total / 2;
+
+        boolean[][] dp = new boolean[n + 1][subsetSum + 1];
+        dp[0][0] = true;
+
+        for (int i = 1; i <= n; ++i) {
+            for (int j = 0; j <= subsetSum; ++j) {
+                int curr = nums[i - 1];
+                if (curr > j) {
+                    dp[i][j] = dp[i - 1][j];
+                } else {
+                    dp[i][j] = dp[i - 1][j] || dp[i - 1][j - curr]; // not take || take
+                }
+            }
+        }
+
+        return dp[n][subsetSum];
+    }
     private Boolean[][] memo;
     private int subsetSum;
 
@@ -36,37 +106,5 @@ public class M_416_PartitionEqualSubsetSum {
 
         memo[i][curSum] = dp(curSum + nums[i], i + 1) || dp(curSum, i + 1);
         return memo[i][curSum];
-    }
-
-    /**
-     * BOTTOM UP DP
-     * This problem is a variation of the 0/1 Knapsack problem.
-     */
-
-    public boolean canPartition2(int[] nums) {
-        int n = nums.length;
-
-        int total = 0;
-        for (int num : nums) total += num;
-        if (total % 2 != 0) return false;
-        int subsetSum = total / 2;
-
-        // DP table
-        // dp[i][w] = true if we can get sum w using first i elements
-        boolean[][] dp = new boolean[n + 1][subsetSum + 1];
-        dp[0][0] = true;
-
-        for (int i = 1; i <= n; ++i) {
-            int curr = nums[i - 1];
-            for (int j = 0; j <= subsetSum; ++j) {
-                if (curr > j) {
-                    dp[i][j] = dp[i - 1][j];
-                } else {
-                    dp[i][j] = dp[i - 1][j - curr] || dp[i - 1][j];
-                }
-            }
-        }
-
-        return dp[n][subsetSum];
     }
 }
