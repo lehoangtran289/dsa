@@ -2,6 +2,7 @@ package leetcode.dp;
 
 /**
  * <a href="https://leetcode.com/discuss/post/1200320/thief-with-a-knapsack-a-series-of-crimes-lcdd/">ref</a>.</a>
+ * <a href="https://leetcode.com/discuss/post/1152328/01-knapsack-problem-and-dynamic-programm-4had/">ref2</a>
  */
 public class _0_Knapsack {
     public static void main(String[] args) {
