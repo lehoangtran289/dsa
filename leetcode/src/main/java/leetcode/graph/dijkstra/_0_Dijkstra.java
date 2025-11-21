@@ -1,4 +1,4 @@
-package leetcode.graph;
+package leetcode.graph.dijkstra;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -8,29 +8,43 @@ import java.util.List;
 import java.util.PriorityQueue;
 
 public class _0_Dijkstra {
-    public static void dijkstra(List<Edge>[] graph, int s) {
-        int n = graph.length;
+
+    /**
+     * Dijkstra's Algorithm to find the shortest path from source to all nodes in a weighted graph
+     * with non-negative weights.
+     * -----------------
+     * TC: O((V + E) lg V) = O(E lg V) for connected graph
+     * SC: O(V)
+     */
+    public static void dijkstra(List<Edge>[] adj, int s) {
+        int n = adj.length;
+
+        // init dist (v.d - distance from src) and prev (v.prev - previous node in path)
         int[] dist = new int[n];
         int[] prev = new int[n];
-
         Arrays.fill(dist, Integer.MAX_VALUE);
         Arrays.fill(prev, -1);
-        dist[s] = 0;
+
+        // min-heap by distance v.d
         PriorityQueue<Edge> pq = new PriorityQueue<>(Comparator.comparingInt(edge -> edge.v));
+
+        // init source
+        dist[s] = 0;
         pq.offer(new Edge(s, 0));
 
         while (!pq.isEmpty()) {
             Edge node = pq.poll();
             int u = node.v;
 
-            for (Edge edge : graph[u]) {
+            for (Edge edge : adj[u]) {
                 int v = edge.v;
-                int vW = edge.w;
-                int tempDist = dist[u] + vW;
-                if (tempDist < dist[v]) {
-                    dist[v] = tempDist;
+                int curDist = dist[u] + edge.w;
+
+                // relaxation
+                if (curDist < dist[v]) {
+                    dist[v] = curDist;
                     prev[v] = u;
-                    pq.offer(new Edge(v, tempDist));
+                    pq.offer(new Edge(v, curDist));
                 }
             }
         }
