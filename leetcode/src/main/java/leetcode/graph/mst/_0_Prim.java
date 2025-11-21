@@ -35,8 +35,8 @@ public class _0_Prim {
      * Prim's Algorithm to find Minimum Spanning Tree (MST) of a connected, undirected graph
      * represented as an edge list.
      * -----------------
-     * TC: O(E log E) where E is the number of edges
-     * SC: O(V + E) where V is the number of vertices
+     * TC: O(E log V)
+     * SC: O(V + E)
      */
     public static Pair<List<Edge>, Integer> prim(
             int n,
@@ -74,7 +74,11 @@ public class _0_Prim {
                 totalWeight += cur.weight;
 
                 // add all edges from the newly visited node
-                minHeap.addAll(adj[cur.dest]);
+                for (Edge next : adj[cur.dest]) {
+                    if (!visited[next.dest]) {
+                        minHeap.offer(next);
+                    }
+                }
             }
         }
 
