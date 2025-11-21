@@ -1,4 +1,4 @@
-package leetcode.graph.dsu;
+package leetcode.graph.mst;
 
 import java.util.ArrayDeque;
 import java.util.Arrays;

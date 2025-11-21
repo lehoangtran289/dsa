@@ -1,4 +1,4 @@
-package leetcode.graph.dsu;
+package leetcode.graph.mst;
 
 public class M_547_NumberOfProvinces {
 
