@@ -36,6 +36,8 @@ public class _0_Dijkstra {
             Edge node = pq.poll();
             int u = node.v;
 
+            if (node.w > dist[u]) continue; // skip if a better distance is already found
+
             for (Edge edge : adj[u]) {
                 int v = edge.v;
                 int curDist = dist[u] + edge.w;
