@@ -3,6 +3,37 @@ package leetcode.dp;
 /**
  * <a href="https://leetcode.com/discuss/post/1200320/thief-with-a-knapsack-a-series-of-crimes-lcdd/">ref</a>.</a>
  * <a href="https://leetcode.com/discuss/post/1152328/01-knapsack-problem-and-dynamic-programm-4had/">ref2</a>
+ *
+ * ---
+ * Ref: M_416_PartitionEqualSubsetSum:
+ * Bottom up DP 2D
+ *      dp[i][sum] = can we achieve subset <sum> using first <i> elements
+ *      dp[i][sum] = dp[i - 1][sum] || dp[i - 1][sum - nums[i]] // not take || take
+ * --------------------------------
+ * TC: O(n*sum)
+ * SC: O(n*sum)
+ * ---
+ * Space optimization : Bottom up DP 1D
+ * --------------------------------
+ * dp[sum] = can we achieve <sum> using cur element
+ * e.g:
+ *      num = 2 -> traverse (from end) from sum -> 2, if we can achieve <sum>
+ *      if we can, that means dp[cur_sum] = true or dp[cur_sum - 2] = true
+ *      => dp[cur_sum] = dp[cur_sum] || dp[cur_sum - 2]
+ *
+ *      initially, dp[0] = true
+ *      if we start with num = 2 -> only dp[2] is true
+ *      -> So we can reach sum = 2 using num = 2
+ *
+ *      then num = 3 -> traverse from sum -> 3
+ *      dp[5] = dp[2] -> dp[5] = true
+ *      dp[3] = dp[0] = true
+ *      dp[4] = dp[1] = false
+ *      -> So we can reach sum = 2, 3, 5 using num = 2, 3
+ * --------------------------------
+ * TC: O(n*sum)
+ * SC: O(sum)
+ *
  */
 public class _0_Knapsack {
     public static void main(String[] args) {
