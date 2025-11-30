@@ -1,10 +1,19 @@
 package leetcode.dp;
 
 /**
+ * 0/1 Knapsack Problem
+ * -----------------------------------------------
  * <a href="https://leetcode.com/discuss/post/1200320/thief-with-a-knapsack-a-series-of-crimes-lcdd/">ref</a>.</a>
  * <a href="https://leetcode.com/discuss/post/1152328/01-knapsack-problem-and-dynamic-programm-4had/">ref2</a>
- *
- * ---
+ * -----------------------------------------------
+ * |                  | 0 | 1 | 2            | 3             | 4             | 5             |
+ * | Weights | Values |
+ * |---------|--------|---|---|--------------|---------------|---------------|---------------|
+ * | 0       | 0      | 0 | 0 | 0            | 0             | 0             | 0             |
+ * | 1       | 6      | 0 | 6 | 6            | 6             | 6             | 6             |
+ * | 2       | 10     | 0 | 6 | 6, 10+0 = 10 | 6, 10+6 = 16  | 6, 10+6 = 16  | 6, 10+6 = 16  |
+ * | 3       | 12     | 0 | 6 | 10           | 16, 12+0 = 16 | 16, 12+6 = 18 | 16, 12+10 = 22 |
+ * -------------------------------
  * Ref: M_416_PartitionEqualSubsetSum:
  * Bottom up DP 2D
  *      dp[i][sum] = can we achieve subset <sum> using first <i> elements
@@ -37,7 +46,7 @@ package leetcode.dp;
  */
 public class _0_Knapsack {
     public static void main(String[] args) {
-        System.out.println(new _0_Knapsack().knapsack(
+        System.out.println(new _0_Knapsack().knapsack2(
                 new int[]{2, 3, 4, 5},
                 new int[]{1, 2, 5, 6},
                 8
@@ -81,6 +90,13 @@ public class _0_Knapsack {
     /**
      * ----------------------------------------------
      * Bottom-up 2D DP
+     * Idea:
+     * dp[i][w] = max profit using first i items with current capacity w
+     * dp[i][w] = max(
+     *      dp[i - 1][w], // not take
+     *      dp[i - 1][w - weights[i]] + profits[i] // take
+     * )
+     * Result: dp[n][W] ~ max profit using first n items with full capacity W
      * ----------------------------------------------
      */
     public int knapsack2(int[] weights, int[] profits, int capacity) {
@@ -100,6 +116,12 @@ public class _0_Knapsack {
                     );
                 }
             }
+        }
+        for (int[] row : dp) {
+            for (int val : row) {
+                System.out.print(val + " ");
+            }
+            System.out.println();
         }
 
         return dp[n][capacity];
