@@ -2,9 +2,9 @@ package leetcode.dp;
 
 import java.util.Arrays;
 
-public class M_300_LongestIncreasingSubsequence {
+public class _0M_300_LongestIncreasingSubsequence {
     public static void main(String[] args) {
-        M_300_LongestIncreasingSubsequence obj = new M_300_LongestIncreasingSubsequence();
+        _0M_300_LongestIncreasingSubsequence obj = new _0M_300_LongestIncreasingSubsequence();
         int[] nums = new int[]{1, 3, 6, 7, 9, 4, 10, 5, 6};
         System.out.println(obj.lengthOfLIS2(nums)); // 6
     }

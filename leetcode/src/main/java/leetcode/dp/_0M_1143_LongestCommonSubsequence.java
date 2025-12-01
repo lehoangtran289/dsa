@@ -1,8 +1,8 @@
 package leetcode.dp;
 
-public class M_1143_LongestCommonSubsequence {
+public class _0M_1143_LongestCommonSubsequence {
     public static void main(String[] args) {
-        System.out.println(new M_1143_LongestCommonSubsequence().longestCommonSubsequence("abcde", "ace"));
+        System.out.println(new _0M_1143_LongestCommonSubsequence().longestCommonSubsequence("abcde", "ace"));
     }
 
     /**
