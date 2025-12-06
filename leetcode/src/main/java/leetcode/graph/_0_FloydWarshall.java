@@ -1,6 +1,13 @@
 package leetcode.graph;
 
-public class _0_Floyd_Warshall {
+/**
+ * All Pairs Shortest Path - Floyd Warshall Algorithm
+ * --------------------------
+ * TC: O(V^3)
+ * SC: O(V^2)
+ * --------------------------
+ */
+public class _0_FloydWarshall {
     private static final int INF = Integer.MAX_VALUE;
 
     public static void main(String[] args) {
