@@ -30,24 +30,24 @@ public class _0_FordFulkerson {
         int source = 0;
         int sink = m + n + 1;
 
-        // initialize residual graph - capacities
+        // initialize residual graph - capacities, as a adj matrix -> size V x V
         // boys index: [1, m]
         // girls index: [m + 1, m + n]
-        int[][] residualGraph = new int[totalNodes][totalNodes];
+        int[][] residualCap = new int[totalNodes][totalNodes];
 
         // connect source & sink
         for (int i = 0; i < m; ++i) {
-            residualGraph[source][i + 1] = 1;
+            residualCap[source][i + 1] = 1;
         }
         for (int j = 0; j < n; ++j) {
-            residualGraph[m + 1 + j][sink] = 1;
+            residualCap[m + 1 + j][sink] = 1;
         }
 
         // connect boys to girls
         for (int i = 0; i < m; ++i) {
             for (int j = 0; j < n; ++j) {
                 if (grid[i][j] == 1) {
-                    residualGraph[i + 1][m + 1 + j] = 1;
+                    residualCap[i + 1][m + 1 + j] = 1;
                 }
             }
         }
@@ -57,20 +57,20 @@ public class _0_FordFulkerson {
         int maxFlow = 0;
 
         // while there is a path from source to sink
-        while (bfs(residualGraph, source, sink, parent)) {
+        while (bfs(residualCap, source, sink, parent)) {
             int pathFlow = 1; // since capacities are 1
 
             // update residual capacities of the edges and reverse edges
             for (int v = sink; v != source; v = parent[v]) {
                 int u = parent[v];
-                residualGraph[u][v] -= pathFlow;
-                residualGraph[v][u] += pathFlow;
+                residualCap[u][v] -= pathFlow;
+                residualCap[v][u] += pathFlow;
             }
             maxFlow += pathFlow; // add path flow to overall flow ~ increment matching count by 1
         }
 
         // find assignment
-        System.out.println(Arrays.toString(getAssignment(residualGraph, m, n)));
+        System.out.println(Arrays.toString(getAssignment(residualCap, m, n)));
 
         return maxFlow;
     }
