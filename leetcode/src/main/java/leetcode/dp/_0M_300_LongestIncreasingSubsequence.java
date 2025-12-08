@@ -2,6 +2,11 @@ package leetcode.dp;
 
 import java.util.Arrays;
 
+/**
+ * 300. Longest Increasing Subsequence (LIS)
+ * ---------
+ * Given an integer array nums, return the length of the longest strictly increasing subsequence
+ */
 public class _0M_300_LongestIncreasingSubsequence {
     public static void main(String[] args) {
         _0M_300_LongestIncreasingSubsequence obj = new _0M_300_LongestIncreasingSubsequence();

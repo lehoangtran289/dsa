@@ -1,5 +1,11 @@
 package leetcode.dp;
 
+/**
+ * 1143. Longest Common Subsequence (LCS)
+ * --------------------------
+ * Given two strings text1 and text2, return the length of their longest common subsequence.
+ * If there is no common subsequence, return 0.
+ */
 public class _0M_1143_LongestCommonSubsequence {
     public static void main(String[] args) {
         System.out.println(new _0M_1143_LongestCommonSubsequence().longestCommonSubsequence("abcde", "ace"));
@@ -57,12 +63,10 @@ public class _0M_1143_LongestCommonSubsequence {
     // -------------------------------------------------------------------------------------------
 
     /**
-     * LCS bottom up
-     * Complexity Analysis
-     * Time complexity : O(M⋅N).
-     * We're solving M⋅N subproblems. Solving each subproblem is an O(1) operation.
-     * Space complexity : O(M⋅N).
-     * We're allocating a 2D array of size M⋅N to save the answers to subproblems.
+     * DP bottom up
+     * ----------------------------------
+     * TC: O(M⋅N) - M⋅N subproblems. Solving each subproblem is an O(1) operation.
+     * SC: O(M⋅N) - 2D array of size M⋅N to save the answers to subproblems.
      */
     public int longestCommonSubsequence2(String text1, String text2) {
         int[][] dp = new int[text1.length() + 1][text2.length() + 1];
