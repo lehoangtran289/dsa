@@ -1,5 +1,7 @@
 package leetcode.dp;
 
+import java.util.Arrays;
+
 /**
  * 1143. Longest Common Subsequence (LCS)
  * --------------------------
@@ -7,86 +9,108 @@ package leetcode.dp;
  * If there is no common subsequence, return 0.
  */
 public class _0M_1143_LongestCommonSubsequence {
-    public static void main(String[] args) {
-        System.out.println(new _0M_1143_LongestCommonSubsequence().longestCommonSubsequence("abcde", "ace"));
-    }
-
     /**
      * Top down DP approach
      * ----------------------------------
-     * TC O(M⋅N)
-     * This time, solving each subproblem has a cost of O(1). Again, there are M⋅N subproblems, and so we get a total time complexity of O(M⋅N).
-     * SC : O(M⋅N).
-     * We need to store the answer for each of the M⋅N subproblems.
+     * TC: O(MN)
+     * SC: O(MN)
      */
-    private int[][] dp;
-    private String text1;
-    private String text2;
-    
-    public int longestCommonSubsequence(String text1, String text2) {
-        this.text1 = text1;
-        this.text2 = text2;
-        dp = new int[text1.length() + 1][text2.length() + 1];
+    private int[][] memo;
+    private String s1;
+    private String s2;
 
-        for (int i = 0; i < dp.length; ++i) {
-            for (int j = 0; j < dp[0].length; ++j) {
-                dp[i][j] = -1;
-            }
-        }
+    public static void main(String[] args) {
+        _0M_1143_LongestCommonSubsequence solver = new _0M_1143_LongestCommonSubsequence();
 
-        return dp(0, 0);
+        System.out.println("DP Bottom Up Approach:");
+        System.out.println(solver.longestCommonSubsequence("abcde", "ace")); // 3
+        System.out.println(solver.longestCommonSubsequence("530", "583")); // 2
+
+        System.out.println("\nDP Bottom Up Approach with path construct:");
+        System.out.println(solver.longestCommonSubsequence2("abcde", "ace")); // 3
+        System.out.println(solver.longestCommonSubsequence2("530", "583")); // 2
+
+        System.out.println("\nDP Top Down Approach:");
+        System.out.println(solver.longestCommonSubsequence_withPath("abcde", "ace")); // 3
+        System.out.println(solver.longestCommonSubsequence_withPath("530", "583")); // 2
     }
-
-    /**
-     * Counting DP
-     */
-    private int dp(int p1, int p2) {
-        if (p1 >= text1.length() || p2 >= text2.length()) {
-            return 0;
-        }
-        if (dp[p1][p2] != -1) {
-            return dp[p1][p2];
-        }
-
-        if (text1.charAt(p1) == text2.charAt(p2)) {
-            dp[p1][p2] = dp(p1 + 1, p2 + 1) + 1;
-        } else {
-            dp[p1][p2] = Math.max(
-                    dp(p1 + 1, p2),
-                    dp(p1, p2 + 1)
-            );
-        }
-
-        return dp[p1][p2];
-    }
-
-    // -------------------------------------------------------------------------------------------
 
     /**
      * DP bottom up
      * ----------------------------------
-     * TC: O(M⋅N) - M⋅N subproblems. Solving each subproblem is an O(1) operation.
-     * SC: O(M⋅N) - 2D array of size M⋅N to save the answers to subproblems.
+     * dp[i][j] = LCS for first i chars of s1 and first j chars of s2
+     * Recurrence relation:
+     * dp[i][j] = dp[i - 1][j - 1] + 1                 if s1[i] == s2[j]
+     * dp[i][j] = max(dp[i - 1][j], dp[i][j - 1])      if s1[i] != s2[j]
+     * ----------------------------------
+     * TC: O(mn) - s1.length() * s2.length()
+     * SC: O(mn)
      */
-    public int longestCommonSubsequence2(String text1, String text2) {
-        int[][] dp = new int[text1.length() + 1][text2.length() + 1];
+    public int longestCommonSubsequence(String s1, String s2) {
+        int m = s1.length(), n = s2.length();
+        int[][] dp = new int[m + 1][n + 1]; // dp[i][j] = LCS for first i chars of s1 and first j chars of s2
 
-        for (int i = text1.length() - 1; i >= 0; --i) {
-            for (int j = text2.length() - 1; j >= 0; --j) {
-                //there were two cases.
-                //1. The first letter of each string is the same.
-                //2. The first letter of each string is different.
-                if (text1.charAt(i) == text2.charAt(j)) {
-                    dp[i][j] = 1 + dp[i + 1][j + 1];
+        for (int i = 1; i <= m; ++i) {
+            for (int j = 1; j <= n; ++j) {
+                if (s1.charAt(i - 1) == s2.charAt(j - 1)) {
+                    dp[i][j] = dp[i - 1][j - 1] + 1;
                 } else {
-                    dp[i][j] = Math.max(
-                            dp[i + 1][j],
-                            dp[i][j + 1]
-                    );
+                    dp[i][j] = Math.max(dp[i - 1][j], dp[i][j - 1]);
                 }
             }
         }
+        return dp[m][n];
+    }
 
-        return dp[0][0];
+    public int longestCommonSubsequence_withPath(String s1, String s2) {
+        int m = s1.length(), n = s2.length();
+        int[][] dp = new int[m + 1][n + 1]; // dp[i][j] = LCS for first i chars of s1 and first j chars of s2
+
+        String[][] dir = new String[m + 1][n + 1]; // to reconstruct the optimal path
+        dir[0][0] = "START";
+
+        for (int i = 1; i <= m; ++i) {
+            for (int j = 1; j <= n; ++j) {
+                if (s1.charAt(i - 1) == s2.charAt(j - 1)) {
+                    dp[i][j] = dp[i - 1][j - 1] + 1;
+                    dir[i][j] = "DIAG";
+                } else if (dp[i - 1][j] >= dp[i][j - 1]) {
+                    dp[i][j] = dp[i - 1][j];
+                    dir[i][j] = "UP";
+                } else {
+                    dp[i][j] = dp[i][j - 1];
+                    dir[i][j] = "LEFT";
+                }
+            }
+        }
+        // Print the LCS path
+        for (String[] row : dir) {
+            System.out.println(Arrays.toString(row));
+        }
+
+        return dp[m][n];
+    }
+
+    public int longestCommonSubsequence2(String s1, String s2) {
+        this.s1 = s1;
+        this.s2 = s2;
+        memo = new int[s1.length() + 1][s2.length() + 1];
+
+        for (int[] row : memo) Arrays.fill(row, -1);
+
+        return dp(0, 0);
+    }
+
+    private int dp(int p1, int p2) {
+        if (p1 >= s1.length() || p2 >= s2.length()) return 0;
+        if (memo[p1][p2] != -1) return memo[p1][p2];
+
+        if (s1.charAt(p1) == s2.charAt(p2)) {
+            memo[p1][p2] = dp(p1 + 1, p2 + 1) + 1;
+        } else {
+            memo[p1][p2] = Math.max(dp(p1 + 1, p2), dp(p1, p2 + 1));
+        }
+
+        return memo[p1][p2];
     }
 }
