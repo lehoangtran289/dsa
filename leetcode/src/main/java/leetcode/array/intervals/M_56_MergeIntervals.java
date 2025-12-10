@@ -5,59 +5,41 @@ import java.util.Arrays;
 import java.util.List;
 
 public class M_56_MergeIntervals {
-    public int[][] merge(int[][] intervals) {
-        Arrays.sort(intervals, (a, b) -> a[0] - b[0]);
-
-        List<int[]> result = new ArrayList<>();
-        result.add(intervals[0]);
-        for (int[] interval : intervals) {
-            int[] cur = result.get(result.size() - 1);
-            if (cur[1] >= interval[0]) {
-                cur[1] = Math.max(cur[1], interval[1]);
-            } else {
-                result.add(interval);
-            }
-        }
-
-        int[][] ret = new int[result.size()][];
-        for (int i = 0; i < result.size(); ++i) {
-            ret[i] = result.get(i);
-        }
-        return ret;
+    public static void main(String[] args) {
+        System.out.println(Arrays.deepToString(
+                merge(new int[][]{{2, 6}, {1, 3}, {8, 10}, {15, 18}}))
+        ); // [[1, 6], [8, 10], [15, 18]]
     }
 
     /**
-     * naive approach -> low readability
+     * Merge Intervals
+     * ----------------------------------
+     * TC: O(nlogn) - sorting
+     * SC: O(n)
      */
-    public int[][] mergeV1(int[][] intervals) {
+    public static int[][] merge(int[][] intervals) {
         Arrays.sort(intervals, (a, b) -> a[0] - b[0]);
 
-        List<int[]> result = new ArrayList<>();
-        int i = 0;
-        while (i < intervals.length) {
-            int[] cur = intervals[i];
-            int[] temp = new int[2];
-            temp[0] = cur[0];
-            temp[1] = cur[1];
+        List<int[]> mergedList = new ArrayList<>();
+        mergedList.add(intervals[0]);
 
-            int k = i + 1;
-            while (k < intervals.length) {
-                if (intervals[k][0] <= temp[1]) {
-                    temp[1] = Math.max(intervals[k][1], temp[1]);
-                    ++k;
-                    i = k - 1;
-                } else {
-                    break;
-                }
+        for (int[] interval : intervals) {
+            int[] cur = mergedList.get(mergedList.size() - 1);
+
+            if (cur[1] >= interval[0]) {
+                cur[1] = Math.max(cur[1], interval[1]);
+            } else {
+                mergedList.add(interval);
             }
-            result.add(temp);
-            ++i;
         }
 
-        int[][] ret = new int[result.size()][];
-        for (int j = 0; j < result.size(); ++j) {
-            ret[j] = result.get(j);
+        int n = mergedList.size();
+        int[][] res = new int[n][2];
+
+        for (int i = 0; i < n; ++i) {
+            res[i] = mergedList.get(i);
         }
-        return ret;
+
+        return res;
     }
 }
