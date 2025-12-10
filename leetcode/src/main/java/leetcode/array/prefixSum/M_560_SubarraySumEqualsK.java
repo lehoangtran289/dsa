@@ -11,6 +11,29 @@ public class M_560_SubarraySumEqualsK {
     }
 
     /**
+     * Prefix Sum + HashMap O(n)
+     * Idea: store the frequency of prefix sums in a map
+     * ----------------------------------
+     * TC: O(n)
+     * SC: O(n)
+     */
+    public static int subarraySum3(int[] nums, int k) {
+        int res = 0;
+        Map<Integer, Integer> freq = new HashMap<>(); // prefixSum -> count
+        int prefixSum = 0;
+
+        for (int num : nums) {
+            prefixSum += num;
+            if (prefixSum == k) res++;
+
+            res += freq.getOrDefault(prefixSum - k, 0);
+            freq.put(prefixSum, freq.getOrDefault(prefixSum, 0) + 1);
+        }
+
+        return res;
+    }
+
+    /**
      * 1. PREFIX SUM O(n^2)
      * sum(i -> j) = prefixSum[j + 1] - prefixSum[i]
      */
@@ -31,46 +54,6 @@ public class M_560_SubarraySumEqualsK {
                 }
             }
         }
-        return res;
-    }
-
-    /**
-     * 2. NO ADDITIONAL SPACE O(n^2)
-     */
-    public static int subarraySum2(int[] nums, int k) {
-        int res = 0;
-        for (int i = 0; i < nums.length; ++i) {
-            int sum = 0;
-            for (int j = i; j < nums.length; ++j) {
-                sum += nums[j];
-                if (sum == k) res++;
-            }
-        }
-        return res;
-    }
-
-    /**
-     * 3. PREFIX SUM + HASHMAP O(n)
-     * [1, 1, 1] -> [1, 2, 3]
-     * - prefSum = k -> res++
-     * - prefSum = X + k -> res += map[X]
-     * <p>
-     * TC: O(n)
-     * SC: O(n)
-     */
-    public static int subarraySum3(int[] nums, int k) {
-        int res = 0;
-        Map<Integer, Integer> prefMap = new HashMap<>();
-        int prefixSum = 0;
-
-        for (int num : nums) {
-            prefixSum += num;
-            if (prefixSum == k) res++;
-
-            res += prefMap.getOrDefault(prefixSum - k, 0);
-            prefMap.put(prefixSum, prefMap.getOrDefault(prefixSum, 0) + 1);
-        }
-
         return res;
     }
 }
