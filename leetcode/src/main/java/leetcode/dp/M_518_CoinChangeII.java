@@ -7,6 +7,33 @@ import java.util.Arrays;
  */
 public class M_518_CoinChangeII {
     /**
+     * DP Bottom Up 1D - unbounded knapsack
+     * Idea:
+     * dp[j] = number of combinations reach amount j
+     * dp[j] += dp[j - coin]
+     * --------------------------------
+     * Note: Looking closely at this transition,
+     * we can see that to fill dp[i][j] for a specific i and all values of j
+     * we only need the values from dp[i] and dp[i - 1].
+     * Values from older rows like i + 2, i + 3, etc. are no longer relevant.
+     * --------------------------------
+     * TC: O(n * amount)
+     * SC: O(amount)
+     */
+    public int change3(int amount, int[] coins) {
+        int[] dp = new int[amount + 1];
+        dp[0] = 1;
+
+        for (int coin : coins) {
+            for (int j = coin; j <= amount; ++j) {
+                dp[j] += dp[j - coin]; // dp[j] already contains combinations of previous step
+            }
+        }
+
+        return dp[amount];
+    }
+
+    /**
      * DP Bottom up 2D - unbounded knapsack
      * Idea:
      * dp[i][j] = number of combinations reach amount j, using first i coins
@@ -16,7 +43,7 @@ public class M_518_CoinChangeII {
      * TC: O(n * amount)
      * SC: O(n * amount)
      */
-    public int change3(int amount, int[] coins) {
+    public int change2(int amount, int[] coins) {
         int n = coins.length;
         int[][] dp = new int[n + 1][amount + 1];
 
