@@ -61,6 +61,8 @@ public class M_322_CoinChange {
         Arrays.fill(dp, amount + 10); // fill with max value
         dp[0] = 0;
 
+        // for each amount n, try each coin c, then recursively find best for amount n - c
+        // order of loops is not important
         for (int i = 1; i <= amount; ++i) {
             for (int c : coins) {
                 if (i >= c)
