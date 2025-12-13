@@ -6,6 +6,14 @@ package leetcode.dp;
  * <a href="https://leetcode.com/discuss/post/1200320/thief-with-a-knapsack-a-series-of-crimes-lcdd/">ref</a>.</a>
  * <a href="https://leetcode.com/discuss/post/1152328/01-knapsack-problem-and-dynamic-programm-4had/">ref2</a>
  * -----------------------------------------------
+ * Given n items with weights and values, put these into a knapsack of capacity W to get the maximum total value
+ * dp[i][w] = max profit using first i items with current capacity w
+ * dp[i][w] = max(
+ *      dp[i - 1][w], // not take
+ *      dp[i - 1][w - weights[i]] + profits[i] // take
+ * )
+ * Result: dp[n][W] ~ max profit using first n items with full capacity W
+ * -----------------------------------------------
  * |                  | 0 | 1 | 2            | 3             | 4             | 5             |
  * | Weights | Values |
  * |---------|--------|---|---|--------------|---------------|---------------|---------------|
@@ -44,15 +52,7 @@ package leetcode.dp;
  * SC: O(sum)
  *
  */
-public class _0_Knapsack {
-    public static void main(String[] args) {
-        System.out.println(new _0_Knapsack().knapsack2(
-                new int[]{2, 3, 4, 5},
-                new int[]{1, 2, 5, 6},
-                8
-        )); // 8
-    }
-
+public class _0_Knapsack01 {
     /**
      * ----------------------------------------------
      * Top-down Knapsack DP
@@ -62,29 +62,33 @@ public class _0_Knapsack {
     private int[] profits;
     private int[][] memo;
 
-    public int knapsack(int[] weights, int[] profits, int capacity) {
-        int n = weights.length;
-        this.weights = weights;
-        this.profits = profits;
-        this.memo = new int[n][capacity + 1]; // int[i][w] = max profit using first i items with capacity w
-
-        return dp(n - 1, capacity);
+    public static void main(String[] args) {
+        System.out.println(new _0_Knapsack01().knapsack2(
+                new int[]{2, 3, 4, 5},
+                new int[]{1, 2, 5, 6},
+                8
+        )); // 8
     }
 
-    private int dp(int i, int w) {
-        if (i == 0 || w <= 0) return 0;
-        if (memo[i][w] != 0) return memo[i][w];
+    /**
+     * ----------------------------------------------
+     * Bottom-up 1D DP
+     * ----------------------------------------------
+     */
+    public int knapsack3(int[] weights, int[] profits, int capacity) {
+        int n = weights.length;
+        int[] dp = new int[capacity + 1];
 
-        if (weights[i] > w) {
-            return dp(i - 1, w);
-        } else {
-            memo[i][w] = Math.max(
-                    dp(i - 1, w), // not take
-                    dp(i - 1, w - weights[i]) + profits[i] // take
-            );
+        for (int i = 0; i < n; ++i) {
+            for (int w = capacity; w >= weights[i]; --w) { // current capacity
+                dp[w] = Math.max(
+                        dp[w], // not take
+                        dp[w - weights[i]] + profits[i] // take
+                );
+            }
         }
 
-        return memo[i][w];
+        return dp[capacity];
     }
 
     /**
@@ -111,8 +115,8 @@ public class _0_Knapsack {
                     dp[i][w] = dp[i - 1][w];
                 } else {
                     dp[i][w] = Math.max(
-                        dp[i - 1][w], // not take
-                        dp[i - 1][w - weights[index]] + profits[index] // take
+                            dp[i - 1][w], // not take
+                            dp[i - 1][w - weights[index]] + profits[index] // take
                     );
                 }
             }
@@ -127,24 +131,29 @@ public class _0_Knapsack {
         return dp[n][capacity];
     }
 
-    /**
-     * ----------------------------------------------
-     * Bottom-up 1D DP
-     * ----------------------------------------------
-     */
-    public int knapsack3(int[] weights, int[] profits, int capacity) {
+    public int knapsack(int[] weights, int[] profits, int capacity) {
         int n = weights.length;
-        int[] dp = new int[capacity + 1];
+        this.weights = weights;
+        this.profits = profits;
+        this.memo = new int[n][capacity + 1]; // int[i][w] = max profit using first i items with capacity w
 
-        for (int i = 0; i < n; ++i) {
-            for (int w = capacity; w >= weights[i]; --w) { // current capacity
-                dp[w] = Math.max(
-                        dp[w], // not take
-                        dp[w - weights[i]] + profits[i] // take
-                );
-            }
+        return dp(n - 1, capacity);
+    }
+
+    private int dp(int i, int w) {
+        if (i == 0 || w <= 0) return 0;
+        if (memo[i][w] != 0) return memo[i][w];
+
+        if (weights[i] > w) {
+            return dp(i - 1, w);
+        } else {
+            memo[i][w] = Math.max(
+                    dp(i - 1, w), // not take
+                    dp(i - 1, w - weights[i]) + profits[i] // take
+            );
         }
 
-        return dp[capacity];
+        return memo[i][w];
     }
+
 }
