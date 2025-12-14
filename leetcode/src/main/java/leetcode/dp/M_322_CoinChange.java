@@ -57,8 +57,8 @@ public class M_322_CoinChange {
      * SC: O(S)
      */
     public int coinChange2(int[] coins, int amount) {
-        int[] dp = new int[amount + 10];
-        Arrays.fill(dp, amount + 10); // fill with max value
+        int[] dp = new int[amount + 1];
+        Arrays.fill(dp, amount + 1); // fill with max value
         dp[0] = 0;
 
         // for each amount n, try each coin c, then recursively find best for amount n - c
@@ -69,7 +69,6 @@ public class M_322_CoinChange {
                     dp[i] = Math.min(dp[i], dp[i - c] + 1);
             }
         }
-
 
         return dp[amount] > amount ? -1 : dp[amount];
     }
