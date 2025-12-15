@@ -81,7 +81,7 @@ public class _0_Dijkstra {
         graph[1].add(new Edge(0, 1));
         graph[1].add(new Edge(2, 2));
         graph[1].add(new Edge(3, 3));
-        graph[1].add(new Edge(4, 6));
+        graph[1].add(new Edge(4, -6));
         graph[1].add(new Edge(5, 1));
         graph[2].add(new Edge(1, 2));
         graph[2].add(new Edge(0, 4));

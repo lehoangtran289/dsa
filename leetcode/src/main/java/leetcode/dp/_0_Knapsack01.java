@@ -73,6 +73,13 @@ public class _0_Knapsack01 {
     /**
      * ----------------------------------------------
      * Bottom-up 1D DP
+     * Idea:
+     * dp[w] = max profit with current capacity w
+     * dp[w] = max(
+     *      dp[w], // not take
+     *      dp[w - weights[i]] + profits[i] // take
+     * )
+     * Result: dp[W] ~ max profit with full capacity W
      * ----------------------------------------------
      */
     public int knapsack3(int[] weights, int[] profits, int capacity) {
