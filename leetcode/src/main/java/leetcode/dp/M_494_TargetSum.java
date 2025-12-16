@@ -1,5 +1,8 @@
 package leetcode.dp;
 
+/**
+ * Return the number of different expressions that you can build, which evaluates to target, using + -
+ */
 public class M_494_TargetSum {
     public static void main(String[] args) {
         System.out.println(findTargetSumWays(new int[]{1, 1, 1, 1, 1}, 3));
@@ -10,8 +13,8 @@ public class M_494_TargetSum {
      * ----------------
      * Idea:
      * dp[i][j] = number of ways to get sum j using first i numbers
-     * For each number, we have two choices: add it or subtract it.
-     * dp[i][j] = dp[i-1][j - nums[i-1]] + dp[i-1][j + nums[i-1]]
+     *      For each number, we have two choices: add it or subtract it.
+     *      dp[i][j] = dp[i-1][j - nums[i-1]] + dp[i-1][j + nums[i-1]]
      * ----------------
      * TC: O(n * m), n = nums.length, m = sum of nums
      * SC: O(n * m)

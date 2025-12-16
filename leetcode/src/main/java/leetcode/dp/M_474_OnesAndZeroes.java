@@ -3,7 +3,7 @@ package leetcode.dp;
 import java.util.Arrays;
 
 /**
- * Knapsack DP
+ * Return the size of the largest subset of strs such that there are at most m 0's and n 1's in the subset.
  */
 public class M_474_OnesAndZeroes {
 
