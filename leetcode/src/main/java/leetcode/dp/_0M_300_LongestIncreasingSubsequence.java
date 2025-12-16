@@ -27,20 +27,18 @@ public class _0M_300_LongestIncreasingSubsequence {
      * dp[i] = 1 OR dp[j] + 1 for j < i and nums[j] < nums[i], where dp[j] is the length of the longest increasing subsequence ending at index j.
      */
     public int lengthOfLIS(int[] nums) {
-        int n = nums.length;
-        int res = 1;
-        int[] dp = new int[n];
+        int[] dp = new int[nums.length];
         Arrays.fill(dp, 1);
+        int res = 1;
 
-        for (int i = n - 2; i >= 0; --i) {
-            for (int j = i + 1; j < n; ++j) {
-                if (nums[j] > nums[i]) {
+        for (int i = 0; i < nums.length; ++i) {
+            for (int j = 0; j < i; ++j) {
+                if (nums[i] > nums[j]) {
                     dp[i] = Math.max(dp[i], dp[j] + 1);
                 }
             }
             res = Math.max(res, dp[i]);
         }
-
         return res;
     }
 
