@@ -9,18 +9,18 @@ public class M_3573_BestTimeToBuyAndSellStockV {
      * state: 0 - not hold, 1 - hold, 2 - short hold
      * Recurrence relation:
      * dp[i][j][0] = max(
-     * dp[i-1][j][0], // skip
-     * dp[i-1][j][1] + prices[i], // sell
-     * dp[i-1][j][2] - prices[i]  // short buy
-     * )
+     *                   dp[i-1][j][0], // skip
+     *                   dp[i-1][j][1] + prices[i], // sell
+     *                   dp[i-1][j][2] - prices[i]  // short buy
+     *               )
      * dp[i][j][1] = max(
-     * dp[i-1][j][1], // skip
-     * dp[i-1][j-1][0] - prices[i] // buy
-     * )
+     *                   dp[i-1][j][1], // skip
+     *                   dp[i-1][j-1][0] - prices[i] // buy
+     *               )
      * dp[i][j][2] = max(
-     * dp[i-1][j][2], // skip
-     * dp[i-1][j-1][0] + prices[i] // short sell
-     * )
+     *                   dp[i-1][j][2], // skip
+     *                   dp[i-1][j-1][0] + prices[i] // short sell
+     *               )
      * ----------------------------------
      * TC: O(n * k)
      * SC: O(n * k)
