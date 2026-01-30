@@ -45,13 +45,8 @@ public class _0_Trie {
     }
 
     static class TrieNode {
-        TrieNode[] child = new TrieNode[26];
-        boolean isLeaf;
-
-        TrieNode() {
-            Arrays.fill(child, null);
-            isLeaf = false;
-        }
+        TrieNode[] links = new TrieNode[26];
+        boolean isLeaf = false;
     }
 
     static class Trie {
@@ -65,36 +60,36 @@ public class _0_Trie {
             TrieNode node = root;
             for (char chr : key.toCharArray()) {
                 int index = chr - 'a';
-                if (node.child[index] == null) {
-                    node.child[index] = new TrieNode(); // If node for current character does not exist then make a new node
+                if (node.links[index] == null) {
+                    node.links[index] = new TrieNode(); // If node for current character does not exist then make a new node
                 }
-                node = node.child[index]; // Move the curr pointer to the newly created node
+                node = node.links[index]; // Move the curr pointer to the newly created node
             }
             node.isLeaf = true;
         }
 
         boolean search(String key) {
             TrieNode node = root;
+
             for (char chr : key.toCharArray()) {
                 int index = chr - 'a';
-                if (node.child[index] == null) {
-                    return false;
-                }
-                node = node.child[index];
+
+                if (node.links[index] == null) return false;
+                node = node.links[index];
             }
-            return node != null && node.isLeaf;
+            return node.isLeaf;
         }
 
         boolean startsWith(String prefix) {
             TrieNode node = root;
+
             for (char chr : prefix.toCharArray()) {
                 int index = chr - 'a';
-                if (node.child[index] == null) {
-                    return false;
-                }
-                node = node.child[index];
+
+                if (node.links[index] == null) return false;
+                node = node.links[index];
             }
-            return node != null;
+            return true;
         }
 
         void display(TrieNode node, char[] str, int level) {
@@ -103,9 +98,9 @@ public class _0_Trie {
                 System.out.println(new String(str, 0, level));
             }
             for (int i = 0; i < 26; i++) {
-                if (node.child[i] != null) {
+                if (node.links[i] != null) {
                     str[level] = (char) (i + 'a');
-                    display(node.child[i], str, level + 1);
+                    display(node.links[i], str, level + 1);
                 }
             }
         }
