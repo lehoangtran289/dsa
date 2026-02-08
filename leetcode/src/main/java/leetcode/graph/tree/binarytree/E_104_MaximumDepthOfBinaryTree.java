@@ -17,11 +17,7 @@ public class E_104_MaximumDepthOfBinaryTree {
     }
 
     public static int maxDepth(TreeNode root) {
-        return getMaxDepth(root, 0);
-    }
-
-    private static int getMaxDepth(TreeNode root, int depth) {
-        if (root == null) return depth;
-        return Math.max(getMaxDepth(root.left, depth + 1), getMaxDepth(root.right, depth + 1));
+        if (root == null) return 0;
+        return 1 + Math.max(maxDepth(root.left), maxDepth(root.right));
     }
 }
