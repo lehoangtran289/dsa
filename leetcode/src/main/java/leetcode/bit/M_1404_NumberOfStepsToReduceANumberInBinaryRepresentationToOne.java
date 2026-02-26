@@ -7,6 +7,36 @@ public class M_1404_NumberOfStepsToReduceANumberInBinaryRepresentationToOne {
     }
 
     /**
+     * Greedy
+     * Idea: process the binary string from right to left, and keep track of the carry
+     * --------
+     * TC: O(N)
+     * SC: O(1)
+     */
+    public int numSteps0(String s) {
+        int res = 0;
+        int n = s.length();
+        int carry = 0;
+
+        for (int i = n - 1; i >= 1; --i) {
+            int lastBit = (s.charAt(i) - '0') + carry;
+
+            if (lastBit == 0) {
+                res++;
+                carry = 0;
+            } else if (lastBit == 1) {
+                res += 2;
+                carry = 1;
+            } else {
+                res++;
+                carry = 1;
+            }
+        }
+
+        return res + carry;
+    }
+
+    /**
      * Just do the operations :D
      * Idea: stringbuilder to represent the binary number
      */
