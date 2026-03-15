@@ -8,32 +8,35 @@ public class M_1415_TheKthLexicographicalStringOfAllHappyStringsOfLengthN {
         System.out.println(new M_1415_TheKthLexicographicalStringOfAllHappyStringsOfLengthN().getHappyString(1, 3));
     }
 
-    private final char[] CHARS = new char[] {'a', 'b', 'c'};
-    private int n;
+    private final char[] LETTERS = new char[]{'a', 'b', 'c'};
 
     public String getHappyString(int n, int k) {
-        this.n = n;
-        List<String> res = new ArrayList<>();
-        backtrack(new StringBuilder(), res);
+        List<String> happyStrings = new ArrayList<>();
+        generateHappyString(n, happyStrings, new StringBuilder());
 
-        return k <= res.size() ? res.get(k - 1) : "";
+        return k <= happyStrings.size() ? happyStrings.get(k - 1) : "";
     }
 
-    private void backtrack(
-            StringBuilder sb,
-            List<String> res
+    /**
+     * Backtracking
+     */
+    private void generateHappyString(
+            int n,
+            List<String> happyStrings,
+            StringBuilder curStr
     ) {
-        if (sb.length() == n) {
-            res.add(sb.toString());
+        if (curStr.length() == n) {
+            happyStrings.add(curStr.toString());
             return;
         }
 
-        for (char c : CHARS) {
-            if (sb.length() == 0 || sb.charAt(sb.length() - 1) != c) {
-                sb.append(c);
-                backtrack(sb, res);
-                sb.deleteCharAt(sb.length() - 1);
-            }
+        for (char c : LETTERS) {
+            if (curStr.length() != 0 && curStr.charAt(curStr.length() - 1) == c)
+                continue;
+
+            curStr.append(c);
+            generateHappyString(n, happyStrings, curStr);
+            curStr.deleteCharAt(curStr.length() - 1);
         }
     }
 }
