@@ -7,28 +7,33 @@ public class M_2033_MinimumOperationsToMakeAUniValueGrid {
         System.out.println(minOperations(new int[][]{{931, 128}, {639, 712}}, 73));
     }
 
+    /**
+     * sort + median
+     * ---
+     * TC: O(mn*log(mn))
+     * SC: O(mn)
+     */
     public static int minOperations(int[][] grid, int x) {
-        int[] arr = new int[grid.length * grid[0].length];
-        for (int i = 0; i < grid.length; i++) {
-            for (int j = 0; j < grid[0].length; j++) {
-                arr[i * grid[0].length + j] = grid[i][j];
+        int rows = grid.length, cols = grid[0].length;
+        int[] nums = new int[rows * cols];
+        int remain = -1;
+
+        for (int i = 0; i < rows; ++i) {
+            for (int j = 0; j < cols; ++j) {
+                if (remain == -1) remain = grid[i][j] % x;
+                if (grid[i][j] % x != remain) return -1;
+
+                nums[i * cols + j] = grid[i][j];
             }
         }
-        Arrays.sort(arr);
-        int mid = arr[arr.length / 2];
+        Arrays.sort(nums);
+
+        int median = nums[nums.length / 2];
 
         int res = 0;
-        int remain = -1;
-        for (int num : arr) {
-            if (remain == -1) {
-                remain = num % x;
-            } else if (num % x != remain) {
-                return -1;
-            }
-
-            res += Math.abs(num - mid) / x;
+        for (int num : nums) {
+            res += Math.abs(num - median) / x;
         }
-
         return res;
     }
 }
