@@ -1,8 +1,6 @@
 package leetcode.array;
 
 import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Set;
 
 public class M_2657_FindThePrefixCommonArrayOfTwoArrays {
     public static void main(String[] args) {
@@ -10,42 +8,21 @@ public class M_2657_FindThePrefixCommonArrayOfTwoArrays {
     }
 
     /**
-     * O(n^2) using hashSet
-     */
-    public static int[] findThePrefixCommonArray(int[] A, int[] B) {
-        int n = A.length;
-        int[] res = new int[n];
-
-        Set<Integer> setA = new HashSet<>();
-        for (int i = 0; i < n; ++i) {
-            setA.add(A[i]);
-
-            int cnt = 0;
-            for (int j = 0; j <= i; ++j) {
-                if (setA.contains(B[j])) cnt++;
-            }
-            res[i] = cnt;
-        }
-
-        return res;
-    }
-
-    /**
      * O(n) Single Pass with Frequency Array
      */
-    public static int[] findThePrefixCommonArray2(int[] A, int[] B) {
+    public static int[] findThePrefixCommonArray(int[] A, int[] B) {
         int n = A.length;
         int[] res = new int[n];
         int[] freq = new int[n + 1];
 
         int cnt = 0;
         for (int i = 0; i < n; ++i) {
+            if (freq[A[i]] == 1) cnt++; // Element already appeared so it's common
+            if (freq[B[i]] == 1) cnt++;
+            if (A[i] == B[i]) cnt++;
+
             freq[A[i]]++;
-            if (freq[A[i]] == 2) cnt++;
-
             freq[B[i]]++;
-            if (freq[B[i]] == 2) cnt++;
-
             res[i] = cnt;
         }
 
