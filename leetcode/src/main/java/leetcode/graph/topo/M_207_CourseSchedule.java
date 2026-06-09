@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Queue;
 
 /**
- * TOPOLOGICAL SORT
+ * TOPOLOGICAL SORT, can be used to detect cycle in directed graph (if we can't visit all nodes, there is a cycle)
  */
 public class M_207_CourseSchedule {
     public static void main(String[] args) {

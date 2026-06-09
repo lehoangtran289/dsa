@@ -4,6 +4,13 @@ import java.util.ArrayDeque;
 import java.util.Queue;
 
 public class M_1559_DetectCyclesIn2DGrid {
+
+    /**
+     * To detect cycle in a graph
+     * -> Use DFS or BFS and check if we can reach a visited node that is not the parent of current node
+     * OR Use Union-Find and check if we can union two nodes that are already in the same set
+     * OR Use topological sort and check if we can visit all nodes (if not, there is a cycle ~ visitedNodes != n)
+     */
     public boolean containsCycle(char[][] grid) {
         final int[][] DIRS = new int[][]{{0, -1}, {0, 1}, {-1, 0}, {1, 0}}; // L, R, U, D
         int rows = grid.length, cols = grid[0].length;
