@@ -1,7 +1,9 @@
 package leetcode.graph;
 
+import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Queue;
 
 public class M_1059P_AllPathsFromSourceLeadToDestination {
 
@@ -47,5 +49,52 @@ public class M_1059P_AllPathsFromSourceLeadToDestination {
 
         states[node] = 2;
         return true;
+    }
+
+    /**
+     * Topological Sort BFS (backward from dest)
+     * Trick: we traverse from dest to source, and check if we can reach source,
+     * If we can reach source, it means all paths from source lead to dest (since only outdegree = 0 can be in queue)
+     * otherwise, there is a path from source that leads to a leaf node that is not dest
+     * ---
+     */
+    public boolean leadsToDestination2(int n, int[][] edges, int source, int destination) {
+        // init graph && outdegree
+        List<Integer>[] graph = new ArrayList[n];
+        int[] outdegree = new int[n];
+
+        for (int i = 0; i < n; i++) {
+            graph[i] = new ArrayList<>();
+        }
+
+        for (int[] edge : edges) {
+            if (edge[0] == destination) { // dest cannot have outdegree
+                return false;
+            }
+
+            graph[edge[1]].add(edge[0]);
+            outdegree[edge[0]]++;
+        }
+
+        // backward bfs
+        Queue<Integer> queue = new ArrayDeque<>();
+        queue.add(destination);
+
+        while (!queue.isEmpty()) {
+            int node = queue.poll();
+
+            if (node == source) // Only outdegree = 0 can be in queue -> if we reach source -> all paths is TRUE
+                return true;
+
+            for (int neighbor : graph[node]) {
+                outdegree[neighbor]--;
+
+                if (outdegree[neighbor] == 0) {
+                    queue.add(neighbor);
+                }
+            }
+        }
+
+        return false;
     }
 }
