@@ -1,4 +1,4 @@
-package leetcode.string.trie;
+package leetcode.graph.trie;
 
 // TODO
 public class H_3045_CountPrefixAndSuffixPairII {

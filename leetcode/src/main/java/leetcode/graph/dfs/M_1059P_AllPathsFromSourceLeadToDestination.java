@@ -1,4 +1,4 @@
-package leetcode.graph;
+package leetcode.graph.dfs;
 
 import java.util.ArrayDeque;
 import java.util.ArrayList;

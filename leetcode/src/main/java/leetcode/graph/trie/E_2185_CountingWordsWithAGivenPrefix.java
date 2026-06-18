@@ -1,4 +1,4 @@
-package leetcode.string.trie;
+package leetcode.graph.trie;
 
 public class E_2185_CountingWordsWithAGivenPrefix {
     public int prefixCount(String[] words, String pref) {

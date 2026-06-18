@@ -1,4 +1,4 @@
-package leetcode.string.trie;
+package leetcode.graph.trie;
 
 import java.util.Arrays;
 
