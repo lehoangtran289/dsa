@@ -17,7 +17,7 @@ public class M_1584_MinCostToConnectAllPoints {
 
             if (rootSrc != rootDest) {
                 result.add(e);
-                ds.union(rootSrc, rootDest);
+                ds.join(rootSrc, rootDest);
             }
         }
         return result;

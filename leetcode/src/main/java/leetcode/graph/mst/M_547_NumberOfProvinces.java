@@ -13,7 +13,7 @@ public class M_547_NumberOfProvinces {
         for (int u = 0; u < n; u++) {
             for (int v = u + 1; v < n; v++) {
                 if (isConnected[u][v] == 1) {
-                    ds.union(u, v);
+                    ds.join(u, v);
                 }
             }
         }

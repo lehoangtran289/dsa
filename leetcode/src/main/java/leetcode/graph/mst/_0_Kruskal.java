@@ -35,7 +35,7 @@ public class _0_Kruskal {
 
             if (rootSrc != rootDest) {
                 result.add(e);
-                ds.union(rootSrc, rootDest);
+                ds.join(rootSrc, rootDest);
             }
         }
 
