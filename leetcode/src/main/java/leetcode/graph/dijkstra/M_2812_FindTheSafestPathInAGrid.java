@@ -18,11 +18,8 @@ public class M_2812_FindTheSafestPathInAGrid {
      * SC: O(n^2)
      */
     public int maximumSafenessFactor(List<List<Integer>> grid) {
-        int n = grid.size();
-        int[][] dist = new int[n][n];
-
         // Multi-src BFS
-        buildDist(grid, dist); // O(n^2)
+        int[][] dist = buildDist(grid); // O(n^2)
 
         // Dijkstra -> Find path with max safeness (maxheap), answer = min safeness in that path
         return minDistInMaxPath(dist); // O(n^2 logn)
@@ -37,11 +34,8 @@ public class M_2812_FindTheSafestPathInAGrid {
      * SC: O(n^2)
      */
     public int maximumSafenessFactor2(List<List<Integer>> grid) {
-        int n = grid.size();
-        int[][] dist = new int[n][n];
-
         // Multi-src BFS
-        buildDist(grid, dist); // O(n^2)
+        int[][] dist = buildDist(grid); // O(n^2)
 
         // Binary search res -> Path must have safeness factor >= target
         int res = 0;
@@ -59,43 +53,40 @@ public class M_2812_FindTheSafestPathInAGrid {
         return res;
     }
 
-    private void buildDist(List<List<Integer>> grid, int[][] dist) {
-        int n = dist.length;
+    private int[][] buildDist(List<List<Integer>> grid) {
+        int n = grid.size();
         Queue<int[]> queue = new ArrayDeque<>();
-        boolean[][] visited = new boolean[n][n];
-        int curDist = 0;
+        int[][] dist = new int[n][n];
 
         for (int i = 0; i < n; ++i) {
             for (int j = 0; j < n; ++j) {
                 if (grid.get(i).get(j) == 1) {
                     queue.add(new int[]{i, j});
-                    visited[i][j] = true;
+                    dist[i][j] = 0;
+                } else {
+                    dist[i][j] = 1 << 30;
                 }
             }
         }
 
         while (!queue.isEmpty()) {
-            int size = queue.size();
-            curDist++;
+            int[] cur = queue.poll();
 
-            while (size-- > 0) {
-                int[] curCell = queue.poll();
+            for (int[] dir : DIRS) {
+                int nextX = cur[0] + dir[0];
+                int nextY = cur[1] + dir[1];
 
-                for (int[] dir : DIRS) {
-                    int nextX = curCell[0] + dir[0];
-                    int nextY = curCell[1] + dir[1];
-
-                    if (
-                            isCellValid(nextX, nextY, n, n)
-                            && !visited[nextX][nextY]
-                    ) {
-                        visited[nextX][nextY] = true;
-                        dist[nextX][nextY] = curDist;
-                        queue.add(new int[]{nextX, nextY});
-                    }
+                if (
+                        isCellValid(nextX, nextY, n, n)
+                        && dist[nextX][nextY] == 1 << 30
+                ) {
+                    dist[nextX][nextY] = dist[cur[0]][cur[1]] + 1;
+                    queue.add(new int[]{nextX, nextY});
                 }
             }
         }
+
+        return dist;
     }
 
     private int minDistInMaxPath(int[][] dist) {
@@ -136,10 +127,10 @@ public class M_2812_FindTheSafestPathInAGrid {
 
     private boolean isValid(int[][] dist, int target) {
         int n = dist.length;
+        if (dist[0][0] < target || dist[n - 1][n - 1] < target) return false;
+
         Queue<int[]> queue = new ArrayDeque<>();
         boolean[][] visited = new boolean[n][n];
-
-        if (dist[0][0] < target || dist[n - 1][n - 1] < target) return false;
 
         queue.add(new int[]{0, 0});
         visited[0][0] = true;
