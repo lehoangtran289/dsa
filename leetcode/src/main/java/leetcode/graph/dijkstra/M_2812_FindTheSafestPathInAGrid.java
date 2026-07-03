@@ -28,7 +28,14 @@ public class M_2812_FindTheSafestPathInAGrid {
         return minDistInMaxPath(dist); // O(n^2 logn)
     }
 
-    // ----------------------------------------------------------------------
+    /**
+     * Multi-src BFS + Binary Search + BFS
+     * 1. Multi-src BFS to find the distance of each cell to the nearest thief
+     * 2. Binary search on the safeness factor, and check if a path exists
+     * ---
+     * TC: O(n^2 log n)
+     * SC: O(n^2)
+     */
     public int maximumSafenessFactor2(List<List<Integer>> grid) {
         int n = grid.size();
         int[][] dist = new int[n][n];
