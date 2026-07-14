@@ -1,16 +1,43 @@
 package leetcode.string;
 
+import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Given a pattern and a text kmp finds all the places that the pattern
+ * is found in the text (even overlapping pattern matches)
+ */
 public class _0_KMP {
+    // Driver code
+    static void main() {
+        String txt = "geeksforgeeks";
+        String pat = "geeks";
 
-    // Given a pattern and a text kmp finds all the places that the pattern
-    // is found in the text (even overlapping pattern matches)
-    public static java.util.List<Integer> kmp(String txt, String pat) {
-        java.util.List<Integer> matches = new java.util.ArrayList<>();
+        List<Integer> result = kmp(txt, pat);
+        System.out.println(result);
+
+        List<Integer> matches = kmp("abababa", "aba");
+        System.out.println(matches); // [0, 2, 4]
+
+        matches = kmp("abc", "abcdef");
+        System.out.println(matches); // []
+
+        matches = kmp("P@TTerNabcdefP@TTerNP@TTerNabcdefabcdefabcdefabcdefP@TTerN", "P@TTerN");
+        System.out.println(matches); // [0, 13, 20, 51]
+    }
+
+    /**
+     * KMP
+     * ---
+     * TC: O(n + m)
+     * SC: O(m)
+     */
+    public static List<Integer> kmp(String txt, String pat) {
+        List<Integer> matches = new ArrayList<>();
         if (txt == null || pat == null) return matches;
 
-        int m = pat.length(), n = txt.length(), i = 0, j = 0;
+        int m = pat.length(), n = txt.length();
+        int i = 0, j = 0;
         if (m > n) return matches;
 
         int[] arr = kmpHelper(pat, m);
@@ -32,8 +59,10 @@ public class _0_KMP {
         return matches;
     }
 
-    // For each index i compute the longest match between the proper
-    // prefix starting at 0 and the proper suffix starting at i
+    /**
+     * For each index i compute the longest match between
+     * the proper prefix starting at 0 and the proper suffix starting at i
+     */
     private static int[] kmpHelper(String pat, int m) {
         int[] arr = new int[m];
         for (int i = 1, len = 0; i < m; ) {
@@ -45,23 +74,5 @@ public class _0_KMP {
             }
         }
         return arr;
-    }
-
-    // Driver code
-    public static void main(String[] args) {
-        String txt = "geeksforgeeks";
-        String pat = "geeks";
-
-        List<Integer> result = kmp(txt, pat);
-        System.out.println(result);
-
-        java.util.List<Integer> matches = kmp("abababa", "aba");
-        System.out.println(matches); // [0, 2, 4]
-
-        matches = kmp("abc", "abcdef");
-        System.out.println(matches); // []
-
-        matches = kmp("P@TTerNabcdefP@TTerNP@TTerNabcdefabcdefabcdefabcdefP@TTerN", "P@TTerN");
-        System.out.println(matches); // [0, 13, 20, 51]
     }
 }
