@@ -4,45 +4,44 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.ThreadLocalRandom;
+import java.util.Random;
 
 public class M_380_InsertDeleteGetRandomO1 {
-    static class RandomizedSet {
-        private final List<Integer> arr;
-        private final Map<Integer, Integer> map;
+    private final Random random;
+    private final List<Integer> valueList;
+    private final Map<Integer, Integer> valueToIndex;
 
-        public RandomizedSet() {
-            arr = new ArrayList<>();
-            map = new HashMap<>();
-        }
+    public M_380_InsertDeleteGetRandomO1() {
+        this.random = new Random();
+        this.valueList = new ArrayList<>();
+        this.valueToIndex = new HashMap<>();
+    }
 
-        public boolean insert(int val) {
-            if (map.containsKey(val)) return false;
+    public boolean insert(int val) {
+        if (valueToIndex.containsKey(val)) return false;
 
-            map.put(val, arr.size());
-            arr.add(val);
-            return true;
-        }
+        valueToIndex.put(val, valueList.size());
+        valueList.add(val);
+        return true;
+    }
 
-        public boolean remove(int val) {
-            if (!map.containsKey(val)) return false;
+    public boolean remove(int val) {
+        if (!valueToIndex.containsKey(val)) return false;
 
-            // replace val with last element in array
-            int curIdx = map.get(val);
-            int lastVal = arr.get(arr.size() - 1);
+        // replace val with last element in array
+        int idx = valueToIndex.get(val);
+        int swapVal = valueList.getLast();
 
-            arr.set(curIdx, lastVal);
-            map.put(lastVal, curIdx);
+        valueList.set(idx, swapVal);
+        valueToIndex.put(swapVal, idx);
 
-            map.remove(val);
-            arr.remove(arr.size() - 1);
+        valueToIndex.remove(val);
+        valueList.removeLast();
 
-            return true;
-        }
+        return true;
+    }
 
-        public int getRandom() {
-            int idx = ThreadLocalRandom.current().nextInt(arr.size()) % arr.size();
-            return arr.get(idx);
-        }
+    public int getRandom() {
+        return valueList.get(random.nextInt(valueList.size()));
     }
 }
