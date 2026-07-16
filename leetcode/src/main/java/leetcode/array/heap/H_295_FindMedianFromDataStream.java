@@ -12,38 +12,34 @@ public class H_295_FindMedianFromDataStream {
      */
     static class TwoHeapSolution {
 
-        private final PriorityQueue<Integer> leftHalf;
-        private final PriorityQueue<Integer> rightHalf;
+        private final PriorityQueue<Integer> leftHeap;
+        private final PriorityQueue<Integer> rightHeap;
 
         public TwoHeapSolution() {
-            this.leftHalf = new PriorityQueue<>((a, b) -> Integer.compare(b, a));
-            this.rightHalf = new PriorityQueue<>((a, b) -> Integer.compare(a, b));
+            this.leftHeap = new PriorityQueue<>((a, b) -> Integer.compare(b, a));
+            this.rightHeap = new PriorityQueue<>((a, b) -> Integer.compare(a, b));
         }
 
         public void addNum(int num) {
-            if (!leftHalf.isEmpty() && num < leftHalf.peek()) {
-                leftHalf.add(num);
-
-                if (leftHalf.size() > rightHalf.size()) {
-                    rightHalf.add(leftHalf.poll());
-                }
+            if (!leftHeap.isEmpty() && num <= leftHeap.peek()) {
+                leftHeap.add(num);
             } else {
-                rightHalf.add(num);
+                rightHeap.add(num);
+            }
 
-                if (rightHalf.size() > leftHalf.size()) {
-                    leftHalf.add(rightHalf.poll());
-                }
+            // rebalance
+            if (leftHeap.size() > rightHeap.size() + 1) {
+                rightHeap.add(leftHeap.poll());
+            } else if (rightHeap.size() > leftHeap.size()) {
+                leftHeap.add(rightHeap.poll());
             }
         }
 
         public double findMedian() {
-            if (leftHalf.size() == rightHalf.size()) {
-                if (leftHalf.isEmpty()) return 0; // no elements added yet
-
-                return (double) (leftHalf.peek() + rightHalf.peek()) / 2;
+            if (leftHeap.size() == rightHeap.size()) {
+                return (leftHeap.peek() + rightHeap.peek()) / 2.0;
             }
-
-            return leftHalf.size() > rightHalf.size() ? leftHalf.peek() : rightHalf.peek();
+            return leftHeap.peek();
         }
     }
 

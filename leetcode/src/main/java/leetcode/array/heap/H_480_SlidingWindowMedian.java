@@ -6,6 +6,14 @@ import java.util.PriorityQueue;
 import java.util.Queue;
 
 public class H_480_SlidingWindowMedian {
+    private final Queue<Integer> leafHeap = new PriorityQueue<>((a, b) -> Integer.compare(b, a));
+    private final Queue<Integer> rightHeap = new PriorityQueue<>((a, b) -> Integer.compare(a, b));
+    private final Map<Integer, Integer> invalidNumCnt = new HashMap<>();
+
+    // track *valid* element counts separately from raw heap sizes,
+    // since lazily-invalidated elements can stay buried inside a heap
+    private int leftSize = leafHeap.size();
+    private int rightSize = rightHeap.size();
 
     /**
      * Use 2 heaps to maintain the left and right halves of the numbers in the sliding window
@@ -18,88 +26,80 @@ public class H_480_SlidingWindowMedian {
         double[] res = new double[n - k + 1];
         int idx = 0;
 
-        Queue<Integer> left = new PriorityQueue<>((a, b) -> Integer.compare(b, a));
-        Queue<Integer> right = new PriorityQueue<>((a, b) -> Integer.compare(a, b));
-        Map<Integer, Integer> invalidNumCnt = new HashMap<>();
-
-        // init first window
+        // init first window of size k
         for (int i = 0; i < k; ++i) {
-            left.add(nums[i]);
+            leafHeap.add(nums[i]);
         }
         for (int i = 0; i < k / 2; ++i) {
-            right.add(left.poll());
+            rightHeap.add(leafHeap.poll());
         }
-
-        // track *valid* element counts separately from raw heap sizes,
-        // since lazily-invalidated elements can stay buried inside a heap
-        int validLeftSize = left.size();
-        int validRightSize = right.size();
-        res[idx++] = getMedian(left, right, validLeftSize, validRightSize);
+        leftSize = leafHeap.size();
+        rightSize = rightHeap.size();
+        res[idx++] = getMedian();
 
         // sliding window
         for (int i = k; i < n; ++i) {
-            // remove nums[i - k]
-            invalidNumCnt.put(nums[i - k], invalidNumCnt.getOrDefault(nums[i - k], 0) + 1);
-            if (!left.isEmpty() && nums[i - k] <= left.peek()) {
-                validLeftSize--;
-            } else {
-                validRightSize--;
-            }
-
-            // add nums[i] to the correct queue
-            if (!left.isEmpty() && left.peek() >= nums[i]) {
-                left.add(nums[i]);
-                validLeftSize++;
-            } else {
-                right.add(nums[i]);
-                validRightSize++;
-            }
-
-            // rebalance 2 queues
-            if (validLeftSize > validRightSize + 1) {
-                right.add(left.poll());
-                validLeftSize--;
-                validRightSize++;
-            } else if (validRightSize > validLeftSize + 1) {
-                left.add(right.poll());
-                validRightSize--;
-                validLeftSize++;
-            }
+            // remove nums[i - k] and add nums[i] to the correct heap, then rebalance 2 heaps
+            remove(nums[i - k]);
+            add(nums[i]);
+            rebalance();
 
             // clean up invalid numbers from the top of the heaps
-            while (!left.isEmpty() && invalidNumCnt.containsKey(left.peek())) {
-                int invalidNum = left.poll();
-                removeFromMap(invalidNumCnt, invalidNum);
-            }
-
-            while (!right.isEmpty() && invalidNumCnt.containsKey(right.peek())) {
-                int invalidNum = right.poll();
-                removeFromMap(invalidNumCnt, invalidNum);
-            }
+            prune(leafHeap);
+            prune(rightHeap);
 
             // get median
-            res[idx++] = getMedian(left, right, validLeftSize, validRightSize);
+            res[idx++] = getMedian();
         }
 
         return res;
     }
 
-    private void removeFromMap(Map<Integer, Integer> map, int target) {
-        map.put(target, map.get(target) - 1);
-        if (map.get(target) == 0) {
-            map.remove(target);
+    private void remove(int num) {
+        invalidNumCnt.put(num, invalidNumCnt.getOrDefault(num, 0) + 1);
+        if (!leafHeap.isEmpty() && num <= leafHeap.peek()) {
+            leftSize--;
+        } else {
+            rightSize--;
         }
     }
 
-    private double getMedian(
-            Queue<Integer> left,
-            Queue<Integer> right,
-            int leftSize,
-            int rightSize
-    ) {
-        if (leftSize == rightSize) {
-            return ((long) left.peek() + right.peek()) / 2.0;
+    private void add(int num) {
+        if (!leafHeap.isEmpty() && leafHeap.peek() >= num) {
+            leafHeap.add(num);
+            leftSize++;
+        } else {
+            rightHeap.add(num);
+            rightSize++;
         }
-        return leftSize > rightSize ? left.peek() : right.peek();
+    }
+
+    private void rebalance() {
+        if (leftSize > rightSize + 1) {
+            rightHeap.add(leafHeap.poll());
+            leftSize--;
+            rightSize++;
+        } else if (rightSize > leftSize) {
+            leafHeap.add(rightHeap.poll());
+            rightSize--;
+            leftSize++;
+        }
+    }
+
+    private void prune(Queue<Integer> queue) {
+        while (!queue.isEmpty() && invalidNumCnt.containsKey(queue.peek())) {
+            int removeNum = queue.poll();
+            invalidNumCnt.put(removeNum, invalidNumCnt.get(removeNum) - 1);
+            if (invalidNumCnt.get(removeNum) == 0) {
+                invalidNumCnt.remove(removeNum);
+            }
+        }
+    }
+
+    private double getMedian() {
+        if (leftSize == rightSize) {
+            return ((long) leafHeap.peek() + rightHeap.peek()) / 2.0;
+        }
+        return leafHeap.peek(); // guarantee leftSize > rightSize
     }
 }
