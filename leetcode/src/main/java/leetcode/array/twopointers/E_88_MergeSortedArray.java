@@ -1,4 +1,4 @@
-package leetcode.array.intervals;
+package leetcode.array.twopointers;
 
 import java.util.ArrayList;
 import java.util.List;
