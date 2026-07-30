@@ -3,11 +3,9 @@ package leetcode.array.intervals;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.PriorityQueue;
-import java.util.Set;
 import java.util.TreeSet;
 
 public class H_218_TheSkylineProblem {
@@ -27,49 +25,50 @@ public class H_218_TheSkylineProblem {
      * SC: O(n) - for the heap and events list
      */
     public static List<List<Integer>> getSkyline(int[][] buildings) {
-        // build event list
-        List<Event> events = new ArrayList<>();
+        List<int[]> events = new ArrayList<>();
         for (int i = 0; i < buildings.length; ++i) {
             int[] b = buildings[i];
-            events.add(new Event(i, b[0], b[2], START));
-            events.add(new Event(i, b[1], b[2], END));
+            events.add(new int[]{b[0], i, START}); // [pos, id, status]
+            events.add(new int[]{b[1], i, END});
         }
-        events.sort((a, b) -> Integer.compare(a.pos, b.pos)); // sort by position
+        events.sort((a, b) -> Integer.compare(a[0], b[0])); // sort by pos
 
-        // max heap to sort by events' height
-        PriorityQueue<Event> maxHeap = new PriorityQueue<>((a, b) -> Integer.compare(b.height, a.height));
-        Set<Integer> removedPos = new HashSet<>(); // for lazy deletion
+        PriorityQueue<int[]> maxHeap = new PriorityQueue<>((a, b) -> Integer.compare(b[0], a[0])); // [height, end]
         List<List<Integer>> res = new ArrayList<>();
 
-        // line sweep through each position
         for (int i = 0; i < events.size(); ++i) {
-            int pos = events.get(i).pos;
+            int curPos = events.get(i)[0];
 
             // process all events at this pos
-            while (i < events.size() && events.get(i).pos == pos) {
-                if (events.get(i).status == START) {
-                    maxHeap.add(events.get(i));
-                } else {
-                    removedPos.add(events.get(i).id); // remove that ID
+            while (i < events.size() && events.get(i)[0] == curPos) {
+                if (events.get(i)[2] == START) {
+                    int bId = events.get(i)[1];
+                    int endPos = buildings[bId][1];
+                    int height = buildings[bId][2];
+
+                    maxHeap.add(new int[]{height, endPos});
                 }
                 i++;
             }
             i--;
 
-            // Lazy deletion past events
-            while (!maxHeap.isEmpty() && removedPos.contains(maxHeap.peek().id)) {
+            // lazy deletion
+            while (!maxHeap.isEmpty() && maxHeap.peek()[1] <= curPos) {
                 maxHeap.poll();
             }
 
-            // check if the current max height has changed
-            int curMaxHeight = maxHeap.isEmpty() ? 0 : maxHeap.peek().height;
+            // get max height at pos
+            int curMaxHeight = maxHeap.isEmpty() ? 0 : maxHeap.peek()[0];
             if (res.isEmpty() || curMaxHeight != res.getLast().get(1)) {
-                res.add(Arrays.asList(pos, curMaxHeight));
+                res.add(Arrays.asList(curPos, curMaxHeight));
             }
         }
 
         return res;
     }
+
+    // --------------------------------------------------------------------
+
 
     /**
      * Brute force. Idea: transform left & right index of building to 0-index array heights
@@ -113,21 +112,5 @@ public class H_218_TheSkylineProblem {
         }
 
         return res;
-    }
-
-    // --------------------------------------------------------------------
-
-    static class Event {
-        int id;
-        int pos;
-        int height;
-        int status;
-
-        Event(int id, int pos, int height, int status) {
-            this.id = id;
-            this.pos = pos;
-            this.height = height;
-            this.status = status;
-        }
     }
 }
