@@ -7,59 +7,58 @@ import java.util.List;
 import java.util.Queue;
 
 public class M_787_CheapestFlightsWithinKStops {
-
-    static class Flight {
-        int to;
-        int price;
-
-        Flight(int to, int price) {
-            this.to = to;
-            this.price = price;
-        }
+    static void main() {
+        System.out.println(
+                findCheapestPrice(3, new int[][]{{0, 1, 100}, {1, 2, 100}, {0, 2, 500}}, 0, 2, 1)
+        ); // Output: 200
     }
 
     /**
-     * Idea: BFS
+     * Idea: BFS limit K steps
      * -----------------------
      * Time: O(E + V) where E is the number of edges and V is the number of vertices
      * Space: O(V) for the adjacency list and distance array
      */
-    public int findCheapestPrice(int n, int[][] flights, int src, int dst, int k) {
+    public static int findCheapestPrice(int n, int[][] flights, int src, int dst, int k) {
         // init graph
-        List<Flight>[] adj = new List[n];
+        List<int[]>[] adjList = new List[n]; // [src -> [dst, dist]]
         for (int i = 0; i < n; ++i) {
-            adj[i] = new ArrayList<>();
+            adjList[i] = new ArrayList<>();
         }
 
-        for (int[] f : flights) {
-            adj[f[0]].add(new Flight(f[1], f[2]));
+        for (int[] flight : flights) {
+            adjList[flight[0]].add(new int[]{flight[1], flight[2]});
         }
 
-        // init bfs variables
-        int stops = 0;
-        int[] dist = new int[n];
-        Queue<Flight> queue = new ArrayDeque<>();
+        // init bfs states
+        int[] dist = new int[n]; // min dist of src to dst within k stops
+        Queue<int[]> queue = new ArrayDeque<>(); // cur stop, curDist
+        int steps = 0;
 
-        Arrays.fill(dist, Integer.MAX_VALUE);
-        queue.add(new Flight(src, 0)); // src, total_price
+        Arrays.fill(dist, 1 << 30);
+        dist[src] = 0;
+        queue.add(new int[]{src, 0});
 
-        while (stops++ <= k && !queue.isEmpty()) {
+        while (steps++ <= k && !queue.isEmpty()) {
             int size = queue.size();
 
             for (int i = 0; i < size; ++i) {
-                Flight cur = queue.poll();
+                int[] cur = queue.poll();
+                int curSrc = cur[0];
+                int curDist = cur[1];
 
-                for (Flight next : adj[cur.to]) {
-                    int newPrice = cur.price + next.price;
+                for (int[] neighbor : adjList[curSrc]) {
+                    int nextDst = neighbor[0];
+                    int nextDist = neighbor[1] + curDist;
 
-                    if (newPrice <= dist[next.to]) {
-                        dist[next.to] = newPrice;
-                        queue.add(new Flight(next.to, newPrice));
+                    if (nextDist < dist[nextDst]) {
+                        dist[nextDst] = nextDist;
+                        queue.add(new int[]{nextDst, nextDist});
                     }
                 }
             }
         }
 
-        return dist[dst] == Integer.MAX_VALUE ? -1 : dist[dst];
+        return dist[dst] == 1 << 30 ? -1 : dist[dst];
     }
 }
