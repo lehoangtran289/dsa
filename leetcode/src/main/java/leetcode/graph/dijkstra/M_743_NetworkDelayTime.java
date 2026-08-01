@@ -2,51 +2,61 @@ package leetcode.graph.dijkstra;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Comparator;
 import java.util.List;
 import java.util.PriorityQueue;
 
 public class M_743_NetworkDelayTime {
-    public static int dijkstra(List<int[]>[] graph, int s) {
-        int n = graph.length;
-        int[] dist = new int[n];
+    static void main() {
+        System.out.println(
+                networkDelayTime(new int[][]{{2, 1, 1}, {2, 3, 1}, {3, 4, 1}}, 4, 2)
+        ); // Output: 2
+    }
 
-        Arrays.fill(dist, Integer.MAX_VALUE);
-        dist[s] = 0;
-        PriorityQueue<Integer[]> pq = new PriorityQueue<>(Comparator.comparingInt(node -> dist[node[0]]));
-        pq.offer(new Integer[]{s, 0});
+    /**
+     * TC: O(E log V) where E is the number of edges and V is the number of vertices
+     * SC: O(V + E) for the adjacency list and distance array
+     */
+    public static int networkDelayTime(int[][] times, int n, int k) {
+        // build adj list
+        List<int[]>[] adjList = new List[n + 1];
+        for (int i = 0; i <= n; ++i) {
+            adjList[i] = new ArrayList<>();
+        }
 
-        while (!pq.isEmpty()) {
-            Integer[] node = pq.poll();
-            int u = node[0];
+        for (int[] time : times) {
+            adjList[time[0]].add(new int[]{time[1], time[2]}); // [src -> [dst, dist]]
+        }
 
-            for (int[] edge : graph[u]) {
-                int v = edge[0];
-                int vW = edge[1];
-                int tempDist = dist[u] + vW;
-                if (tempDist < dist[v]) {
-                    dist[v] = tempDist;
-                    pq.offer(new Integer[]{v, tempDist});
+        // set up djkstra states
+        int[] dist = new int[n + 1];
+        PriorityQueue<int[]> minHeap = new PriorityQueue<>((a, b) -> Integer.compare(a[1], b[1])); // [dst, curDist]
+
+        Arrays.fill(dist, 1 << 30);
+        dist[k] = 0;
+        minHeap.add(new int[]{k, 0});
+
+        // dijkstra process
+        while (!minHeap.isEmpty()) {
+            int[] node = minHeap.poll();
+            int curDist = node[1];
+
+            for (int[] neighbor : adjList[node[0]]) {
+                int dst = neighbor[0];
+                int nextDist = curDist + neighbor[1];
+
+                if (nextDist < dist[dst]) {
+                    dist[dst] = nextDist;
+                    minHeap.add(new int[]{dst, nextDist});
                 }
             }
         }
-        int maxDist = Arrays.stream(dist).max().getAsInt();
-        return maxDist == Integer.MAX_VALUE ? -1 : maxDist;
-    }
 
-    public int networkDelayTime(int[][] times, int n, int k) {
-        List<int[]>[] graph = new List[n];
-
-        for (int i = 0; i < n; i++)
-            graph[i] = new ArrayList<>();
-
-        for (int[] time : times) {
-            final int u = time[0] - 1;
-            final int v = time[1] - 1;
-            final int w = time[2];
-            graph[u].add(new int[]{v, w});
+        // build result
+        int res = 0;
+        for (int i = 1; i <= n; ++i) {
+            if (dist[i] == 1 << 30) return -1;
+            res = Math.max(res, dist[i]);
         }
-
-        return dijkstra(graph, k - 1);
+        return res;
     }
 }
