@@ -3,12 +3,10 @@ package leetcode.bit;
 public class M_393_UTF8Validation {
     static void main() {
         System.out.println(
-                validUtf8(new int[]{197, 130, 1})
-        ); // Output: true
+                validUtf8(new int[] { 197, 130, 1 })); // Output: true
 
         System.out.println(
-                validUtf8(new int[]{235, 140, 4})
-        ); // Output: false);
+                validUtf8(new int[] { 235, 140, 4 })); // Output: false);
     }
 
     /**
@@ -16,12 +14,13 @@ public class M_393_UTF8Validation {
      * ---
      * TC: O(n)
      */
-    public boolean validUtf8(int[] data) {
+    public static boolean validUtf8(int[] data) {
         for (int i = 0; i < data.length; ++i) {
             int byteSize = getByteSize(data[i]);
 
             // check first byte
-            if (byteSize == 1 || byteSize > 4) return false;
+            if (byteSize == 1 || byteSize > 4)
+                return false;
 
             // check following bytes
             while (byteSize-- > 1) {
@@ -34,7 +33,7 @@ public class M_393_UTF8Validation {
         return true;
     }
 
-    private int getByteSize(int num) {
+    private static int getByteSize(int num) {
         int res = 0;
         for (int i = 7; i >= 0; --i) {
             if (((num >> i) & 1) == 0) {
@@ -45,7 +44,7 @@ public class M_393_UTF8Validation {
         return res;
     }
 
-    private boolean isFollowByte(int num) {
+    private static boolean isFollowByte(int num) {
         int firstMSB = (num >> 7) & 1;
         int secondMSB = (num >> 6) & 1;
 
