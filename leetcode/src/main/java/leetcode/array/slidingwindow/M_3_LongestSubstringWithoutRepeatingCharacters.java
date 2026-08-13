@@ -10,16 +10,14 @@ public class M_3_LongestSubstringWithoutRepeatingCharacters {
      */
     public static int lengthOfLongestSubstring(String s) {
         int res = 0;
-        int n = s.length();
-        int[] freq = new int[128];
+        int[] frequencies = new int[128];
         int l = 0;
 
-        for (int r = 0; r < n; ++r) {
-            char rChar = s.charAt(r);
-            freq[rChar]++;
+        for (int r = 0; r < s.length(); ++r) {
+            frequencies[s.charAt(r)]++;
 
-            while (l <= r && freq[rChar] > 1) {
-                freq[s.charAt(l)]--;
+            while (frequencies[s.charAt(r)] > 1) {
+                frequencies[s.charAt(l)]--;
                 l++;
             }
 
@@ -29,7 +27,7 @@ public class M_3_LongestSubstringWithoutRepeatingCharacters {
         return res;
     }
 
-    public static void main(String[] args) {
+    static void main() {
         System.out.println(lengthOfLongestSubstring("bbbb"));
     }
 }
