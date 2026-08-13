@@ -18,67 +18,69 @@
 
 ## Two Sliding Window Patterns
 
-### Pattern 1 — `while` shrink (common pattern)
+The most common dynamic sliding-window pattern starts with a valid window, expands r, and only shrinks l when expansion
+makes the window invalid.
+
+### Pattern 1 : maximum window size / counting all valid windows
 
 ```java
-for (int r = 0; r < n; r++) {// expand with r
-    while (isInvalid(l, r)) {
-        l++;  // shrink until valid
+for(int r = 0;
+r<n;r++){
+
+// 1. Expand window by including nums[r]
+add(nums[r]);
+
+// 2. If expansion made the window invalid, shrink until it becomes valid again.
+    while(!
+
+isValid(l, r)){
+
+remove(nums[l]);
+
+l++;
     }
-    res = Math.min(res, r - l + 1); // minimum window / count
+
+// 3. [l, r] is guaranteed valid here
+ans =Math.
+
+max(ans, r -l+1); // OR ans += r - l + 1, if counting all valid windows
 }
 ```
 
-✅ Window is **always valid** after shrinking
-✅ Used for: **minimum** window size, counting valid windows
+Use cases:
 
----
+- longest substring without duplicates
+- longest substring with at most K distinct elements
+- longest subarray sum ≤ K, when all numbers are non-negative
+- maximum window satisfying some monotonic constraint
 
-### Pattern 2 — `if` shrink (this problem's pattern)
+### Pattern 2 : minimum window size
 
 ```java
-for (int r = 0; r < n; r++) {// expand with r
-    if (isInvalid(l, r)) {
-        l++;  // shrink by exactly 1
+for(int r = 0;
+r<n;r++){
+
+// 1. Expand window by including nums[r]
+add(nums[r]);
+    
+    while(
+
+isValid(l, r)){
+minLen =Math.
+
+min(minLen, r -l+1);
+
+remove(nums[l]);
+
+l++;
     }
-    res = Math.max(res, r - l + 1); // maximum window
 }
 ```
 
-⚠️ Window might **still be invalid** after shrinking
-✅ Used for: **maximum** window size only
+Use cases:
 
----
-
-## Why Does `if` Work Here?
-
-The key insight is the window size **never decreases**:
-
-```
-r=0: window size = 1  (valid)   → res=1
-r=1: window size = 2  (valid)   → res=2
-r=2: window size = 3  (invalid) → shrink → size=2, res stays 2
-r=3: window size = 3  (valid)   → res=3  ← grew again!
-```
-
-> Since we only want the **maximum**, we never need to shrink below our current best. Shrinking by 1 simply "holds" the
-> window size steady.
-
----
-
-## Summary — When to Use Each
-
-| Condition        | Use `while`                  | Use `if`                              |
-|------------------|------------------------------|---------------------------------------|
-| **Goal**         | Min window / Count           | Max window                            |
-| **After shrink** | Window must be valid         | Window can stay invalid               |
-| **Window size**  | Can decrease                 | Never decreases                       |
-| **Key question** | "Find exact valid boundary?" | "Can we do better than current best?" |
-
----
-
-**One-line rule:**
-> Use `if` when you're **maximizing** window size — you never need to shrink below your current best answer.
+- Minimum Size Subarray Sum >= target
+- Minimum Window Substring
 
 ---
 
