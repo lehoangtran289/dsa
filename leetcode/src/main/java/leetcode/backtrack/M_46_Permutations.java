@@ -4,33 +4,37 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class M_46_Permutations {
-    public static void main(String[] args) {
-        System.out.println(new M_46_Permutations().permute(new int[]{1, 2, 3}));
+    static void main() {
+        System.out.println(permute(new int[]{1, 2, 3}));
     }
 
-    public List<List<Integer>> permute(int[] nums) {
+    public static List<List<Integer>> permute(int[] nums) {
         List<List<Integer>> res = new ArrayList<>();
-        backtrack(res, nums, new ArrayList<>());
-
+        backtrack(nums, res, new ArrayList<>(), new boolean[nums.length]);
         return res;
     }
 
-    private void backtrack(
-            List<List<Integer>> res,
+    private static void backtrack(
             int[] nums,
-            List<Integer> curList
+            List<List<Integer>> res,
+            List<Integer> cur,
+            boolean[] used
     ) {
-        if (curList.size() == nums.length) {
-            res.add(new ArrayList<>(curList));
+        if (cur.size() == nums.length) {
+            res.add(new ArrayList<>(cur));
             return;
         }
 
-        for (int num : nums) {
-            if (curList.contains(num)) continue;
+        for (int i = 0; i < nums.length; ++i) {
+            if (used[i]) continue;
 
-            curList.add(num);
-            backtrack(res, nums, curList);
-            curList.remove(curList.size() - 1);
+            used[i] = true;
+            cur.add(nums[i]);
+
+            backtrack(nums, res, cur, used);
+
+            used[i] = false;
+            cur.removeLast();
         }
     }
 }

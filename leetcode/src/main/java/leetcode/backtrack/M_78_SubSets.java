@@ -40,4 +40,29 @@ public class M_78_SubSets {
         // case 2: skip this num
         backtrack(nums, res, start + 1, curList);
     }
+
+    /**
+     * bitmask, generate all possible bitmask for n bits, where n is the length of nums
+     * ---
+     * TC: O(2^n), where n is the length of nums
+     * SC: O(n)
+     */
+    public static List<List<Integer>> subsets2(int[] nums) {
+        int n = nums.length;
+        List<List<Integer>> res = new ArrayList<>();
+        int mask = (1 << n) - 1;
+
+        for (int i = 0; i <= mask; ++i) { // O(2^n)
+            List<Integer> curList = new ArrayList<>();
+
+            for (int j = 0; j < n; ++j) { // O(n)
+                if (((i >> j) & 1) == 1) {
+                    curList.add(nums[j]);
+                }
+            }
+            res.add(curList);
+        }
+
+        return res;
+    }
 }

@@ -4,31 +4,32 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class M_77_Combinations {
-    private int n;
-    private int k;
+    static void main() {
+        System.out.println(combine(4, 2));
+    }
 
-    public List<List<Integer>> combine(int n, int k) {
-        this.n = n;
-        this.k = k;
+    public static List<List<Integer>> combine(int n, int k) {
         List<List<Integer>> res = new ArrayList<>();
-        backtrack(res, new ArrayList<>(), 1);
+        backtrack(n, k, res, 1, new ArrayList<>());
         return res;
     }
 
-    private void backtrack(
+    private static void backtrack(
+            int n,
+            int k,
             List<List<Integer>> res,
-            List<Integer> cur,
-            int firstNum
+            int start,
+            List<Integer> cur
     ) {
         if (cur.size() == k) {
             res.add(new ArrayList<>(cur));
             return;
         }
 
-        for (int i = firstNum; i <= n; ++i) {
+        for (int i = start; i <= n; ++i) {
             cur.add(i);
-            backtrack(res, cur, i + 1);
-            cur.remove(cur.size() - 1);
+            backtrack(n, k, res, i + 1, cur);
+            cur.removeLast();
         }
     }
 }
