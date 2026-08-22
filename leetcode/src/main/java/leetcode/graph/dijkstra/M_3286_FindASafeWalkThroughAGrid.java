@@ -54,13 +54,13 @@ public class M_3286_FindASafeWalkThroughAGrid {
      * SC: O(n * m)
      */
     public boolean findSafeWalk2(List<List<Integer>> grid, int health) {
-        int rows = grid.size(), cols = grid.get(0).size();
+        int rows = grid.size(), cols = grid.getFirst().size();
         int[][] costs = new int[rows][cols];
         Deque<int[]> deque = new ArrayDeque<>();
 
         for (int[] row : costs) Arrays.fill(row, 1 << 30);
-        deque.addLast(new int[]{0, 0, grid.get(0).get(0)});
-        costs[0][0] = grid.get(0).get(0);
+        deque.addLast(new int[]{0, 0, grid.getFirst().getFirst()});
+        costs[0][0] = grid.getFirst().getFirst();
 
         while (!deque.isEmpty()) {
             int[] cur = deque.poll();
