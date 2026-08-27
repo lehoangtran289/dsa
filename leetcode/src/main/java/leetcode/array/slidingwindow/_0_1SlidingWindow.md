@@ -23,27 +23,60 @@ makes the window invalid.
 
 ### Pattern 1 : maximum window size / counting all valid windows
 
-```java
-for(int r = 0;
-r<n;r++){
+option 1: expand r, shrink l until valid
 
-// 1. Expand window by including nums[r]
-add(nums[r]);
+```txt
+int l = 0, ans = 0; // initialize left pointer and answer
+for (int r = 0; r < n; r++) {
+    // 1. Expand window by including nums[r]
+    add(nums[r]);
+    
+    // 2. If expansion made the window invalid, shrink until it becomes valid again.
+    while (!isValid(l, r)) {
+        remove(nums[l]);
+        l++;
+    }
+    
+    // 3. [l, r] is guaranteed valid here -> either find max window / count all valid windows ending at r
+    ans = Math.max(ans, r - l + 1); // OR ans += r - l + 1
+}
 
-// 2. If expansion made the window invalid, shrink until it becomes valid again.
-    while(!
+```
 
-isValid(l, r)){
+option 2: fix l, expand r to max_r
 
-remove(nums[l]);
+```txt
+public long countSubarrays(int[] nums, long k) {
+    long answer = 0;
+    long windowSum = 0;
 
-l++;
+    int right = -1;
+
+    for (int left = 0; left < nums.length; left++) {
+
+        // Tìm right lớn nhất để sum(nums[left...right]) <= k.
+        while (right + 1 < nums.length
+                && windowSum + nums[right + 1] <= k) {
+            right++;
+            windowSum += nums[right];
+        }
+
+        // Đếm các đoạn:
+        // [left, left], [left, left + 1], ..., [left, right]
+        if (right >= left) {
+            answer += right - left + 1;
+        }
+
+        // Loại nums[left] trước khi chuyển sang left + 1.
+        if (right >= left) {
+            windowSum -= nums[left];
+        } else {
+            // nums[left] tự nó cũng không hợp lệ.
+            right = left;
+        }
     }
 
-// 3. [l, r] is guaranteed valid here
-ans =Math.
-
-max(ans, r -l+1); // OR ans += r - l + 1, if counting all valid windows
+    return answer;
 }
 ```
 
@@ -56,25 +89,18 @@ Use cases:
 
 ### Pattern 2 : minimum window size
 
-```java
-for(int r = 0;
-r<n;r++){
-
-// 1. Expand window by including nums[r]
-add(nums[r]);
+```txt
+for (int r = 0; r < n; r++) {
+    // 1. Expand window by including nums[r]
+    add(nums[r]);
     
-    while(
-
-isValid(l, r)){
-minLen =Math.
-
-min(minLen, r -l+1);
-
-remove(nums[l]);
-
-l++;
+    while (isValid(l, r)) {
+        minLen = Math.min(minLen, r - l + 1);
+        remove(nums[l]);
+        l++;
     }
 }
+
 ```
 
 Use cases:
