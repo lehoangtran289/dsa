@@ -8,120 +8,60 @@ import java.util.Map;
  * and exactly k consonants.
  */
 public class M_3306_CountOfSubstringsContainingEveryVowelAndKConsonantsII {
-    public static void main(String[] args) {
-        M_3306_CountOfSubstringsContainingEveryVowelAndKConsonantsII sol = new M_3306_CountOfSubstringsContainingEveryVowelAndKConsonantsII();
-
-        System.out.println(sol.countOfSubstrings2("ieaouqqieaouqq", 1)); // 3
-        System.out.println(sol.countOfSubstrings2("aeiou", 0)); // 1
+    static void main() {
+        System.out.println(countOfSubstrings("ieaouqqieaouqq", 1)); // 3
+        System.out.println(countOfSubstrings("aeiou", 0)); // 1
     }
 
     /**
-     * Sliding window approach with trick. </br>
      * Valid substrings = atLeastK(word, k) - atLeastK(word, k + 1) </br>
-     * Time complexity: O(n) </br>
-     * Space complexity: O(n) </br>
+     * Intuition: once we reach our first valid window, every substring that extends from this point onward is also valid
+     * ---
+     * TC: O(n) </br>
+     * SC: O(n) </br>
      */
-    public long countOfSubstrings2(String word, int k) {
-        return atLeastK(word, k) - atLeastK(word, k + 1);
+    public static long countOfSubstrings(String word, int k) {
+        return atLeast(word, k) - atLeast(word, k + 1);
     }
-
-    private long atLeastK(String word, int k) {
-        int n = word.length();
-        long res = 0;
-        int l = 0;
-
-        Map<Character, Integer> vowelMap = new HashMap<>();
-        int consonantCount = 0;
-
-        for (int r = 0; r < n; ++r) {
-            char rChar = word.charAt(r);
-            if (isVowel(rChar)) {
-                vowelMap.put(rChar, vowelMap.getOrDefault(rChar, 0) + 1);
-            } else {
-                consonantCount++;
-            }
-
-            while (vowelMap.size() == 5 && consonantCount >= k) {
-                res += n - r;
-
-                char lChar = word.charAt(l);
-                if (isVowel(lChar)) {
-                    vowelMap.put(lChar, vowelMap.get(lChar) - 1);
-                    if (vowelMap.get(lChar) == 0) vowelMap.remove(lChar);
-                } else {
-                    consonantCount--;
-                }
-                l++;
-            }
-        }
-        return res;
-    }
-
-    // -----------------------------------------------------------------------------------
 
     /**
-     * Sliding window approach. Keep track of valid window </br>
-     * Time complexity: O(n) </br>
-     * Space complexity: O(n) </br>
+     * Number of substrings of word that contain every vowel and at least k consonants.
+     * ---
      */
-    public long countOfSubstrings1(String word, int k) {
-        int n = word.length();
+    private static long atLeast(String word, int k) {
         long res = 0;
-        int l = 0;
-
-        // compute index of next consonant for all indices to avoid TLE
-        int[] nextConsonant = new int[n];
-        int nextConsonantIndex = n;
-        for (int i = n - 1; i >= 0; --i) {
-            nextConsonant[i] = nextConsonantIndex;
-            if (!isVowel(word.charAt(i))) {
-                nextConsonantIndex = i;
-            }
-        }
-
-        Map<Character, Integer> vowelMap = new HashMap<>();
+        Map<Character, Integer> vowelCount = new HashMap<>();
         int consonantCount = 0;
 
-        for (int r = 0; r < n; ++r) {
-            char rChar = word.charAt(r);
-            if (isVowel(rChar)) {
-                vowelMap.put(rChar, vowelMap.getOrDefault(rChar, 0) + 1);
+        int l = 0;
+        for (int r = l; r < word.length(); ++r) {
+            char rightChar = word.charAt(r);
+
+            if (isVowel(rightChar)) {
+                vowelCount.put(rightChar, vowelCount.getOrDefault(rightChar, 0) + 1);
             } else {
                 consonantCount++;
             }
 
-            // shrink left if consonant count exceeds k
-            while (consonantCount > k) {
-                char lChar = word.charAt(l);
-                if (isVowel(lChar)) {
-                    vowelMap.put(lChar, vowelMap.get(lChar) - 1);
-                    if (vowelMap.get(lChar) == 0) vowelMap.remove(lChar);
-                } else {
-                    consonantCount--;
-                }
-                l++;
-            }
+            // find min valid subarray starting at l
+            while (vowelCount.size() == 5 && consonantCount >= k) {
+                res += word.length() - r;
 
-            while (vowelMap.size() == 5 && consonantCount == k) {
-                // window still valid when adding more vowels to the right
-                // res += nextConsonant[r] - r; since all substrings starting from r to nextConsonant[r] will be valid
-                res += nextConsonant[r] - r;
-
-                // try to shrink left and continue counting
-                char lChar = word.charAt(l);
-                if (isVowel(lChar)) {
-                    vowelMap.put(lChar, vowelMap.get(lChar) - 1);
-                    if (vowelMap.get(lChar) == 0) vowelMap.remove(lChar);
+                char leftChar = word.charAt(l);
+                if (isVowel(leftChar)) {
+                    vowelCount.put(leftChar, vowelCount.get(leftChar) - 1);
+                    if (vowelCount.get(leftChar) == 0) vowelCount.remove(leftChar);
                 } else {
                     consonantCount--;
                 }
                 l++;
             }
         }
+
         return res;
     }
 
-    private boolean isVowel(char c) {
+    private static boolean isVowel(char c) {
         return c == 'a' || c == 'e' || c == 'i' || c == 'o' || c == 'u';
     }
 }
