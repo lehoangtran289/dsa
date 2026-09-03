@@ -7,32 +7,81 @@ import java.util.Map;
 import java.util.Queue;
 
 public class M_2948_MakeLexicographicallySmallestArrayBySwappingElements {
-    public static void main(String[] args) {
-        System.out.println(Arrays.toString(lexicographicallySmallestArray(new int[]{1, 7, 6, 18, 2, 1}, 3)));
+    static void main() {
+        System.out.println(Arrays.toString(lexicographicallySmallestArray2(new int[]{1, 7, 6, 18, 2, 1}, 3)));
     }
 
+    /**
+     * Idea: Maintain pair of [num, index] and sort by num (to preserve num indices)
+     * ---
+     * TC: O(N logN)
+     * SC: O(N)
+     */
+    public static int[] lexicographicallySmallestArray2(int[] nums, int limit) {
+        int n = nums.length;
+        int[][] pairs = new int[n][2];
+        int[] res = new int[n];
+
+        // construct pairs array of [[num, index]]
+        for (int i = 0; i < n; ++i) {
+            pairs[i] = new int[]{nums[i], i};
+        }
+        Arrays.sort(pairs, (a, b) -> Integer.compare(a[0], b[0]));
+
+        // group relevant numbers and build result
+        int l = 0;
+        while (l < n) {
+            int r = l;
+            while (r < n - 1 && Math.abs(pairs[r][0] - pairs[r + 1][0]) <= limit) {
+                r++;
+            }
+
+            int windowSize = r - l + 1;
+            int[] indices = new int[windowSize];
+
+            for (int i = 0; i < windowSize; ++i) {
+                indices[i] = pairs[l + i][1];
+            }
+            Arrays.sort(indices);
+
+            for (int i = 0; i < windowSize; ++i) {
+                res[indices[i]] = pairs[l + i][0];
+            }
+
+            l = r + 1;
+        }
+
+        return res;
+    }
+
+    /**
+     * Idea: Use DSU to group numbers in range "limit", then sort each group and assign to original indices
+     * ---
+     * TC: O(N logN)
+     * SC: O(N)
+     */
     public static int[] lexicographicallySmallestArray(int[] nums, int limit) {
         int n = nums.length;
 
         // clone input and sort
-        int[] numsClone = new int[nums.length];
-        for (int i = 0; i < nums.length; i++) numsClone[i] = nums[i];
-        Arrays.sort(numsClone);
+        int[] clone = new int[nums.length];
+        for (int i = 0; i < nums.length; i++) clone[i] = nums[i];
+        Arrays.sort(clone);
 
         // construct DSU
-        DisjointSet dsu = new DisjointSet(numsClone);
+        DisjointSet dsu = new DisjointSet(clone);
         for (int i = 1; i < n; ++i) {
-            if (numsClone[i] - numsClone[i - 1] <= limit) {
-                dsu.union(numsClone[i], numsClone[i - 1]);
+            if (clone[i] - clone[i - 1] <= limit) {
+                dsu.union(clone[i], clone[i - 1]);
             }
         }
 
         // construct groups of sorted elements
         Map<Integer, Queue<Integer>> map = new HashMap<>();
         for (int i = 0; i < n; ++i) {
-            int root = dsu.find(numsClone[i]);
+            int root = dsu.find(clone[i]);
             map.putIfAbsent(root, new ArrayDeque<>());
-            map.get(root).add(numsClone[i]);
+            map.get(root).add(clone[i]);
         }
 
         // construct output
@@ -46,28 +95,25 @@ public class M_2948_MakeLexicographicallySmallestArrayBySwappingElements {
     }
 
     static class DisjointSet {
-        private final Map<Integer, Integer> parent;
+        Map<Integer, Integer> lab = new HashMap<>();
 
-        public DisjointSet(int[] nums) {
-            parent = new HashMap<>();
-            for (int num : nums) {
-                parent.put(num, num);
+        DisjointSet(int[] arr) {
+            for (int num : arr) {
+                lab.putIfAbsent(num, -1);
             }
         }
 
-        public int find(int x) {
-            if (parent.get(x) != x) {
-                parent.put(x, find(parent.get(x)));
-            }
-            return parent.get(x);
+        int find(int u) {
+            return lab.get(u) < 0 ? u : (lab.put(u, find(lab.get(u))));
         }
 
-        public void union(int x, int y) {
-            int rootX = find(x);
-            int rootY = find(y);
-            if (rootX != rootY) {
-                parent.put(rootY, rootX);
-            }
+        void union(int u, int v) {
+            int parU = find(u);
+            int parV = find(v);
+            if (parU == parV) return;
+
+            lab.put(parV, lab.get(parV) + lab.get(parU));
+            lab.put(parU, parV);
         }
     }
 
