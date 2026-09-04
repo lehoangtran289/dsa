@@ -2,7 +2,6 @@ package leetcode.graph.topo;
 
 import java.util.ArrayDeque;
 import java.util.ArrayList;
-import java.util.Deque;
 import java.util.List;
 import java.util.Queue;
 
@@ -10,45 +9,50 @@ import java.util.Queue;
  * TOPOLOGICAL SORT, can be used to detect cycle in directed graph (if we can't visit all nodes, there is a cycle)
  */
 public class M_207_CourseSchedule {
-    public static void main(String[] args) {
+    static void main() {
         System.out.println(canFinish(3, new int[][]{{1, 0}, {0, 1}, {0, 2}}));
     }
 
-    public static boolean canFinish(int numCourses, int[][] prerequisites) {
-        List<Integer>[] adj = new ArrayList[numCourses];
-        for (int i = 0; i < numCourses; i++) {
+    public static boolean canFinish(int n, int[][] prerequisites) {
+        List<Integer>[] adj = new List[n];
+        int[] indegree = new int[n];
+
+        // init adjacent list
+        for (int i = 0; i < n; ++i) {
             adj[i] = new ArrayList<>();
         }
 
-        // init in-degree arr
-        int[] indegree = new int[numCourses];
-        for (int[] prerequisite : prerequisites) {
-            indegree[prerequisite[0]]++;
-            adj[prerequisite[1]].add(prerequisite[0]);
+        // build indegree array and adj list
+        for (int[] p : prerequisites) {
+            int from = p[0], to = p[1];
+            adj[from].add(to);
+            indegree[to]++;
         }
 
-        // init queue with all vertices with in-degree = 0
-        Deque<Integer> queue = new ArrayDeque<>();
-        for (int i = 0; i < numCourses; ++i) {
-            if (indegree[i] == 0) {
-                queue.add(i);
-            }
+        Queue<Integer> queue = new ArrayDeque<>();
+
+        // init queue with 0 indegree
+        for (int i = 0; i < n; ++i) {
+            if (indegree[i] == 0) queue.add(i);
         }
 
-        List<Integer> order = new ArrayList<>();
+        // process
+        List<Integer> result = new ArrayList<>();
+
         while (!queue.isEmpty()) {
-            int u = queue.poll();
-            order.add(u);
-            for (int v : adj[u]) {
-                indegree[v]--;
-                if (indegree[v] == 0) {
-                    queue.offer(v);
+            int course = queue.poll();
+            result.add(course);
+
+            for (int nextCourse : adj[course]) {
+                indegree[nextCourse]--;
+
+                if (indegree[nextCourse] == 0) {
+                    queue.add(nextCourse);
                 }
             }
         }
 
-        return order.size() == numCourses;
-
+        return result.size() == n;
     }
 
     // Given a an acyclic graph `g` represented as a adjacency list, return a
@@ -76,9 +80,11 @@ public class M_207_CourseSchedule {
 
         int index = 0;
         int[] order = new int[n];
+
         while (!q.isEmpty()) {
             int at = q.poll();
             order[index++] = at;
+
             for (int to : g.get(at)) {
                 inDegree[to]--;
                 if (inDegree[to] == 0) {
@@ -86,6 +92,7 @@ public class M_207_CourseSchedule {
                 }
             }
         }
+
         if (index != n) {
             throw new IllegalArgumentException("Graph is not acyclic! Detected a cycle.");
         }
