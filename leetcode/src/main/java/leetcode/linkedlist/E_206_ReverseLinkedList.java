@@ -1,7 +1,7 @@
 package leetcode.linkedlist;
 
 public class E_206_ReverseLinkedList {
-    public static void main(String[] args) {
+    static void main() {
         ListNode head = new ListNode(1);
         head.next = new ListNode(2);
         head.next.next = new ListNode(3);
@@ -33,11 +33,12 @@ public class E_206_ReverseLinkedList {
      * Recursive approach
      */
     public static ListNode reverseList2(ListNode head) {
-        if (head == null || head.next == null) return head;
+        if (head == null) return null;
+        if (head.next == null) return head;
 
-        ListNode temp = reverseList2(head.next);
-        head.next.next = head;
-        head.next = null;
+        ListNode temp = reverseList(head.next);
+        head.next.next = head; // make latest node in reversed list points to head
+        head.next = null; // make head the latest node now
         return temp;
     }
 }
