@@ -9,7 +9,7 @@ public class H_1751_MaximumNumberOfEventsThatCanBeAttendedII {
 
     /**
      * Idea: DP Knapsack + Binary Search
-     * dp[i][j] = max value considering events [0, i], with max j events
+     * dp[i][j] = max value considering first i events, with max j events
      * ---
      * TC: O(n * logn + n * k)
      * SC: O(n * k)
@@ -20,34 +20,25 @@ public class H_1751_MaximumNumberOfEventsThatCanBeAttendedII {
         // sort events by end day
         Arrays.sort(events, (a, b) -> Integer.compare(a[1], b[1]));
 
-        // dp[i][j] = max value considering events [0, i], with max j events
-        int[][] dp = new int[n][k + 1];
+        // dp[i][j] = max value considering first i events, with max j events
+        int[][] dp = new int[n + 1][k + 1];
 
-        // init dp states
-        for (int i = 1; i <= k; ++i) {
-            dp[0][i] = events[0][2];
-        }
-
-        for (int i = 1; i < n; ++i) {
-            int prevEvent = getPreviousEvent(events, events[i][0]);
+        for (int i = 1; i <= n; ++i) {
+            int[] event = events[i - 1];
+            int prevEvent = getPreviousEvent(events, event[0]);
+            int prevId = prevEvent + 1;
 
             for (int j = 1; j <= k; ++j) {
                 // skip
                 int skip = dp[i - 1][j];
 
                 // take
-                int take = events[i][2];
-                if (prevEvent != -1) take += dp[prevEvent][j - 1];
+                int take = dp[prevId][j - 1] + event[2]; // if prevEvent = -1 -> prevId = 0 -> dp = 0
 
                 dp[i][j] = Math.max(skip, take);
             }
         }
-
-        int res = 0;
-        for (int i = 1; i <= k; ++i) {
-            res = Math.max(res, dp[n - 1][i]);
-        }
-        return res;
+        return dp[n][k];
     }
 
     private int getPreviousEvent(int[][] events, int targetEnd) {
