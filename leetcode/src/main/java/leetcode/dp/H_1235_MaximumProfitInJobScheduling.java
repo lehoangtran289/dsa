@@ -3,12 +3,22 @@ package leetcode.dp;
 import java.util.Arrays;
 
 public class H_1235_MaximumProfitInJobScheduling {
+    static void main() {
+        System.out.println(jobScheduling(
+                new int[]{1, 2, 3, 4, 6},
+                new int[]{3, 5, 10, 6, 9},
+                new int[]{20, 20, 100, 70, 60}
+        )); // 150
+    }
 
     /**
      * DP Knapsack + Binary Search
      * ------------------------------
-     * skip = dp[i - 1]
-     * take = dp[prev] + profit[i], where prev = lastest non-overlapping task
+     * dp[i] = max profit when considering jobs 0...i
+     * = max(
+     *      skip = dp[i - 1],
+     *      take = dp[prev] + profit[i], where prev = lastest non-overlapping task
+     * )
      * ------------------------------
      * Note: unlike a traditional knapsack problem, here the constraint is non-overlapping tasks,
      * instead of budgeting processing unit time
@@ -17,46 +27,46 @@ public class H_1235_MaximumProfitInJobScheduling {
      * TC: O(n log n) due to sorting + binary search
      * SC: O(n)
      */
-    public int jobScheduling(int[] startTime, int[] endTime, int[] profit) {
+    public static int jobScheduling(int[] startTime, int[] endTime, int[] profit) {
         int n = startTime.length;
-        Task[] tasks = new Task[n];
+        Job[] jobs = new Job[n];
 
-        // init task list and sort by end time ASC
+        // init jobs array and sort by endtime ASC
         for (int i = 0; i < n; ++i) {
-            tasks[i] = new Task(startTime[i], endTime[i], profit[i]);
+            jobs[i] = new Job(startTime[i], endTime[i], profit[i]);
         }
-        Arrays.sort(tasks, (a, b) -> a.end - b.end);
+        Arrays.sort(jobs, (a, b) -> Integer.compare(a.end, b.end));
 
-        // dp bottom up - max profit using first i tasks
+        // init dp states: dp[i] = max profit when considering jobs 0...i
         int[] dp = new int[n];
-        dp[0] = tasks[0].profit;
+        dp[0] = jobs[0].profit;
 
         for (int i = 1; i < n; ++i) {
-            Task cur = tasks[i];
+            Job cur = jobs[i];
 
-            // Choice 1: skip
+            // Option 1: skip
             int skip = dp[i - 1];
 
-            // Choice 2: take
+            // Option 2: take
             int take = cur.profit;
-            int prev = binSearch(tasks, cur.start);
+            int prev = getPreviousJob(jobs, cur.start);
             if (prev != -1) take += dp[prev];
 
-            // next dp state
+            // update dp state
             dp[i] = Math.max(skip, take);
         }
 
         return dp[n - 1];
     }
 
-    private int binSearch(Task[] tasks, int target) {
+    private static int getPreviousJob(Job[] jobs, int target) {
         int res = -1;
-        int l = 0, r = tasks.length - 1;
+        int l = 0, r = jobs.length - 1;
 
         while (l <= r) {
-            int mid = r - (r - l) / 2;
+            int mid = (l + r) >>> 1;
 
-            if (tasks[mid].end <= target) {
+            if (jobs[mid].end <= target) {
                 res = mid;
                 l = mid + 1;
             } else {
@@ -66,12 +76,12 @@ public class H_1235_MaximumProfitInJobScheduling {
         return res;
     }
 
-    static class Task {
+    static class Job {
         int start;
         int end;
         int profit;
 
-        Task(int start, int end, int profit) {
+        Job(int start, int end, int profit) {
             this.start = start;
             this.end = end;
             this.profit = profit;

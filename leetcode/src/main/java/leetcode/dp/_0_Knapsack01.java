@@ -1,5 +1,7 @@
 package leetcode.dp;
 
+import java.util.Arrays;
+
 /**
  * 0/1 Knapsack Problem
  * -----------------------------------------------
@@ -14,7 +16,7 @@ package leetcode.dp;
  * )
  * Result: dp[n][W] ~ max profit using first n items with full capacity W
  * -----------------------------------------------
- * |                  | 0 | 1 | 2            | 3             | 4             | 5             |
+ * |                  | 0 | 1 | 2            | 3             | 4             | 5             | (max capacity)
  * | Weights | Values |
  * |---------|--------|---|---|--------------|---------------|---------------|---------------|
  * | 0       | 0      | 0 | 0 | 0            | 0             | 0             | 0             |
@@ -62,12 +64,12 @@ public class _0_Knapsack01 {
     private int[] profits;
     private int[][] memo;
 
-    public static void main(String[] args) {
-        System.out.println(new _0_Knapsack01().knapsack2(
-                new int[]{2, 3, 4, 5},
-                new int[]{1, 2, 5, 6},
-                8
-        )); // 8
+    static void main() {
+        System.out.println(new _0_Knapsack01().knapsack3(
+                new int[]{1, 2, 3},
+                new int[]{6, 10, 12},
+                5
+        )); // 22
     }
 
     /**
@@ -81,17 +83,39 @@ public class _0_Knapsack01 {
      * )
      * Result: dp[W] ~ max profit with full capacity W
      * ----------------------------------------------
+     * Intuition behind traverse in reverse order (capacity -> weight[i])
+     * Essentially, To compute row i, we only need row i-1.
+     * dp[w] = Math.max(
+     *     dp[w],
+     *     dp[w - weights[i]] + profits[i]
+     * );
+     * is equivalent to:
+     * dp[i][w] = Math.max(
+     *     dp[i - 1][w],
+     *     dp[i - 1][w - weights[i]] + profits[i]
+     * );
+     *
+     * So by traversing in reverse order, we can take the previous value of dp[w - weights[i]] (i.e: dp[i - 1][w - weights[i]])
+     * This mimics the operations in 2d array.
+     *
+     * If we traverse in forward order, we are taking the new updated value of dp[w - weights[i]] (i.e: dp[i][w - weights[i]))
+     * This is wrong, because we may double count an item.
+     *
+     * =>> We iterate capacity backwards so dp[w - weight] still stores the result from the previous item.
+     * ----------------------------------------------
      */
     public int knapsack3(int[] weights, int[] profits, int capacity) {
         int n = weights.length;
         int[] dp = new int[capacity + 1];
 
         for (int i = 0; i < n; ++i) {
+            System.out.println(i);
             for (int w = capacity; w >= weights[i]; --w) { // current capacity
                 dp[w] = Math.max(
                         dp[w], // not take
                         dp[w - weights[i]] + profits[i] // take
                 );
+                System.out.println(Arrays.toString(dp));
             }
         }
 
@@ -129,10 +153,7 @@ public class _0_Knapsack01 {
             }
         }
         for (int[] row : dp) {
-            for (int val : row) {
-                System.out.print(val + " ");
-            }
-            System.out.println();
+            System.out.println(Arrays.toString(row));
         }
 
         return dp[n][capacity];
