@@ -17,17 +17,18 @@ public class H_3414_MaximumScoreOfNonOverlappingIntervals {
     public int[] maximumWeight(List<List<Integer>> intervalList) {
         int n = intervalList.size();
 
-        // init intervals array and sort by right ASC
+        // init interval array and sort by end time ASC
         Interval[] intervals = new Interval[n];
-        for (int i = 0; i < intervalList.size(); ++i) {
+        for (int i = 0; i < n; ++i) {
             List<Integer> interval = intervalList.get(i);
             intervals[i] = new Interval(interval.get(0), interval.get(1), interval.get(2), i);
         }
         Arrays.sort(intervals, (a, b) -> Integer.compare(a.right, b.right));
 
-        // dp[i][j] = maximum score using the first i sorted intervals, picking at most j of them
-        // dp[0][j] = 0 for all j (no intervals considered yet)
+        // init dp states, dp[i][j] = max weights for considering first i intervals, with maximum j intervals chosen
         long[][] dp = new long[n + 1][MAX_INTERVALS + 1];
+
+        // store indices of chosen intervals at certain state
         List<Integer>[][] chosen = new List[n + 1][MAX_INTERVALS + 1];
 
         for (int j = 0; j <= MAX_INTERVALS; ++j) {
@@ -35,28 +36,29 @@ public class H_3414_MaximumScoreOfNonOverlappingIntervals {
         }
 
         for (int i = 1; i <= n; ++i) {
-            Interval interval = intervals[i - 1];
-            int prevInterval = getPreviousInterval(intervals, interval.left);
-            int p = prevInterval + 1;
-
+            Interval curInterval = intervals[i - 1];
+            int prevIntervalId = getPreviousInterval(intervals, curInterval.left);
             chosen[i][0] = new ArrayList<>();
+
             for (int j = 1; j <= MAX_INTERVALS; ++j) {
-                // option1 : skip interval i - 1
+                // option 1: skip
                 long skip = dp[i - 1][j];
                 List<Integer> skipList = chosen[i - 1][j];
 
-                // option2: take interval i - 1
-                long take = dp[p][j - 1] + interval.weight;
+                // option 2: take
+                long take = dp[prevIntervalId + 1][j - 1] + curInterval.weight;
+                List<Integer> takeList = insertSorted(chosen[prevIntervalId + 1][j - 1], curInterval.originalId);
 
-                List<Integer> takeList = insertSorted(chosen[p][j - 1], interval.originalId);
-                boolean useTake = take > skip || (take == skip && isLexSmaller(takeList, skipList));
-
-                if (useTake) {
-                    dp[i][j] = take;
-                    chosen[i][j] = takeList;
-                } else {
+                // update dp states & chosen path
+                if (skip > take) {
                     dp[i][j] = skip;
                     chosen[i][j] = skipList;
+                } else if (skip < take) {
+                    dp[i][j] = take;
+                    chosen[i][j] = takeList;
+                } else { // in tie case -> chose lexico smaller list
+                    dp[i][j] = take;
+                    chosen[i][j] = isLexicoSmaller(skipList, takeList) ? skipList : takeList;
                 }
             }
         }
@@ -65,36 +67,35 @@ public class H_3414_MaximumScoreOfNonOverlappingIntervals {
     }
 
     /**
-     * Get index of latest interval with its right strictly < endBoundary
+     * Get index of latest interval with its right strictly < right Boundary
      */
-    private int getPreviousInterval(Interval[] intervals, int endBoundary) {
+    private int getPreviousInterval(Interval[] intervals, int rightBoundary) {
         int res = -1;
         int l = 0, r = intervals.length - 1;
 
         while (l <= r) {
             int mid = (l + r) >>> 1;
 
-            if (intervals[mid].right < endBoundary) {
+            if (intervals[mid].right < rightBoundary) {
                 res = mid;
                 l = mid + 1;
             } else {
                 r = mid - 1;
             }
         }
-
         return res;
     }
 
     /**
      * Insert an element into sorted list
      */
-    private List<Integer> insertSorted(List<Integer> base, int value) {
+    private List<Integer> insertSorted(List<Integer> list, int element) {
         List<Integer> res = new ArrayList<>();
 
         int i = 0;
-        while (i < base.size() && base.get(i) <= value) res.add(base.get(i++));
-        res.add(value);
-        while (i < base.size()) res.add(base.get(i++));
+        while (i < list.size() && list.get(i) < element) res.add(list.get(i++));
+        res.add(element);
+        while (i < list.size()) res.add(list.get(i++));
 
         return res;
     }
@@ -102,12 +103,13 @@ public class H_3414_MaximumScoreOfNonOverlappingIntervals {
     /**
      * Compare if a is lexicographically smaller than b
      */
-    private boolean isLexSmaller(List<Integer> a, List<Integer> b) {
-        int len = Math.min(a.size(), b.size());
-        for (int i = 0; i < len; i++) {
-            if (a.get(i) != b.get(i)) return a.get(i) < b.get(i);
+    private boolean isLexicoSmaller(List<Integer> list1, List<Integer> list2) {
+        for (int i = 0; i < Math.min(list1.size(), list2.size()); ++i) {
+            if (list1.get(i) != list2.get(i)) {
+                return list1.get(i) < list2.get(i);
+            }
         }
-        return a.size() < b.size();
+        return list1.size() < list2.size();
     }
 
     private int[] toArray(List<Integer> list) {
