@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class M_560_SubarraySumEqualsK {
-    public static void main(String[] args) {
+    static void main() {
         System.out.println(subarraySum3(new int[]{-1, 1, 0}, 3)); // 3
         System.out.println(subarraySum3(new int[]{1, 2, 3}, 3)); // 2
     }
@@ -18,16 +18,20 @@ public class M_560_SubarraySumEqualsK {
      * SC: O(n)
      */
     public static int subarraySum3(int[] nums, int k) {
+        Map<Integer, Integer> sumCountMap = new HashMap<>();
         int res = 0;
-        Map<Integer, Integer> freq = new HashMap<>(); // prefixSum -> count
         int prefixSum = 0;
 
         for (int num : nums) {
             prefixSum += num;
-            if (prefixSum == k) res++;
+            if (prefixSum == k) res++; // check subarray starting with index 0
 
-            res += freq.getOrDefault(prefixSum - k, 0);
-            freq.put(prefixSum, freq.getOrDefault(prefixSum, 0) + 1);
+            int complement = prefixSum - k;
+            if (sumCountMap.containsKey(complement)) {
+                res += sumCountMap.get(complement);
+            }
+
+            sumCountMap.put(prefixSum, sumCountMap.getOrDefault(prefixSum, 0) + 1);
         }
 
         return res;
