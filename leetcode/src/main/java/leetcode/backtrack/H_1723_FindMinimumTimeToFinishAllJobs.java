@@ -17,27 +17,29 @@ public class H_1723_FindMinimumTimeToFinishAllJobs {
         this.k = k;
         Arrays.sort(jobs);
 
-        backtrack(0, new int[k]); // Array to store the total time assigned to each worker
+        backtrack(jobs.length - 1, new int[k]); // Array to store the total time assigned to each worker
         return res;
     }
 
     private void backtrack(int index, int[] workerLoads) {
-        if (index == jobs.length) {
-            int maxWorkerTime = 0;
-            for (int time : workerLoads)
-                maxWorkerTime = Math.max(maxWorkerTime, time);
-            res = Math.min(res, maxWorkerTime);
+        if (index < 0) {
+            int maxLoad = 0;
+            for (int time : workerLoads) maxLoad = Math.max(maxLoad, time);
+            res = Math.min(res, maxLoad);
             return;
         }
 
         for (int i = 0; i < k; ++i) {
-            // Prune: skip if the current worker has the same load as the previous worker
+            // Prune 1: skip if the current worker has the same load as the previous worker
+            // This does not cover all duplicate work load assignment case
             if (i > 0 && workerLoads[i] == workerLoads[i - 1]) continue;
-            // Early termination if the current worker's load exceeds minMaxTime
+
+            // Prune 2: if the current worker's load exceeds minMaxTime
             if (workerLoads[i] + jobs[index] >= res) continue;
 
+            // backtrack
             workerLoads[i] += jobs[index];
-            backtrack(index + 1, workerLoads);
+            backtrack(index - 1, workerLoads);
             workerLoads[i] -= jobs[index];
         }
     }
