@@ -4,6 +4,9 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Similar M_930_BinarySubarraysWithSum
+ */
 public class M_560_SubarraySumEqualsK {
     static void main() {
         System.out.println(subarraySum3(new int[]{-1, 1, 0}, 3)); // 3
