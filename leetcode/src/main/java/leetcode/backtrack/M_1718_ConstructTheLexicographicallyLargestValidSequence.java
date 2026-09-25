@@ -4,56 +4,47 @@ import java.util.Arrays;
 
 public class M_1718_ConstructTheLexicographicallyLargestValidSequence {
 
-    public static void main(String[] args) {
-        System.out.println(Arrays.toString(constructDistancedSequence(3)));
+    static void main() {
+        M_1718_ConstructTheLexicographicallyLargestValidSequence sol = new M_1718_ConstructTheLexicographicallyLargestValidSequence();
+        System.out.println(Arrays.toString(sol.constructDistancedSequence(3))); // [3, 1, 2, 3, 2]
     }
 
-    public static int[] constructDistancedSequence(int n) {
+    private int n;
+
+    /**
+     * TC: O(n!)
+     * SC: O(n)
+     */
+    public int[] constructDistancedSequence(int n) {
+        this.n = n;
         int[] res = new int[2 * n - 1];
-        boolean[] visited = new boolean[n + 1];
-
-        backtrack(0, res, visited, n);
-
+        backtrack(0, res, new boolean[n + 1]);
         return res;
     }
 
-    private static boolean backtrack(int curIdx, int[] res, boolean[] visited, int n) {
-        // If we have filled all positions, return true indicating success
-        if (curIdx == res.length) return true;
+    private boolean backtrack(int index, int[] seq, boolean[] seen) {
+        if (index == seq.length) return true; // all filled
+        if (seq[index] != 0) return backtrack(index + 1, seq, seen); // already filled
 
-        // If the current position is already filled, move to the next index
-        if (res[curIdx] != 0) {
-            return backtrack(curIdx + 1, res, visited, n);
-        }
+        for (int num = n; num >= 1; --num) {
+            if (seen[num]) continue;
 
-        // attempt to place numbers from n to 1
-        for (int i = n; i >= 1; --i) {
-            if (visited[i]) continue;
+            seq[index] = num;
+            seen[num] = true;
 
-            // set
-            visited[i] = true;
-            res[curIdx] = i;
-
-            if (i == 1) {
-                if (backtrack(curIdx + 1, res, visited, n)) return true;
-            } else if (
-                    curIdx + i < res.length &&
-                    res[curIdx + i] == 0
-            ) {
-                // set
-                res[curIdx + i] = i;
-
-                if (backtrack(curIdx + 1, res, visited, n)) return true;
-
-                // undo
-                res[curIdx + i] = 0;
+            if (num == 1 && backtrack(index + 1, seq, seen)) {
+                return true;
             }
 
-            // undo
-            visited[i] = false;
-            res[curIdx] = 0;
-        }
+            if (index + num < seq.length && seq[index + num] == 0) {
+                seq[index + num] = num;
+                if (backtrack(index + 1, seq, seen)) return true;
+                seq[index + num] = 0;
+            }
 
+            seq[index] = 0;
+            seen[num] = false;
+        }
         return false;
     }
 }
