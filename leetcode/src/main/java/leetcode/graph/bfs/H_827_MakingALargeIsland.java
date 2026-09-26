@@ -1,118 +1,109 @@
 package leetcode.graph.bfs;
 
-import java.util.ArrayDeque;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
-import java.util.Queue;
 import java.util.Set;
 
 public class H_827_MakingALargeIsland {
-    public static void main(String[] args) {
-        System.out.println(largestIsland(new int[][]{{1, 1}, {1, 1}}));
-        System.out.println(largestIsland(new int[][]{{0, 0}, {0, 0}}));
-        System.out.println(largestIsland(new int[][]{{1, 0, 1}, {0, 1, 0}}));
-        System.out.println(largestIsland(new int[][]{{1, 1}, {1, 0}}));
+    static void main() {
+        H_827_MakingALargeIsland sol = new H_827_MakingALargeIsland();
+        System.out.println(sol.largestIsland(new int[][]{{1, 1}, {1, 1}}));
+        System.out.println(sol.largestIsland(new int[][]{{0, 0}, {0, 0}}));
+        System.out.println(sol.largestIsland(new int[][]{{1, 0, 1}, {0, 1, 0}}));
+        System.out.println(sol.largestIsland(new int[][]{{1, 1}, {1, 0}}));
     }
 
     /**
-     * Assign each island an id,
+     * Idea: Assign each island an id,
      * Then try to switch each 0 -> 1 and connect island to see which one results in the largest island.
+     * ---
+     * TC: O(rows * cols)
+     * SC: O(rows * cols)
      */
-    public static int largestIsland(int[][] grid) {
-        int rows = grid.length;
-        int cols = grid[0].length;
-        int[][] dirs = new int[][]{{0, -1}, {0, 1}, {-1, 0}, {1, 0}}; // left, right, up, down
-        int result = 0;
+    private static final int[][] DIRS = new int[][]{{-1, 0}, {1, 0}, {0, -1}, {0, 1}}; // U, D, L, R
+    private int[][] grid;
+    private int rows, cols;
+    private Map<Integer, Integer> islandSizeMap;
+    private int res;
 
-        Map<Integer, Integer> islandSizeMap = new HashMap<>(); // id, size
-        int idx = 2; // init id
-        for (int i = 0; i < rows; ++i) {
-            for (int j = 0; j < cols; ++j) {
-                if (grid[i][j] == 1) {
-                    // assign id to each island
-                    int curSize = calSize(grid, dirs, i, j, idx);
-                    islandSizeMap.put(idx, curSize);
-                    idx++;
+    public int largestIsland(int[][] grid) {
+        this.rows = grid.length;
+        this.cols = grid[0].length;
+        this.grid = grid;
+        this.islandSizeMap = new HashMap<>();
 
-                    // update result to current max island size
-                    result = Math.max(result, curSize);
-                }
-            }
-        }
+        // explore all islands, assign ids and put into islandSizeMap
+        exploreIslands();
 
-        // traverse 0 and switch to 1
         for (int i = 0; i < rows; ++i) {
             for (int j = 0; j < cols; ++j) {
                 if (grid[i][j] != 0) continue;
 
-                Set<Integer> connected = new HashSet<>();
-                for (int[] d : dirs) {
-                    int nextX = i + d[0];
-                    int nextY = j + d[1];
-                    if (isCellValid(nextX, nextY, rows, cols)) {
-                        connected.add(grid[nextX][nextY]);
-                    }
-                }
-
-                int sum = 0;
-                for (int id : connected) {
-                    sum += islandSizeMap.getOrDefault(id, 0);
-                }
-                result = Math.max(result, sum + 1);
-            }
-        }
-
-        return result;
-    }
-
-    // BFS
-    private static int calSize(int[][] grid, int[][] dirs, int x, int y, int idx) {
-        boolean[][] visited = new boolean[grid.length][grid[0].length];
-        Queue<Cell> queue = new ArrayDeque<>();
-        queue.add(new Cell(x, y));
-        grid[x][y] = idx;
-        visited[x][y] = true;
-
-        int res = 0;
-        while (!queue.isEmpty()){
-            int size = queue.size();
-
-            for (int i = 0; i < size; ++i) {
-                Cell cur = queue.poll();
-                res++;
-
-                for (int[] d : dirs) {
-                    int nextX = cur.x + d[0];
-                    int nextY = cur.y + d[1];
+                int mergeSize = 1;
+                Set<Integer> mergedIsland = new HashSet<>();
+                for (int[] dir : DIRS) {
+                    int nx = i + dir[0];
+                    int ny = j + dir[1];
 
                     if (
-                            isCellValid(nextX, nextY, grid.length, grid[0].length) &&
-                            !visited[nextX][nextY] &&
-                            grid[nextX][nextY] == 1
+                            isValidCell(nx, ny, rows, cols)
+                            && grid[nx][ny] != 0
+                            && !mergedIsland.contains(grid[nx][ny])
                     ) {
-                        grid[nextX][nextY] = idx;
-                        visited[nextX][nextY] = true;
-                        queue.add(new Cell(nextX, nextY));
+                        mergeSize += islandSizeMap.get(grid[nx][ny]);
+                        mergedIsland.add(grid[nx][ny]);
                     }
                 }
+
+                res = Math.max(res, mergeSize);
             }
         }
 
         return res;
     }
 
-    private static boolean isCellValid(int x, int y, int rows, int cols) {
-        return x >= 0 && y >= 0 && x < rows && y < cols;
+    /**
+     * explore all islands, assign ids and put into islandSizeMap
+     */
+    private void exploreIslands() {
+        int curId = 2;
+
+        for (int i = 0; i < rows; ++i) {
+            for (int j = 0; j < cols; ++j) {
+                if (grid[i][j] == 1) {
+                    int islandSize = dfs(curId, new boolean[rows][cols], i, j);
+
+                    res = Math.max(res, islandSize);
+                    islandSizeMap.put(curId, islandSize);
+                    curId++;
+                }
+            }
+        }
     }
 
-    static class Cell {
-        int x;
-        int y;
+    private int dfs(
+            int id,
+            boolean[][] visited,
+            int x,
+            int y
+    ) {
+        if (!isValidCell(x, y, rows, cols) || visited[x][y] || grid[x][y] == 0) return 0;
 
-        Cell(int x, int y) {
-            this.x = x;
-            this.y = y;
+        visited[x][y] = true;
+        grid[x][y] = id;
+        int size = 1;
+
+        for (int[] dir : DIRS) {
+            int nx = x + dir[0];
+            int ny = y + dir[1];
+
+            size += dfs(id, visited, nx, ny);
         }
+        return size;
+    }
+
+    private boolean isValidCell(int x, int y, int rows, int cols) {
+        return x >= 0 && x < rows && y >= 0 && y < cols;
     }
 }
