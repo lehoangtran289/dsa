@@ -5,30 +5,28 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class M_1679_MaxNumberOfKSumPairs {
+    static void main() {
+        System.out.println(maxOperations(new int[]{1, 2, 3, 4}, 5)); //2
+    }
 
     /**
-     * HashMap + 2 passes
+     * HashMap + 1 pass
      * --------------------
      * TC: O(n)
      * SC: O(n)
      */
-    public int maxOperations(int[] nums, int k) {
-        Map<Integer, Integer> freq = new HashMap<>();
-
-        for (int num : nums) {
-            freq.put(num, freq.getOrDefault(num, 0) + 1);
-        }
-
+    public static int maxOperations(int[] nums, int k) {
         int res = 0;
+        Map<Integer, Integer> numCountMap = new HashMap<>();
+
         for (int num : nums) {
             int complement = k - num;
 
-            if (freq.getOrDefault(num, 0) > 0 && freq.getOrDefault(complement, 0) > 0) {
-                if (num == complement && freq.get(num) <= 1) continue;
-
+            if (numCountMap.getOrDefault(complement, 0) > 0) {
                 res++;
-                freq.put(num, freq.get(num) - 1);
-                freq.put(complement, freq.get(complement) - 1);
+                numCountMap.put(complement, numCountMap.get(complement) - 1);
+            } else {
+                numCountMap.put(num, numCountMap.getOrDefault(num, 0) + 1);
             }
         }
 
@@ -41,7 +39,7 @@ public class M_1679_MaxNumberOfKSumPairs {
      * TC: O(n log n) for sorting + O(n) for two pointers
      * SC: O(1)
      */
-    public int maxOperations2(int[] nums, int k) {
+    public static int maxOperations2(int[] nums, int k) {
         int n = nums.length;
         int res = 0;
         int l = 0, r = n - 1;
