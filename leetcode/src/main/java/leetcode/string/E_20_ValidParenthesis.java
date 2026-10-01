@@ -1,24 +1,30 @@
 package leetcode.string;
 
-import java.util.Stack;
+import java.util.ArrayDeque;
+import java.util.Deque;
 
 public class E_20_ValidParenthesis {
-    public static void main(String[] args) {
+    static void main() {
         System.out.println(new E_20_ValidParenthesis().isValid("]]]]"));
     }
 
     public boolean isValid(String s) {
-        Stack<Integer> stack = new Stack<>();
+        Deque<Character> stack = new ArrayDeque<>();
 
-        for (int i = 0; i < s.length(); ++i) {
-            int c = s.charAt(i);
-            if (c == '{' || c == '[' || c == '(') stack.add(c);
-            else if (stack.isEmpty()) return false;
+        for (char c : s.toCharArray()) {
+            if (c == '(' || c == '{' || c == '[') {
+                stack.addFirst(c);
+                continue;
+            }
 
-            if (c == '}' && stack.pop() != '{') return false;
-            if (c == ']' && stack.pop() != '[') return false;
-            if (c == ')' && stack.pop() != '(') return false;
+            if (stack.isEmpty()) return false;
+
+            char open = stack.pollFirst();
+            if (open == '(' && c != ')') return false;
+            if (open == '[' && c != ']') return false;
+            if (open == '{' && c != '}') return false;
         }
+
         return stack.isEmpty();
     }
 }
