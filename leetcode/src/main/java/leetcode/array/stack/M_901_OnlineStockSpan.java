@@ -1,9 +1,10 @@
 package leetcode.array.stack;
 
-import java.util.Stack;
+import java.util.ArrayDeque;
+import java.util.Deque;
 
 public class M_901_OnlineStockSpan {
-    public static void main(String[] args) {
+    static void main() {
         M_901_OnlineStockSpan stockSpanner = new M_901_OnlineStockSpan();
         System.out.println(stockSpanner.next(100)); // 1
         System.out.println(stockSpanner.next(80));  // 1
@@ -14,39 +15,32 @@ public class M_901_OnlineStockSpan {
         System.out.println(stockSpanner.next(85));  // 6
     }
 
-    static class Stock {
-        int price;
-        int span;
-
-        Stock(int price, int span) {
-            this.price = price;
-            this.span = span;
-        }
-    }
-
-    private final Stack<Stock> stockStack;
+    private final Deque<int[]> stack; // [value, span]
 
     public M_901_OnlineStockSpan() {
-        this.stockStack = new Stack<>();
+        this.stack = new ArrayDeque<>();
     }
 
     /**
-     * Monotonic Stack, store (price, span)
-     * TC: O(n) amortized
-     * SC: O(n)
+     Idea: monotonic stack, store [value, span]
+     ---
+     Dry run: [7,2,1,2], price = 2
+     price = 7 -> stack = [[7,1]]
+     price = 2 -> stack = [[7,1],[2,1]]
+     price = 1 -> stack = [[7,1],[2,1],[1,1]]
+     price = 2 -> stack = [[7,1],[2,3]]
+     price = 2 (today) -> stack = [[7,1],[2,4]]
+     ---
+     TC: O(N) - number of prices entered
+     SC: O(N)
      */
     public int next(int price) {
         int span = 1;
-
-        while (
-                !stockStack.isEmpty()
-                && stockStack.peek().price <= price
-        ) {
-            Stock prevStock = stockStack.pop();
-            span += prevStock.span;
+        while (!stack.isEmpty() && stack.peek()[0] <= price) {
+            span += stack.pop()[1];
         }
+        stack.push(new int[]{price, span});
 
-        stockStack.push(new Stock(price, span));
         return span;
     }
 }
