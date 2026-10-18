@@ -1,6 +1,7 @@
 package leetcode.array.stack;
 
-import java.util.Stack;
+import java.util.ArrayDeque;
+import java.util.Deque;
 
 public class M_227_BasicCalculatorII {
 
@@ -14,8 +15,7 @@ public class M_227_BasicCalculatorII {
      * SC: O(n)
      */
     public int calculate(String s) {
-        s += '+'; // handle last number, can be any sign
-        Stack<Integer> stack = new Stack<>();
+        Deque<Integer> stack = new ArrayDeque<>();
         int number = 0;
         char sign = '+';
 
@@ -27,24 +27,30 @@ public class M_227_BasicCalculatorII {
                 continue;
             }
 
-            if (sign == '+') {
-                stack.push(number);
-            } else if (sign == '-') {
-                stack.push(-number);
-            } else if (sign == '*') {
-                stack.push(stack.pop() * number);
-            } else if (sign == '/') {
-                stack.push(stack.pop() / number);
-            }
+            // when c = sign
+            pushStack(stack, sign, number);
             number = 0;
             sign = c;
         }
 
-        System.out.println(stack);
+        // handle last number
+        pushStack(stack, sign, number);
 
         int result = 0;
         while (!stack.isEmpty()) result += stack.pop();
         return result;
+    }
+
+    private void pushStack(Deque<Integer> stack, char sign, int number) {
+        if (sign == '+') {
+            stack.push(number);
+        } else if (sign == '-') {
+            stack.push(-number);
+        } else if (sign == '*') {
+            stack.push(stack.pop() * number);
+        } else {
+            stack.push(stack.pop() / number);
+        }
     }
 
     private boolean isDigit(char c) {
