@@ -1,8 +1,6 @@
 package leetcode.array.intervals;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 public class H_4086_MinimumIntervalSelectionToCoverTargetIntervals {
     static void main() {
@@ -10,7 +8,7 @@ public class H_4086_MinimumIntervalSelectionToCoverTargetIntervals {
     }
 
     /**
-     * Idea: Greedy. Merge intervals for target intervals.
+     * Idea: Greedy. No need merge intervals for target intervals.
      * Then for each target interval, we greedily choose each interval in list of available intervals that has start point <= target start point,
      * to see which interval has the maximum end point.
      * ---
@@ -23,13 +21,11 @@ public class H_4086_MinimumIntervalSelectionToCoverTargetIntervals {
         Arrays.sort(intervals, (a, b) -> Integer.compare(a[0], b[0]));
         Arrays.sort(targetIntervals, (a, b) -> Integer.compare(a[0], b[0]));
 
-        List<int[]> mergedTargetIntervals = merge(targetIntervals);
-
         int res = 0;
         int index = 0;
         int covered = 0;
 
-        for (int[] target : mergedTargetIntervals) {
+        for (int[] target : targetIntervals) {
             int targetLeft = target[0], targetRight = target[1];
 
             int maxCovered = covered;
@@ -53,22 +49,5 @@ public class H_4086_MinimumIntervalSelectionToCoverTargetIntervals {
         }
 
         return res;
-    }
-
-    private static List<int[]> merge(int[][] intervals) {
-        List<int[]> result = new ArrayList<>();
-        result.add(intervals[0]);
-
-        for (int[] curInterval : intervals) {
-            int[] lastInterval = result.getLast();
-
-            if (lastInterval[1] >= curInterval[0]) {
-                lastInterval[1] = Math.max(lastInterval[1], curInterval[1]);
-            } else {
-                result.add(curInterval);
-            }
-        }
-
-        return result;
     }
 }
