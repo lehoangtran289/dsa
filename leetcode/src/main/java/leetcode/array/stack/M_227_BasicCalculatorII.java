@@ -14,38 +14,37 @@ public class M_227_BasicCalculatorII {
      * SC: O(n)
      */
     public int calculate(String s) {
+        s += '+'; // handle last number, can be any sign
         Stack<Integer> stack = new Stack<>();
-        int curNum = 0;
-        char sign = '+'; // default sign
+        int number = 0;
+        char sign = '+';
 
-        for (int i = 0; i < s.length(); ++i) {
-            char c = s.charAt(i);
+        for (char c : s.toCharArray()) {
+            if (c == ' ') continue;
 
             if (isDigit(c)) {
-                curNum = curNum * 10 + (c - '0');
+                number = number * 10 + (c - '0');
+                continue;
             }
 
-            if ((!isDigit(c) && c != ' ') || i == s.length() - 1) {
-                if (sign == '+') {
-                    stack.add(curNum);
-                } else if (sign == '-') {
-                    stack.add(-curNum);
-                } else if (sign == '*') {
-                    stack.add(curNum * stack.pop());
-                } else if (sign == '/') {
-                    stack.add(stack.pop() / curNum);
-                }
-                sign = c;
-                curNum = 0;
+            if (sign == '+') {
+                stack.push(number);
+            } else if (sign == '-') {
+                stack.push(-number);
+            } else if (sign == '*') {
+                stack.push(stack.pop() * number);
+            } else if (sign == '/') {
+                stack.push(stack.pop() / number);
             }
+            number = 0;
+            sign = c;
         }
 
-        int res = 0;
-        while (!stack.isEmpty()) {
-            res += stack.pop();
-        }
+        System.out.println(stack);
 
-        return res;
+        int result = 0;
+        while (!stack.isEmpty()) result += stack.pop();
+        return result;
     }
 
     private boolean isDigit(char c) {
