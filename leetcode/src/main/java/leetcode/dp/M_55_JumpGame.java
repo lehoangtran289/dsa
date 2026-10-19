@@ -2,45 +2,30 @@ package leetcode.dp;
 
 public class M_55_JumpGame {
 
-    public static void main(String[] args) {
+    static void main() {
         M_55_JumpGame sol = new M_55_JumpGame();
         System.out.println(sol.canJump(new int[]{2, 3, 1, 1, 4})); // true
         System.out.println(sol.canJump(new int[]{3, 2, 1, 0, 4})); // false
     }
 
     /**
-     * Top down DP approach
-     * state = is valid jump at i-th step
-     * dp(i) = dp(k) for i + 1 <= k <= min(n - 1, i + nums[i])
-     * ------------------
-     * TC O(n^2)
-     * SC O(n)
+     * Idea: Greedy. Check furthest index a position can reach.
+     * ---
+     * TC: O(N)
+     * SC: O(1)
      */
-    private int[] nums;
-    private Boolean[] memo;
-
     public boolean canJump(int[] nums) {
         int n = nums.length;
-        this.nums = nums;
-        this.memo = new Boolean[n];
+        int maxIndex = 0;
 
-        memo[n - 1] = true;
-        return dp(0);
-    }
-
-    private boolean dp(int pos) {
-        if (memo[pos] != null) return memo[pos];
-
-        int maxJumpPos = Math.min(nums.length - 1, pos + nums[pos]);
-
-        for (int i = pos + 1; i <= maxJumpPos; ++i) {
-            if (dp(i)) {
-                return memo[pos] = true;
-            }
+        for (int i = 0; i < n; ++i) {
+            if (maxIndex < i) return false;
+            maxIndex = Math.max(maxIndex, nums[i] + i);
         }
 
-        return memo[pos] = false;
+        return true;
     }
+
 
     /**
      * Bottom up DP approach
@@ -52,22 +37,17 @@ public class M_55_JumpGame {
      */
     public boolean canJump2(int[] nums) {
         int n = nums.length;
-        Boolean[] dp = new Boolean[n];
-        dp[n - 1] = true;
+        boolean[] dp = new boolean[n];
+        dp[0] = true;
 
-        for (int i = n - 2; i >= 0; --i) {
-            int maxJumpPos = Math.min(n - 1, i + nums[i]);
+        for (int i = 0; i < n; ++i) {
+            if (!dp[i]) continue; // unreachable
 
-            boolean res = false;
-            for (int j = i + 1; j <= maxJumpPos; ++j) {
-                if (dp[j]) {
-                    res = true;
-                    break;
-                }
+            for (int j = i + 1; j <= Math.min(nums[i] + i, n - 1); ++j) {
+                dp[j] = dp[i];
             }
-            dp[i] = res;
         }
 
-        return dp[0];
+        return dp[n - 1];
     }
 }
