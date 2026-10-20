@@ -5,33 +5,35 @@ import java.util.List;
 
 public class M_1352_ProductOfTheLastKNumbers {
     /**
-     * Your ProductOfNumbers object will be instantiated and called as such:
-     * ProductOfNumbers obj = new ProductOfNumbers();
-     * obj.add(num);
-     * int param_2 = obj.getProduct(k);
+     * Idea: prefix product. getProduct(k) = totalProduct / prefixProduct(n - k - 1)
+     * When we encounter 0 -> clear prefix product to record next non-zero product
+     * ---
+     * TC: O(1)
      */
-    static class ProductOfNumbers {
-        private List<Integer> arr = new ArrayList<>();
+    private final List<Integer> prefixProducts;
+    private int totalProduct;
 
-        public ProductOfNumbers() {
-            // Initialize the product list with 1 to handle multiplication logic
-            arr.add(1);
+    public M_1352_ProductOfTheLastKNumbers() {
+        this.prefixProducts = new ArrayList<>();
+        this.totalProduct = 1;
+    }
+
+    public void add(int num) {
+        if (num == 0) {
+            prefixProducts.clear();
+            totalProduct = 1;
+        } else {
+            prefixProducts.add(totalProduct * num);
+            totalProduct *= num;
         }
+    }
 
-        public void add(int num) {
-            if (num == 0) {
-                // If num is 0, reset the cumulative products
-                arr = new ArrayList<>();
-                arr.add(1);
-            } else {
-                arr.add(arr.get(arr.size() - 1) * num);
-            }
-        }
+    public int getProduct(int k) {
+        int streamLength = prefixProducts.size();
 
-        public int getProduct(int k) {
-            if (k > arr.size() - 1) return 0;
+        if (streamLength == k) return totalProduct;
+        else if (streamLength < k) return 0;
 
-            return arr.get(arr.size() - 1) / arr.get(arr.size() - 1 - k);
-        }
+        return totalProduct / prefixProducts.get(streamLength - k - 1);
     }
 }
