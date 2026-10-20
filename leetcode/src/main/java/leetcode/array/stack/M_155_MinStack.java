@@ -1,5 +1,7 @@
 package leetcode.array.stack;
 
+import java.util.ArrayDeque;
+import java.util.Deque;
 import java.util.Stack;
 
 public class M_155_MinStack {
@@ -7,43 +9,36 @@ public class M_155_MinStack {
     /**
      * Val/Min pair approach
      */
-    private final Stack<Pair> stack1 = new Stack<>();
+    private final Deque<int[]> stack;
 
-    public void push1(int val) {
-        if (stack1.isEmpty()) {
-            stack1.push(new Pair(val, val));
+    public M_155_MinStack() {
+        this.stack = new ArrayDeque<>();
+    }
+
+    public void push1(int value) {
+        if (stack.isEmpty()) {
+            stack.push(new int[]{value, value});
         } else {
-            int curMin = Math.min(val, stack1.peek().min);
-            stack1.push(new Pair(val, curMin));
+            stack.push(new int[]{value, Math.min(value, stack.peek()[1])});
         }
     }
 
     public void pop1() {
-        stack1.pop();
+        stack.pop();
     }
 
     public int top1() {
-        return stack1.peek().val;
+        return stack.peek()[0];
     }
 
     public int getMin1() {
-        return stack1.peek().min;
-    }
-
-    static class Pair {
-        int val;
-        int min;
-
-        Pair(int val, int min) {
-            this.val = val;
-            this.min = min;
-        }
+        return stack.peek()[1];
     }
 
     // --------------------------------------------------------------------------
 
     /**
-     * 2 stacks approach
+     * Idea: we don't have to store every min value along each element if it doesn't change
      */
     private final Stack<Integer> stack2 = new Stack<>();
     private final Stack<Integer> minStack = new Stack<>();
