@@ -16,32 +16,53 @@ public class M_253P_MeetingRoomsII {
     /**
      * Idea: Use a difference array && prefix sum
      * ---
-     * TC: O(n log n) - due to sorting
+     * TC: O(n + m) - n meetings, m = max range
      * SC: O(n)
      */
     public static int minMeetingRooms3(int[][] intervals) {
-        int maxEnd = 0;
+        int[] diffArray = new int[1000001];
 
         for (int[] interval : intervals) {
-            maxEnd = Math.max(maxEnd, interval[1]);
-        }
-
-        int[] diff = new int[maxEnd + 1];
-        Arrays.sort(intervals, (a, b) -> Integer.compare(a[0], b[0]));
-
-        for (int[] interval : intervals) {
-            diff[interval[0]]++;
-            diff[interval[1]]--;
+            diffArray[interval[0]]++;
+            diffArray[interval[1]]--;
         }
 
         int res = 0;
-        int curSum = 0;
-        for (int num : diff) {
-            curSum += num;
-            res = Math.max(res, curSum);
+        int prefixSum = 0;
+
+        for (int diff : diffArray) {
+            prefixSum += diff;
+            res = Math.max(res, prefixSum);
         }
 
         return res;
+    }
+
+    /**
+     * Idea: Use a priority queue to track the end times of meetings, compare with each interval start time
+     * If current start time > nearest end time -> assign that room to current interval
+     * Else allocate another room for current interval
+     * -----------------------
+     * TC: O(n log n) - due to sorting and priority queue operations
+     * SC: O(n)
+     */
+    public static int minMeetingRooms2(int[][] intervals) {
+        // sort intervals by start time ASC
+        Arrays.sort(intervals, (a, b) -> Integer.compare(a[0], b[0]));
+
+        // min heap to store end time
+        PriorityQueue<Integer> minHeap = new PriorityQueue<>();
+
+        for (int[] interval : intervals) {
+            int curStart = interval[0], curEnd = interval[1];
+
+            // if nearest end time < current start time -> assign that room for current interval
+            if (!minHeap.isEmpty() && minHeap.peek() <= curStart) {
+                minHeap.poll();
+            }
+            minHeap.add(curEnd);
+        }
+        return minHeap.size();
     }
 
     /**
@@ -81,29 +102,5 @@ public class M_253P_MeetingRoomsII {
         }
 
         return res;
-    }
-
-    /**
-     * Idea: Use a priority queue to track the end times of meetings.
-     * -----------------------
-     * TC: O(n log n) - due to sorting and priority queue operations
-     * SC: O(n)
-     */
-    public static int minMeetingRooms2(int[][] intervals) {
-        // sort intervals by start time
-        Arrays.sort(intervals, (a, b) -> a[0] - b[0]);
-
-        // heap to store min ending times
-        var minHeap = new PriorityQueue<Integer>();
-
-        for (int[] interval : intervals) {
-            if (!minHeap.isEmpty() && minHeap.peek() <= interval[0]) {
-                minHeap.poll();
-            }
-
-            minHeap.add(interval[1]);
-        }
-
-        return minHeap.size();
     }
 }
