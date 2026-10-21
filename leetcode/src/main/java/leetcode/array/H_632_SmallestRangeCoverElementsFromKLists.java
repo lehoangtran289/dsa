@@ -7,62 +7,66 @@ import java.util.List;
 import java.util.Map;
 
 public class H_632_SmallestRangeCoverElementsFromKLists {
-    public static void main(String[] args) {
+    static void main() {
         List<List<Integer>> nums = Arrays.asList(
                 Arrays.asList(4, 10, 15, 24, 26),
                 Arrays.asList(0, 9, 12, 20),
                 Arrays.asList(5, 18, 22, 30)
         );
-        System.out.println(Arrays.toString(new H_632_SmallestRangeCoverElementsFromKLists().smallestRange(nums)));
+        System.out.println(Arrays.toString(smallestRange(nums))); // [20, 24]
     }
 
-    public int[] smallestRange(List<List<Integer>> nums) {
-        // build list of elements and their list index
-        // ex: [[1,0], [2,1], ...] -> [element, kth-list]
-        List<int[]> merged = new ArrayList<>();
-        for (int i = 0; i < nums.size(); ++i) {
-            for (int n : nums.get(i))
-                merged.add(new int[]{n, i});
-        }
-        merged.sort((a, b) -> {
-            if (a[0] == b[0]) return Integer.compare(a[1], b[1]);
-            else return Integer.compare(a[0], b[0]);
-        });
+    /**
+     * Idea: merge all elements in all list, keep list index with each element
+     * Use sliding window to find min range containing all k lists.
+     * ---
+     * TC: O(N * log(N))
+     * SC: O(N)
+     */
+    public static int[] smallestRange(List<List<Integer>> nums) {
+        final int INF = 1 << 20;
+        final int k = nums.size();
 
-//        // debug
-//        for (int[] event : merged) {
-//            System.out.print(Arrays.toString(event) + " ");
-//        }
-//        System.out.println();
-
-        // Two pointers to track the smallest range
-        Map<Integer, Integer> freq = new HashMap<>();
-        int start = 0, end = Integer.MAX_VALUE;
-        int left = 0;
-
-        for (int[] curRight : merged) {
-            freq.put(curRight[1], freq.getOrDefault(curRight[1], 0) + 1); // increase freq at list index
-
-            // while condition is satisfied, shrink the range window
-            while (freq.size() == nums.size()) {
-                int[] curLeft = merged.get(left);
-
-                // update min range
-                if (curRight[0] - curLeft[0] < end - start) {
-                    start = curLeft[0];
-                    end = curRight[0];
-                }
-
-                // shrink window ~ increase left pointer and update freq
-                if (freq.get(curLeft[1]) == 1) {
-                    freq.remove(curLeft[1]);
-                } else {
-                    freq.put(curLeft[1], freq.get(curLeft[1]) - 1);
-                }
-                left++;
+        // [[list index, value]]
+        List<int[]> mergedList = new ArrayList<>();
+        for (int i = 0; i < k; ++i) {
+            for (int num : nums.get(i)) {
+                mergedList.add(new int[]{num, i});
             }
         }
 
-        return new int[]{start, end};
+        // sort by values ASC
+        mergedList.sort((a, b) -> a[0] == b[0] ?
+                Integer.compare(a[1], b[1]) :
+                Integer.compare(a[0], b[0])
+        );
+
+        int[] result = new int[]{-INF, INF};
+        Map<Integer, Integer> listCounts = new HashMap<>();
+
+        // sliding window to find min range containing all list
+        int l = 0;
+        for (int[] rightPair : mergedList) {
+            int rightValue = rightPair[0], rightList = rightPair[1];
+
+            listCounts.put(rightList, listCounts.getOrDefault(rightList, 0) + 1);
+
+            while (listCounts.size() == k) {
+                int[] leftPair = mergedList.get(l);
+                int leftValue = leftPair[0], leftList = leftPair[1];
+
+                int range = rightValue - leftValue;
+                if (range < result[1] - result[0]) {
+                    result[0] = leftValue;
+                    result[1] = rightValue;
+                }
+
+                listCounts.put(leftList, listCounts.get(leftList) - 1);
+                if (listCounts.get(leftList) == 0) listCounts.remove(leftList);
+                l++;
+            }
+        }
+
+        return result;
     }
 }
