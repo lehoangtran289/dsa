@@ -12,20 +12,24 @@ public class M_133_CloneGraph {
      * recursive DFS
      * Idea: Use a map to keep track of visited nodes to avoid cycles.
      */
-    private static final Map<Node, Node> visited = new HashMap<>();
-
-    public Node cloneGraph(Node node) {
+    public Node cloneGraphDFS(Node node) {
         if (node == null) return null;
+
+        Map<Node, Node> visited = new HashMap<>();
+        return cloneGraph(node, visited);
+    }
+
+    private Node cloneGraph(Node node, Map<Node, Node> visited) {
         if (visited.containsKey(node)) return visited.get(node);
 
-        Node newNode = new Node(node.val);
-        visited.put(node, newNode);
+        Node clone = new Node(node.val);
+        visited.put(node, clone);
 
-        for (Node n : node.neighbors) {
-            newNode.neighbors.add(cloneGraph(n));
+        for (Node neighbor : node.neighbors) {
+            clone.neighbors.add(cloneGraph(neighbor, visited));
         }
 
-        return newNode;
+        return clone;
     }
 
     /**
@@ -52,8 +56,7 @@ public class M_133_CloneGraph {
                 }
 
                 // link the new neighbor to the new node
-                Node newNeighbor = visited.get(neighbor);
-                newNode.neighbors.add(newNeighbor);
+                newNode.neighbors.add(visited.get(neighbor));
             }
         }
         return visited.get(root);
