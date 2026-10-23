@@ -1,99 +1,106 @@
 package leetcode.design;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
-import java.util.List;
 
 public class E_706_DesignHashMap {
-    static class Pair<K, V> {
-        public K key;
-        public V value;
-
-        public Pair(K k, V v) {
-            this.key = k;
-            this.value = v;
-        }
+    static void main() {
+        E_706_DesignHashMap hashMap = new E_706_DesignHashMap();
+        hashMap.put(1, 1);
+        hashMap.put(2, 2);
+        System.out.println(hashMap.get(1)); // 1
+        System.out.println(hashMap.get(3)); // -1
+        hashMap.put(2, 1); // update the existing value
+        System.out.println(hashMap.get(2)); // 1
+        hashMap.remove(2); // remove the mapping for 2
+        System.out.println(hashMap.get(2)); // -1
     }
 
-    static class Bucket {
-        private final List<Pair<Integer, Integer>> bucket;
+    // -----------------------------------------------------------------------
 
-        public Bucket() {
-            this.bucket = new LinkedList<>();
+    private final HashTable<Integer, Integer> hashTable;
+
+    public E_706_DesignHashMap() {
+        this.hashTable = new HashTable<>();
+    }
+
+    public void put(int key, int value) {
+        hashTable.put(key, value);
+    }
+
+    public int get(int key) {
+        Integer result = hashTable.get(key);
+        return result != null ? result : -1;
+    }
+
+    public void remove(int key) {
+        hashTable.remove(key);
+    }
+
+    // Custom hash table -----------------------------------------------
+
+    static class HashTable<K, V> {
+        private final LinkedList<Entry<K, V>>[] table;
+        private final int mask;
+
+        public HashTable() {
+            this.table = new LinkedList[1 << 10];
+            this.mask = table.length - 1;
         }
 
-        public int get(int key) {
-            for (Pair<Integer, Integer> pair : bucket) {
-                if (pair.key == key) return pair.value;
+        public void put(K key, V value) {
+            int index = getIndex(key);
+
+            if (table[index] == null) {
+                table[index] = new LinkedList<>();
+                table[index].add(new Entry<>(key, value));
+                return;
             }
-            return -1;
-        }
 
-        public void put(int key, int value) {
-            boolean seen = false;
-            for (Pair<Integer, Integer> pair : bucket) {
-                if (pair.key == key) {
-                    pair.value = value;
-                    seen = true;
+            for (var entry : table[index]) {
+                if (entry.key.equals(key)) {
+                    entry.value = value;
+                    return;
                 }
             }
-
-            if (!seen) {
-                bucket.add(new Pair<>(key, value));
-            }
+            table[index].add(new Entry<>(key, value));
         }
 
-        public void remove(int key) {
-            for (Pair<Integer, Integer> pair : bucket) {
-                if (pair.key == key) {
-                    bucket.remove(pair);
+        public V get(K key) {
+            int index = getIndex(key);
+            if (table[index] == null) return null;
+
+            for (var entry : table[index]) {
+                if (entry.key.equals(key)) {
+                    return entry.value;
+                }
+            }
+            return null;
+        }
+
+        public void remove(K key) {
+            int index = getIndex(key);
+            if (table[index] == null) return;
+
+            for (var entry : table[index]) {
+                if (entry.key.equals(key)) {
+                    table[index].remove(entry);
                     return;
                 }
             }
         }
-    }
 
-    // -----------------------------------------------------------------------
-
-    private static final int capacity = 2069; // should be a prime number
-    private final List<Bucket> hashMap;
-
-    public E_706_DesignHashMap() {
-        this.hashMap = new ArrayList<>();
-        for (int i = 0; i < capacity; ++i) {
-            hashMap.add(new Bucket());
+        private int getIndex(K key) {
+            return key.hashCode() & mask;
         }
     }
 
-    public void put(int key, int value) {
-        int bucketIndex = hash(key);
-        hashMap.get(bucketIndex).put(key, value);
-    }
+    static class Entry<K, V> {
+        K key;
+        V value;
 
-    public int get(int key) {
-        int bucketIndex = hash(key);
-        return hashMap.get(bucketIndex).get(key);
-    }
-
-    public void remove(int key) {
-        int bucketIndex = hash(key);
-        hashMap.get(bucketIndex).remove(key);
-    }
-
-    private int hash(int key) {
-        return key % capacity;
-    }
-
-    // -----------------------------------------------------------------------
-    public static void main(String[] args) {
-        E_706_DesignHashMap hashMap = new E_706_DesignHashMap();
-        hashMap.put(1, 1);
-        hashMap.put(2, 2);
-        System.out.println(hashMap.get(1)); // returns 1
-        System.out.println(hashMap.get(3)); // returns -1 (not found)
-        hashMap.put(2, 1); // update the existing value
-        System.out.println(hashMap.get(2)); // returns 1
-        hashMap.remove(2); // remove the mapping for 2
-        System.out.println(hashMap.get(2)); // returns -1 (not found)
+        public Entry(K key, V value) {
+            this.key = key;
+            this.value = value;
+        }
     }
 }
