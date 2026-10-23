@@ -5,41 +5,32 @@ import java.util.Map;
 
 public class M_523_ContinuousSubarraySum {
 
-    public static void main(String[] args) {
+    static void main() {
         System.out.println(checkSubarraySum(new int[]{23, 2, 4, 6, 7}, 6)); // true
         System.out.println(checkSubarraySum(new int[]{0, 0}, 10)); // true
     }
 
     /**
-     * Prefix Sum & Hashing
-     * -------------
-     * Time: O(n)
-     * Space: O(n)
+     * Idea: subarray sum % k == 0 -> use prefix sum and store map of first modulo index occurrence
+     * If map already contains an index with same modulo -> valid subarray
+     * ---
+     * TC: O(N)
+     * SC: O(N)
      */
     public static boolean checkSubarraySum(int[] nums, int k) {
-        int n = nums.length;
+        Map<Integer, Integer> moduloIndices = new HashMap<>();
+        int prefixSum = 0;
 
-        // build prefix sum
-        int[] prefixSum = new int[n];
-        prefixSum[0] = nums[0];
+        for (int i = 0; i < nums.length; ++i) {
+            prefixSum += nums[i];
+            int mod = prefixSum % k;
 
-        for (int i = 1; i < n; ++i) {
-            prefixSum[i] = prefixSum[i - 1] + nums[i];
-        }
+            if (i > 0 && mod == 0) return true;
 
-        // hashing to find mod
-        Map<Integer, Integer> map = new HashMap<>();
-
-        for (int i = 0; i < n; ++i) {
-            int mod = prefixSum[i] % k;
-
-            // handle case when first pref sum element % k = 0
-            if (mod == 0 && i >= 1) return true;
-
-            if (map.containsKey(mod)) {
-                if (i - map.get(mod) > 1) return true;
+            if (moduloIndices.containsKey(mod)) {
+                if (i - moduloIndices.get(mod) > 1) return true;
             } else {
-                map.put(mod, i);
+                moduloIndices.put(mod, i);
             }
         }
 
