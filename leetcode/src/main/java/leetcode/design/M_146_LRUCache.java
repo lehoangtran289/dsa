@@ -4,69 +4,84 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class M_146_LRUCache {
+    private final Map<Integer, Node> keyNodeMap;
+    private final Node head;
+    private final Node tail;
     private final int capacity;
-    private final Map<Integer, ListNode> map;
-    private final ListNode head;
-    private final ListNode tail;
 
     public M_146_LRUCache(int capacity) {
-        this.capacity = capacity;
-        this.map = new HashMap<>();
-        this.head = new ListNode(-1, -1); // dummy node head
-        this.tail = new ListNode(-1, -1); // dummy node tail
+        this.keyNodeMap = new HashMap<>();
+
+        // set up boundary nodes (avoid null checks)
+        this.head = new Node(-1, -1);
+        this.tail = new Node(-1, -1);
         head.next = tail;
         tail.prev = head;
+
+        this.capacity = capacity;
     }
 
+    /**
+     * If key exists -> return key and move node to head
+     * Else return -1
+     */
     public int get(int key) {
-        if (!map.containsKey(key)) return -1;
+        if (!keyNodeMap.containsKey(key)) return -1;
 
-        ListNode node = map.get(key);
-        remove(node);
-        addLast(node);
-        return node.val;
+        Node currentNode = keyNodeMap.get(key);
+        removeNode(currentNode);
+        addHead(currentNode);
+        return currentNode.val;
     }
 
+    /**
+     * If key exists, update value & put node to head;
+     * Else add new node and entry in map, check cacheSize
+     *      If curSize > capacity -> evict tail node and entry in hashmap
+     */
     public void put(int key, int value) {
-        if (map.containsKey(key)) {
-            ListNode node = map.get(key);
-            node.val = value;
-            remove(node);
-            addLast(node);
-        } else {
-            ListNode node = new ListNode(key, value);
-            map.put(key, node);
-            addLast(node);
+        // case 1: key already exist
+        if (keyNodeMap.containsKey(key)) {
+            Node currentNode = keyNodeMap.get(key);
+            currentNode.val = value;
+            removeNode(currentNode);
+            addHead(currentNode);
+            return;
+        }
 
-            if (map.size() > capacity) {
-                ListNode cur = head.next;
-                remove(cur);
-                map.remove(cur.key);
-            }
+        // case 2: key not exist
+        Node newNode = new Node(key, value);
+        keyNodeMap.put(key, newNode);
+        addHead(newNode);
+
+        if (keyNodeMap.size() > capacity) {
+            Node tailNode = tail.prev;
+            keyNodeMap.remove(tailNode.key);
+            removeNode(tailNode);
         }
     }
 
-    // ---- UTILS
-    private void addLast(ListNode node) {
-        ListNode prev = tail.prev;
-        prev.next = node;
-        node.prev = prev;
-        node.next = tail;
-        tail.prev = node;
-    }
+    // --- HELPERS
 
-    private void remove(ListNode node) {
+    private void removeNode(Node node) {
         node.prev.next = node.next;
         node.next.prev = node.prev;
     }
 
-    static class ListNode {
+    private void addHead(Node node) {
+        node.next = head.next;
+        node.prev = head;
+        head.next.prev = node;
+        head.next = node;
+    }
+
+    static class Node {
+        Node prev;
+        Node next;
         int key;
         int val;
-        ListNode prev;
-        ListNode next;
 
-        ListNode(int key, int val) {
+        Node(int key, int val) {
             this.key = key;
             this.val = val;
         }
