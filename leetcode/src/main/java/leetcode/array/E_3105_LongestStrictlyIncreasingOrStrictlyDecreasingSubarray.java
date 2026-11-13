@@ -1,40 +1,33 @@
 package leetcode.array;
 
 public class E_3105_LongestStrictlyIncreasingOrStrictlyDecreasingSubarray {
-    public static void main(String[] args) {
+    static void main() {
         System.out.println(longestMonotonicSubarray(new int[]{1,4,3,3,2}));
     }
 
     /**
-     * Time complexity: O(2 * N) ~ O(N)
+     * Time complexity: O(N)
      * Space complexity: O(1)
      */
     public static int longestMonotonicSubarray(int[] nums) {
-        int n = nums.length;
-        int res = 0;
+        int maxIncrLength = 1, maxDecrLength = 1;
+        int curIncrLength = 1, curDecrLength = 1;
 
-        // strictly increasing
-        int incr = 1;
-        for (int i = 1; i < n; ++i) {
-            if (nums[i] > nums[i - 1]) {
-                incr++;
+        for (int i = 1; i < nums.length; ++i) {
+            if (nums[i - 1] < nums[i]) { // strictly increasing
+                curIncrLength++;
+                curDecrLength = 1;
+            } else if (nums[i - 1] > nums[i]) { // strictly decreasing
+                curDecrLength++;
+                curIncrLength = 1;
             } else {
-                incr = 1;
+                curIncrLength = 1;
+                curDecrLength = 1;
             }
-            res = Math.max(res, incr);
-        }
 
-        // strictly decreasing
-        int decr = 1;
-        for (int i = 1; i < n; ++i) {
-            if (nums[i] < nums[i - 1]) {
-                decr++;
-            } else {
-                decr = 1;
-            }
-            res = Math.max(res, decr);
+            maxDecrLength = Math.max(maxDecrLength, curDecrLength);
+            maxIncrLength = Math.max(maxIncrLength, curIncrLength);
         }
-
-        return res;
+        return Math.max(maxIncrLength, maxDecrLength);
     }
 }
