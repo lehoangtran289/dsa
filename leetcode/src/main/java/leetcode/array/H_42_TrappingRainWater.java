@@ -37,7 +37,7 @@ public class H_42_TrappingRainWater {
     }
 
     /**
-     * Idea: Optimize space to O(1).
+     * Idea: Optimize space to O(1). (trick: only need to track max height of the side with SMALLER MAX HEIGHT)
      * ---
      * Maintain 2 vars max_left_so_far and max_right_so_far and 2 pointers l and r
      * If max_left < max_right -> calc trapped water at l, then forward l and update max_left
@@ -49,19 +49,17 @@ public class H_42_TrappingRainWater {
     public static int trap2(int[] height) {
         int n = height.length;
         int res = 0;
-        int maxLeftHeight = height[0], maxRightHeight = height[n - 1];
-        int l = 1, r = n - 2;
+        int l = 0, r = n - 1;
+        int maxLeftHeight = height[l], maxRightHeight = height[r];
 
         while (l <= r) {
             if (maxLeftHeight < maxRightHeight) {
                 maxLeftHeight = Math.max(maxLeftHeight, height[l]);
-                int gain = Math.min(maxLeftHeight, maxRightHeight) - height[l];
-                if (gain > 0) res += gain;
+                res += maxLeftHeight - height[l]; // no need negative check since we already update maxLeft
                 l++;
             } else {
                 maxRightHeight = Math.max(maxRightHeight, height[r]);
-                int gain = Math.min(maxLeftHeight, maxRightHeight) - height[r];
-                if (gain > 0) res += gain;
+                res += maxRightHeight - height[r];
                 r--;
             }
         }
