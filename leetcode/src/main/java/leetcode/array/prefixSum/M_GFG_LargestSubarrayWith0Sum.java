@@ -23,9 +23,7 @@ public class M_GFG_LargestSubarrayWith0Sum {
 
             if (sumIndexMap.containsKey(prefixSum)) {
                 res = Math.max(res, i - sumIndexMap.get(prefixSum));
-            }
-
-            if (!sumIndexMap.containsKey(prefixSum)) {
+            } else {
                 sumIndexMap.put(prefixSum, i);
             }
         }
