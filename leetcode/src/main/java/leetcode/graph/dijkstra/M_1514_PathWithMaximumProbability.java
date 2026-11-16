@@ -5,62 +5,58 @@ import java.util.List;
 import java.util.PriorityQueue;
 
 public class M_1514_PathWithMaximumProbability {
-    public static void main(String[] args) {
-        System.out.println(maxProbability(3,
-                                          new int[][]{{0, 1}, {1, 2}, {0, 2}}, new double[]{0.5, 0.5, 0.2}
-                , 0, 2));
+    static void main() {
+        System.out.println(maxProbability(3, new int[][]{{0, 1}, {1, 2}, {0, 2}}, new double[]{0.5, 0.5, 0.2}, 0, 2));
     }
 
+    /**
+     * TC: O((V + E) log(V)),
+     *      ~ heap ops = logV, nodes are added to heap once -> VlogV, edges are examined once -> ElogV
+     * SC: O(V + E) for graph
+     */
     public static double maxProbability(int n, int[][] edges, double[] succProb, int start_node, int end_node) {
-        List<Edge>[] graph = new List[n];
-        for (int i = 0; i < n; ++i) {
-            graph[i] = new ArrayList<>();
-        }
+        // init graph
+        List<int[]>[] graph = new List[n];
 
+        for (int i = 0; i < n; ++i) graph[i] = new ArrayList<>();
         for (int i = 0; i < edges.length; ++i) {
-            int[] e = edges[i];
-            int u = e[0];
-            int v = e[1];
-            double w = succProb[i];
-            graph[u].add(new Edge(v, w));
-            graph[v].add(new Edge(u, w));
+            graph[edges[i][0]].add(new int[]{edges[i][1], i});
+            graph[edges[i][1]].add(new int[]{edges[i][0], i});
         }
 
-        return dijkstra(graph, start_node, end_node);
-    }
+        // init dijkstra states
+        double[] best = new double[n];
+        PriorityQueue<State> maxHeap = new PriorityQueue<>((a, b) -> Double.compare(b.prob, a.prob));
 
-    public static double dijkstra(List<Edge>[] graph, int src, int dst) {
-        int n = graph.length;
-        double[] dist = new double[n];
+        maxHeap.add(new State(start_node, 1));
 
-        dist[src] = 1.0;
-        PriorityQueue<Edge> pq = new PriorityQueue<>((o1, o2) -> Double.compare(o2.w, o1.w));
-        pq.offer(new Edge(src, 1.0));
+        // process dijkstra
+        while (!maxHeap.isEmpty()) {
+            State curState = maxHeap.poll();
 
-        while (!pq.isEmpty()) {
-            Edge e = pq.poll();
-            int u = e.v;
+            if (curState.node == end_node) return curState.prob;
 
-            for (Edge edge : graph[u]) {
-                int v = edge.v;
-                double vW = edge.w;
-                double tempDist = dist[u] * vW;
-                if (tempDist > dist[v]) {
-                    dist[v] = tempDist;
-                    pq.offer(new Edge(v, tempDist));
+            for (int[] neighbor : graph[curState.node]) {
+                int nextNode = neighbor[0];
+                double nextProb = succProb[neighbor[1]] * curState.prob;
+
+                if (nextProb > best[nextNode]) {
+                    best[nextNode] = nextProb;
+                    maxHeap.add(new State(nextNode, nextProb));
                 }
             }
         }
-        return dist[dst] != 0 ? dist[dst] : 0;
+
+        return best[end_node];
     }
 
-    static class Edge {
-        int v;
-        double w;
+    static class State {
+        int node;
+        double prob;
 
-        public Edge(int v, double w) {
-            this.v = v;
-            this.w = w;
+        State(int node, double prob) {
+            this.node = node;
+            this.prob = prob;
         }
     }
 }
