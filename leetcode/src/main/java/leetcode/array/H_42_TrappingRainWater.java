@@ -1,69 +1,68 @@
 package leetcode.array;
 
 public class H_42_TrappingRainWater {
-    public static void main(String[] args) {
+    static void main() {
         System.out.println(trap(new int[]{0, 1, 0, 2, 1, 0, 1, 3, 2, 1, 2, 1})); // Output: 6
     }
 
     /**
-     * Intuition:
-     * Calculate prefix left and right max height
+     * INTUITION
+     * Idea: at index i, trap-able water = min(height_left_max, height_right_max) - height[i]
+     * -> Use 2 arrays to track max height on left side and right side separately.
      * ---
-     * TC: O(3 * n)
-     * SC: O(2 * n)
+     * TC: O(2N)
+     * SC: O(2N)
      */
     public static int trap(int[] height) {
         int n = height.length;
-        if (n == 0) return 0;
 
-        int[] leftMax = new int[n];
-        int[] rightMax = new int[n];
+        // build left and right max height arrays
+        int[] leftMaxHeights = new int[n];
+        int[] rightMaxHeights = new int[n];
 
-        leftMax[0] = height[0];
+        leftMaxHeights[0] = height[0];
+        rightMaxHeights[n - 1] = height[n - 1];
+
         for (int i = 1; i < n; ++i) {
-            leftMax[i] = Math.max(leftMax[i - 1], height[i]);
+            leftMaxHeights[i] = Math.max(leftMaxHeights[i - 1], height[i]);
+            rightMaxHeights[n - 1 - i] = Math.max(rightMaxHeights[n - i], height[n - 1 - i]);
         }
 
-        rightMax[n - 1] = height[n - 1];
-        for (int i = n - 2; i >= 0; --i) {
-            rightMax[i] = Math.max(rightMax[i + 1], height[i]);
-        }
-
+        // build result
         int res = 0;
-
-        // Calculate the trapped water at each index (How much water can be trapped on this wall)
-        for (int i = 0; i < n; ++i) {
-            res += Math.min(leftMax[i], rightMax[i]) - height[i];
+        for (int i = 1; i < n - 1; ++i) {
+            res += Math.min(leftMaxHeights[i], rightMaxHeights[i]) - height[i];
         }
-
         return res;
     }
 
     /**
-     * Two Pointers
+     * Idea: Optimize space to O(1).
      * ---
-     * Optimization: Move the pointer on the shorter side — because that side is the limiting factor for water.
-     * You already have enough information to calculate water there!
+     * Maintain 2 vars max_left_so_far and max_right_so_far and 2 pointers l and r
+     * If max_left < max_right -> calc trapped water at l, then forward l and update max_left
+     * If max_right > max_left -> calc trapped water at r, then backward r and update max_right
      * ---
-     * TC: O(n)
+     * TC: O(N)
      * SC: O(1)
      */
     public static int trap2(int[] height) {
         int n = height.length;
         int res = 0;
+        int maxLeftHeight = height[0], maxRightHeight = height[n - 1];
+        int l = 1, r = n - 2;
 
-        int leftMax = 0, rightMax = 0;
-        int left = 0, right = n - 1;
-
-        while (left <= right) {
-            if (height[left] <= height[right]) {
-                leftMax = Math.max(leftMax, height[left]);
-                res += leftMax - height[left]; // same equation as intuition solution, but here we already have shorter side.
-                left++;
+        while (l <= r) {
+            if (maxLeftHeight < maxRightHeight) {
+                maxLeftHeight = Math.max(maxLeftHeight, height[l]);
+                int gain = Math.min(maxLeftHeight, maxRightHeight) - height[l];
+                if (gain > 0) res += gain;
+                l++;
             } else {
-                rightMax = Math.max(rightMax, height[right]);
-                res += rightMax - height[right];
-                right--;
+                maxRightHeight = Math.max(maxRightHeight, height[r]);
+                int gain = Math.min(maxLeftHeight, maxRightHeight) - height[r];
+                if (gain > 0) res += gain;
+                r--;
             }
         }
 
