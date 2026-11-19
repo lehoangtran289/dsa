@@ -6,39 +6,45 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-// Neetcode two pointers 3
 public class M_15_3Sum {
-    public static void main(String[] args) {
+    static void main() {
         System.out.println(threeSum(new int[]{-2, 0, 1, 1, 2})); // [[-2,0,2],[-2,1,1]]
         System.out.println(threeSum(new int[]{0, 0, 0, 0}));
         System.out.println(threeSum(new int[]{-1, 0, 1, 2, -1, -4}));
     }
 
+    /**
+     * Idea: fix 1 element -> narrow down the problem to 2sum
+     * To solve 2 sum, we can sort the array beforehand and do 2 pointers
+     * To check for duplicate triplets, just check if first element value has been processed or not.
+     * ---
+     * TC: O(N^2)
+     * SC: O(N)
+     */
     public static List<List<Integer>> threeSum(int[] nums) {
+        Set<List<Integer>> res = new HashSet<>();
         Arrays.sort(nums);
 
-        Set<List<Integer>> result = new HashSet<>();
         for (int i = 0; i < nums.length; ++i) {
-            if (nums[i] > 0) break;
-            if (i != 0 && nums[i] == nums[i - 1]) continue;
-
-            int curNum = nums[i];
-            int target = -curNum;
+            if (i != 0 && nums[i] == nums[i - 1]) continue; // skip processed value
+            if (nums[i] > 0) break; // smallest number > 0 -> 3sum > 0
 
             int l = i + 1, r = nums.length - 1;
             while (l < r) {
-                if (nums[l] + nums[r] < target) {
+                int sum = nums[i] + nums[l] + nums[r];
+
+                if (sum == 0) {
+                    res.add(List.of(nums[i], nums[l], nums[r]));
                     l++;
-                } else if (nums[l] + nums[r] > target) {
                     r--;
-                } else {
-                    result.add(Arrays.asList(curNum, nums[l], nums[r]));
+                } else if (sum < 0) {
                     l++;
+                } else {
                     r--;
                 }
             }
         }
 
-        return new ArrayList<>(result);
+        return new ArrayList<>(res);
     }
 }
