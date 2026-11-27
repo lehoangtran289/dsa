@@ -1,10 +1,46 @@
 package leetcode.array.prefixSum;
 
+import java.util.ArrayDeque;
 import java.util.Arrays;
+import java.util.Deque;
 import java.util.HashMap;
 import java.util.Map;
 
 public class H_768_MaxChunksToMakeSortedII {
+
+    /**
+     * Monotonic stack
+     * ---
+     * Observation: Max value in chunk (i-1)-th < Min value in chunk i-th
+     * As we process each element, we decide if it should forms a new chunk or merge to previous chunk
+     * If current value > prev max -> forms new chunk
+     * Else we need to find prev max that < current value to merge it to chunk
+     * ---
+     * TC: O(N)
+     * SC: O(N)
+     */
+    public int maxChunksToSorted3(int[] arr) {
+        Deque<Integer> incrStack = new ArrayDeque<>();
+
+        for (int currentValue : arr) {
+            // if current value > prev max -> make a chunk by pushing to stack
+            if (incrStack.isEmpty() || incrStack.peek() <= currentValue) {
+                incrStack.push(currentValue);
+                continue;
+            }
+
+            // store current max value
+            int currentMax = incrStack.pop();
+
+            // find corresponding chunk of current value
+            while (!incrStack.isEmpty() && incrStack.peek() > currentValue) {
+                incrStack.pop();
+            }
+            incrStack.push(currentMax);
+        }
+
+        return incrStack.size();
+    }
 
     /**
      * Same solution as M_769
